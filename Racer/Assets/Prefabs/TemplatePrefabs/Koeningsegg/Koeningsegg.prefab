@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4207316277422292456}
   - component: {fileID: 1759140372012794653}
   - component: {fileID: 6383256353388775634}
+  - component: {fileID: 3209919372865886815}
   m_Layer: 0
   m_Name: KoenigseggM
   m_TagString: Untagged
@@ -160,108 +161,114 @@ MonoBehaviour:
   FR: {fileID: 8731854455550595010}
   RL: {fileID: 1943865835099506112}
   RR: {fileID: 513392428729196495}
+  steeringSpeed: 0.1
+  totalSteering: 40
+  snapBackSpeed: 0.02
+  brakeTorque: 3000
+  brakeBalance: 55
+  brakeDeadzone: 0.1
   powerDeliviry: 0
-  engineTorque: 5000
   reverseTorque: 0.2
-  topSpeed: 300
+  throttleDeadzone: 0.1
+  maxRPM: 7500
   torqueCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.0018157959
-      value: 0.59905744
-      inSlope: 3.2765403
-      outSlope: 3.2765403
+      time: -0.00036416808
+      value: 0.21096884
+      inSlope: 1.0209248
+      outSlope: 1.0209248
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.0765316
-      value: 0.84386677
-      inSlope: 1.7451276
-      outSlope: 1.7451276
+      time: 0.1
+      value: 0.3134331
+      inSlope: 1.7173557
+      outSlope: 1.7173557
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.1847826
+      inWeight: 0.51618534
       outWeight: 0.3488546
     - serializedVersion: 3
-      time: 0.2
-      value: 1
-      inSlope: -0.018758746
-      outSlope: -0.018758746
+      time: 0.1949601
+      value: 0.4934284
+      inSlope: 1.248627
+      outSlope: 1.248627
       tangentMode: 0
       weightedMode: 0
-      inWeight: 1
+      inWeight: 0.40937498
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.3
-      value: 0.95
-      inSlope: -0.6618831
-      outSlope: -0.6618831
+      time: 0.28387144
+      value: 0.6369213
+      inSlope: 1.8034036
+      outSlope: 1.8034036
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.86231893
+      inWeight: 0.568164
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.4
-      value: 0.9
-      inSlope: -0.67657155
-      outSlope: -0.67657155
+      time: 0.3969761
+      value: 0.809537
+      inSlope: 1.0843549
+      outSlope: 1.0843549
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.9202901
+      inWeight: 0.49454245
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.5
-      value: 0.8
-      inSlope: -0.8624998
-      outSlope: -0.8624998
+      time: 0.49899206
+      value: 0.92282015
+      inSlope: 1.3306351
+      outSlope: 1.3306351
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.86956537
+      inWeight: 0.49511138
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.6
-      value: 0.7
-      inSlope: -1.1210686
-      outSlope: -1.1210686
+      value: 1
+      inSlope: 0.02561241
+      outSlope: 0.02561241
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.7826088
+      inWeight: 0.7359932
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.7
-      value: 0.6
-      inSlope: -1.1730548
-      outSlope: -1.1730548
+      value: 0.9903864
+      inSlope: -0.13868816
+      outSlope: -0.13868816
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.695652
+      inWeight: 0.4166338
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.8011944
-      value: 0.4
-      inSlope: -2.0065453
-      outSlope: -2.0065453
+      time: 0.8067749
+      value: 0.88859564
+      inSlope: -1.3307385
+      outSlope: -1.3307385
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.55304945
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.9
-      value: 0.2
-      inSlope: -2.0132751
-      outSlope: -2.0132751
+      time: 0.9096776
+      value: 0.7135196
+      inSlope: -1.9280988
+      outSlope: -1.9280988
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.5166011
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -1.9999995
-      outSlope: -1.9999995
+      time: 0.9969761
+      value: 0.49748072
+      inSlope: -2.4747157
+      outSlope: -2.4747157
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -269,30 +276,68 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  gearInfo:
+  gears:
   - gearNumber: -1
-    maxSpeed: -20
+    rpmMultiplier: 3
+    rpmLossMultiplier: 0.7
+    rpmAddMultiplier: 0
+    gearRatio: 1
+    engineTorque: 500
   - gearNumber: 0
-    maxSpeed: 0
+    rpmMultiplier: 3
+    rpmLossMultiplier: 1
+    rpmAddMultiplier: 0
+    gearRatio: 0
+    engineTorque: 200
   - gearNumber: 1
-    maxSpeed: 30
+    rpmMultiplier: 7
+    rpmLossMultiplier: 0.5
+    rpmAddMultiplier: 0.3
+    gearRatio: 1
+    engineTorque: 3000
   - gearNumber: 2
-    maxSpeed: 60
+    rpmMultiplier: 6
+    rpmLossMultiplier: 0.7
+    rpmAddMultiplier: 0.3
+    gearRatio: 1.3
+    engineTorque: 2500
   - gearNumber: 3
-    maxSpeed: 90
+    rpmMultiplier: 5
+    rpmLossMultiplier: 0.7
+    rpmAddMultiplier: 0.3
+    gearRatio: 1.6
+    engineTorque: 2000
   - gearNumber: 4
-    maxSpeed: 115
+    rpmMultiplier: 3
+    rpmLossMultiplier: 0.7
+    rpmAddMultiplier: 0.3
+    gearRatio: 1.9
+    engineTorque: 1500
   - gearNumber: 5
-    maxSpeed: 130
+    rpmMultiplier: 2
+    rpmLossMultiplier: 0.7
+    rpmAddMultiplier: 0.3
+    gearRatio: 2.2
+    engineTorque: 1000
   - gearNumber: 6
-    maxSpeed: 140
-  brakeTorque: 3000
-  brakeBalance: 55
-  pedalDeadzone: 0.1
-  steeringSpeed: 0.1
-  totalSteering: 40
-  steeringDeadzone: 0.05
-  snapBackSpeed: 0.02
+    rpmMultiplier: 1
+    rpmLossMultiplier: 0.7
+    rpmAddMultiplier: 0.3
+    gearRatio: 2.5
+    engineTorque: 500
+--- !u!114 &3209919372865886815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537222787306763227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd3cb2e631e21414b8e08b9ba202e01d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
 --- !u!1 &1196968587578460156
 GameObject:
   m_ObjectHideFlags: 0
