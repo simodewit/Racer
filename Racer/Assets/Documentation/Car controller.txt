@@ -1,0 +1,31 @@
+GASSEN:
+
+wanneer je gas geeft pak je de huidige rpm en plus je de nieuwe rpm's erbij op die je met een som van verschillende dingen hebt berekent als grip, maximale rpm's, throttle input en andere vactoren. vervolgens kan je bij de torque functie de rpm's pakken en samen met de torque curve een percentage krijgen van de motor torque die je kan gebruiken. die kan je dan vervolgens samen doen met de gear ratio en een eventuele vermenigvuldiger(multiplier) om de totale torque te krijgen die je vervolgens door kan geven aan de banden via de motortorque optie in de wheelcolliders.
+
+
+
+REMMEN:
+
+wanneer je gas los hebt of remt wil je via de braketorque optie in de wheelcolliders alles meegeven. hieronder wil je de brake torque, engine braking en meer doorgeven. wanneer je gaat remmen moet je onder de hoeveelheid banden de brake torque verdelen. ook wil je een brake balance hebben waarbij je de brake torque meer naar voren of achteren kan zetten. de rpm's wil je vervolgens basseren op de deceleration van de auto. dit moet je via de wheelcolliders die de motor torque doorgegeven krijgen doen. als je dat niet doet hoor je bij het geluid de lockups niet. dit kan je doen door de rpm's van de banden samen te voegen en te delen door de hoeveelheid banden voor een gemiddelde rpm's. vervolgens kan je dat gebruiken om de snelheid te meten en de rpm's van de motor er op aan te sluiten.
+
+
+
+GELUID:
+
+ik heb nog geen flauw idee hoe je dit zou kunnen doen. misschien dat je naar de rpm's zou kunnen kijken en daar het geluid op zou kunnen afstemmen.
+
+
+
+BUGGS:
+
+1. laag in versnelling kan je gewoon met volle snelheid wegtrekken. dit zorgt ervoor dat je gelijk naar de laatste versnelling kan en met de beste snelheid weg kan rijden. mogelijke oplossing 1 kan zijn dat je een soort minimale torque hebt dat je van de output torque zou kunnen halen per versnelling. mogelijke oplossing 2 zou kunnen zijn dat je per gear een maximale torque hebt voor de motor zodat je niet de torque er nog hoeft af te halen per gear.
+
+2. je kan wanneer je gas inhoud geen rpm's kwijtraken. dit zorgt ervoor dat als je tegen een muur rijdt je niet minder rpm's krijgt en je totale torque behoud. ik heb hier nog geen mogelijke oplossing voor
+
+
+
+
+
+
+
+
