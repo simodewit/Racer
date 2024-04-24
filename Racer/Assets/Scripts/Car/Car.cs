@@ -1,10 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.WebSockets;
-using UnityEditor.UIElements;
 using UnityEngine;
-using UnityEngine.Animations;
+using UnityEngine.InputSystem;
 
 public enum PowerDeliviry
 {
@@ -32,8 +30,6 @@ public class Car : MonoBehaviour
     [SerializeField] private float steeringSpeed = 0.1f;
     [Tooltip("The maximum amount at witch you can steer the wheels"), Range(0, 75)]
     [SerializeField] private float totalSteering = 30;
-    [Tooltip("The speed at witch the steering snaps back towards the middle"), Range(0, 0.1f)]
-    [SerializeField] private float snapBackSpeed = 0.02f;
 
     [Header("Brakes")]
     [Tooltip("The total newton meters of torque that the car has"), Range(0, 5000)]
@@ -48,7 +44,9 @@ public class Car : MonoBehaviour
     [SerializeField] private PowerDeliviry powerDeliviry = PowerDeliviry.AWD;
     [Tooltip("The deadzone in the pedal before the throttle is used"), Range(0, 1)]
     [SerializeField] private float throttleDeadzone = 0.1f;
-    [Tooltip("The maximum rpm that the engine can have")]
+    [Tooltip("The minimum rpm that the engine can run")]
+    [SerializeField] private int minRPM = 1000;
+    [Tooltip("The maximum rpm that the engine can run")]
     [SerializeField] private int maxRPM = 5000;
     [Tooltip("The total newton meters of torque that the car has"), Range(0, 5000)]
     [SerializeField] private float engineTorque = 200;
@@ -62,10 +60,14 @@ public class Car : MonoBehaviour
     [Header("Code refrences")]
     public int currentRPM;
 
-    private Rigidbody rb;
     private List<WheelCollider> wheelColliders = new List<WheelCollider>();
     private int currentGear;
     private float steeringAmount;
+
+    //all the input axisses
+    private float steeringAxis;
+    private float throttleAxis;
+    private float brakeAxis;
 
     #endregion
 
@@ -74,7 +76,6 @@ public class Car : MonoBehaviour
     public void Start()
     {
         currentGear = 1;
-        rb = GetComponent<Rigidbody>();
 
         if (powerDeliviry == PowerDeliviry.AWD)
         {
@@ -95,13 +96,47 @@ public class Car : MonoBehaviour
         }
     }
 
-    public void Update()
+    public void FixedUpdate()
     {
         Turning();
-        GearShifts();
         CalculateRPM();
         DriveTrain();
         Braking();
+    }
+
+    #endregion
+
+    #region input
+
+    public void SteeringInput(InputAction.CallbackContext context)
+    {
+        steeringAxis = context.ReadValue<float>();
+    }
+
+    public void BrakeInput(InputAction.CallbackContext context)
+    {
+        brakeAxis = context.ReadValue<float>();
+    }
+
+    public void ThrottleInput(InputAction.CallbackContext context)
+    {
+        throttleAxis = context.ReadValue<float>();
+    }
+
+    public void ShiftUp(InputAction.CallbackContext context)
+    {
+        if (context.performed && currentGear < gears.Length - 1)
+        {
+            currentGear += 1;
+        }
+    }
+
+    public void ShiftDown(InputAction.CallbackContext context)
+    {
+        if (context.performed && currentGear > 0)
+        {
+            currentGear -= 1;
+        }
     }
 
     #endregion
@@ -110,26 +145,9 @@ public class Car : MonoBehaviour
 
     public void Turning()
     {
-        //temporary turning code. should be changed to the new input system soon
-        float turningAxis = Input.GetAxis("Horizontal");
-        bool isTurning = false;
+        float turnTowards = totalSteering * steeringAxis;
 
-        //this is used to prevent delay
-        if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
-        {
-            isTurning = true;
-        }
-
-        float totalTurning = turningAxis * steeringSpeed;
-
-        if (isTurning == false)
-        {
-            steeringAmount = Mathf.Lerp(steeringAmount, 0, snapBackSpeed);
-        }
-        else
-        {
-            steeringAmount += totalTurning;
-        }
+        steeringAmount = Mathf.Lerp(steeringAmount, turnTowards, steeringSpeed * Time.deltaTime);
 
         //this is in place for a bug
         if (steeringAmount < 0.01 && steeringAmount > -0.01)
@@ -150,14 +168,14 @@ public class Car : MonoBehaviour
     public void CalculateRPM()
     {
         float averageRPM = CalculateWheelRPM();
-        float rpmAfterDif = ReverseDifferential(averageRPM);
-        float rpmAfterGearBox = ReverseDifferential(rpmAfterDif);
+        float rpmAfterDif = Differential(averageRPM);
+        float rpmAfterGearBox = GearBox(rpmAfterDif);
 
-        int newRPM = (int)(rpmAfterGearBox);
+        int newRPM = (int)rpmAfterGearBox;
 
-        if (newRPM > maxRPM)
+        if (newRPM < minRPM)
         {
-            newRPM = maxRPM;
+            newRPM = minRPM;
         }
 
         currentRPM = newRPM;
@@ -179,35 +197,11 @@ public class Car : MonoBehaviour
 
     #endregion
 
-    #region gear shifts
-
-    public void GearShifts()
-    {
-        //temporary shifting code. should be changed to the new input system soon
-        if (Input.GetKeyDown(KeyCode.E) && currentGear < gears.Length - 1)
-        {
-            currentGear += 1;
-        }
-        else if (Input.GetKeyDown(KeyCode.Q) && currentGear > 0)
-        {
-            currentGear -= 1;
-        }
-    }
-
-    #endregion
-
     #region gearbox and differential
 
     public float GearBox(float torque)
     {
         float returnValue = torque * gears[currentGear].gearRatio;
-
-        return returnValue;
-    }
-
-    public float ReverseGearbox(float rpm)
-    {
-        float returnValue = rpm / gears[currentGear].gearRatio;
 
         return returnValue;
     }
@@ -219,13 +213,6 @@ public class Car : MonoBehaviour
         return returnValue;
     }
 
-    public float ReverseDifferential(float rpm)
-    {
-        float returnValue = rpm / finalGearRatio;
-
-        return returnValue;
-    }
-
     #endregion
 
     #region driveTrain
@@ -233,7 +220,7 @@ public class Car : MonoBehaviour
     public void DriveTrain()
     {
         //the torque curve
-        float placeInCurve = (currentRPM * 100) / maxRPM;
+        float placeInCurve = currentRPM / maxRPM;
         float curveMultiplier = torqueCurve.Evaluate(placeInCurve);
         float torqueOutput = engineTorque * curveMultiplier;
 
@@ -241,16 +228,17 @@ public class Car : MonoBehaviour
         float torqueAfterGearbox = GearBox(torqueOutput);
         float torqueAfterDif = Differential(torqueAfterGearbox);
 
-        //the input
-        float axis = Input.GetAxis("Vertical");
         float outputToWheels = 0;
 
-        if (axis > throttleDeadzone)
+        if (throttleAxis > throttleDeadzone)
         {
-            outputToWheels = torqueAfterDif * axis;
+            outputToWheels = torqueAfterDif * throttleAxis;
         }
 
-        print(outputToWheels);
+        if (currentRPM >= maxRPM)
+        {
+            outputToWheels = 0;
+        }
 
         //the power deliviry
         if (powerDeliviry == PowerDeliviry.AWD)
@@ -311,20 +299,17 @@ public class Car : MonoBehaviour
 
     public void Braking()
     {
-        //temporary braking code. should be changed to the new input system soon
-        float axis = Input.GetAxis("Vertical");
-
-        if (axis < brakeDeadzone)
+        if (brakeAxis > brakeDeadzone)
         {
             float frontBrakes = brakeBalance / 100;
             float rearBrakes = (100 - brakeBalance) / 100;
 
             float wheelTorque = brakeTorque * 0.5f;
 
-            FL.brakeTorque = wheelTorque * frontBrakes * -axis;
-            FR.brakeTorque = wheelTorque * frontBrakes * -axis;
-            RL.brakeTorque = wheelTorque * rearBrakes * -axis;
-            RR.brakeTorque = wheelTorque * rearBrakes * -axis;
+            FL.brakeTorque = wheelTorque * frontBrakes * brakeAxis;
+            FR.brakeTorque = wheelTorque * frontBrakes * brakeAxis;
+            RL.brakeTorque = wheelTorque * rearBrakes * brakeAxis;
+            RR.brakeTorque = wheelTorque * rearBrakes * brakeAxis;
         }
         else
         {

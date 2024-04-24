@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CarCamera : MonoBehaviour
 {
@@ -9,21 +10,18 @@ public class CarCamera : MonoBehaviour
 
     public void Start()
     {
-        ChangeCamera();
+        Change();
     }
 
-    public void Update()
+    public void ChangeCamera(InputAction.CallbackContext context)
     {
-        //temporary control code. should be changed to the new input system soon
-        if (Input.GetKeyDown(KeyCode.C))
+        if (context.performed)
         {
-            ChangeCamera();
+            Change();
         }
     }
 
-    #region change cam
-
-    public void ChangeCamera()
+    public void Change()
     {
         currentCam += 1;
 
@@ -35,6 +33,4 @@ public class CarCamera : MonoBehaviour
         transform.position = placesToCycle[currentCam].position;
         transform.rotation = placesToCycle[currentCam].rotation;
     }
-
-    #endregion
 }

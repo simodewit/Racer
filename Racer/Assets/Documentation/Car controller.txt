@@ -1,3 +1,5 @@
+DEZE IS VEROUDERD
+
 GASSEN:
 
 wanneer je gas geeft pak je de huidige rpm en plus je de nieuwe rpm's erbij op die je met een som van verschillende dingen hebt berekent als grip, maximale rpm's, throttle input en andere vactoren. vervolgens kan je bij de torque functie de rpm's pakken en samen met de torque curve een percentage krijgen van de motor torque die je kan gebruiken. die kan je dan vervolgens samen doen met de gear ratio en een eventuele vermenigvuldiger(multiplier) om de totale torque te krijgen die je vervolgens door kan geven aan de banden via de motortorque optie in de wheelcolliders.
