@@ -6,8 +6,10 @@ public class CarSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject carPrefab;
 
+    public GameObject car;
+
     public void Start()
     {
-        Instantiate(carPrefab, transform.position, transform.rotation);
+        car = Instantiate(carPrefab, transform.position, transform.rotation);
     }
 }

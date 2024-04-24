@@ -46,23 +46,26 @@ public class Car : MonoBehaviour
     [Header("Power")]
     [Tooltip("The way that power is transmitted to the wheels. AWD = all wheel drive, RWD = rear wheel drive, FWD = front wheel drive")]
     [SerializeField] private PowerDeliviry powerDeliviry = PowerDeliviry.AWD;
-    [Tooltip("The amount of torque that is used of the engineTorque when in reverse"), Range(0, 1)]
-    [SerializeField] private float reverseTorque = 0.1f;
     [Tooltip("The deadzone in the pedal before the throttle is used"), Range(0, 1)]
     [SerializeField] private float throttleDeadzone = 0.1f;
     [Tooltip("The maximum rpm that the engine can have")]
     [SerializeField] private int maxRPM = 5000;
+    [Tooltip("The total newton meters of torque that the car has"), Range(0, 5000)]
+    [SerializeField] private float engineTorque = 200;
+    [Tooltip("The final gear ratio of the car")]
+    [SerializeField] private float finalGearRatio;
     [Tooltip("The torque given at specific moments")]
     [SerializeField] private AnimationCurve torqueCurve;
     [Tooltip("The info for every gear")]
     [SerializeField] private GearInfo[] gears;
 
+    [Header("Code refrences")]
+    public int currentRPM;
+
     private Rigidbody rb;
-    private int currentGear;
-    private int currentRPM;
-    private float steeringAmount;
-    private float backwardTorque;
     private List<WheelCollider> wheelColliders = new List<WheelCollider>();
+    private int currentGear;
+    private float steeringAmount;
 
     #endregion
 
@@ -70,7 +73,6 @@ public class Car : MonoBehaviour
 
     public void Start()
     {
-        backwardTorque = -gears[currentGear].engineTorque * reverseTorque;
         currentGear = 1;
         rb = GetComponent<Rigidbody>();
 
@@ -96,9 +98,9 @@ public class Car : MonoBehaviour
     public void Update()
     {
         Turning();
-        RPM();
         GearShifts();
-        AllWheelDrive();
+        CalculateRPM();
+        DriveTrain();
         Braking();
     }
 
@@ -143,6 +145,40 @@ public class Car : MonoBehaviour
 
     #endregion
 
+    #region RPM's
+
+    public void CalculateRPM()
+    {
+        float averageRPM = CalculateWheelRPM();
+        float rpmAfterDif = ReverseDifferential(averageRPM);
+        float rpmAfterGearBox = ReverseDifferential(rpmAfterDif);
+
+        int newRPM = (int)(rpmAfterGearBox);
+
+        if (newRPM > maxRPM)
+        {
+            newRPM = maxRPM;
+        }
+
+        currentRPM = newRPM;
+    }
+
+    public float CalculateWheelRPM()
+    {
+        //calculate the average rpm's from the wheels attached to the engine
+        float addedRPM = 0;
+
+        foreach (var wheel in wheelColliders)
+        {
+            addedRPM += wheel.rpm;
+        }
+
+        float averageRPM = addedRPM / wheelColliders.Count;
+        return averageRPM;
+    }
+
+    #endregion
+
     #region gear shifts
 
     public void GearShifts()
@@ -151,230 +187,122 @@ public class Car : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && currentGear < gears.Length - 1)
         {
             currentGear += 1;
-
-            if (currentGear == 0)
-            {
-                currentRPM = (int)(currentRPM * (gears[currentGear].rpmAddMultiplier + 1));
-            }
-            else
-            {
-                currentRPM = (int)(currentRPM * gears[currentGear].rpmLossMultiplier);
-            }
         }
         else if (Input.GetKeyDown(KeyCode.Q) && currentGear > 0)
         {
             currentGear -= 1;
-
-            if (currentGear == -1)
-            {
-                currentRPM = (int)(currentRPM * gears[currentGear].rpmLossMultiplier);
-            }
-            else
-            {
-                currentRPM = (int)(currentRPM * (gears[currentGear].rpmAddMultiplier + 1));
-            }
         }
     }
 
     #endregion
 
-    #region RPM's
+    #region gearbox and differential
 
-    public void RPM()
+    public float GearBox(float torque)
     {
-        //temporary throttle code. should be changed to the new input system soon
-        float axis = Input.GetAxis("Vertical");
+        float returnValue = torque * gears[currentGear].gearRatio;
 
-        //calculate the rpm's to add
-        int rpmToAdd = 0;
-
-        if (axis > throttleDeadzone)
-        {
-            rpmToAdd = (int)CalculateRPM();
-
-            if (currentRPM > maxRPM)
-            {
-                rpmToAdd = 0;
-            }
-        }
-
-        ////calculate the rpm's to remove
-        //float currentSpeed = CalculateSpeedFromWheel();
-        //float gearTopSpeed = (gears[currentGear].engineTorque / rb.drag) / gears[currentGear].gearRatio;
-
-        //float targetRPM = maxRPM * (currentSpeed / (gearTopSpeed * 3.6f));
-        //int rpmToRemove = currentRPM - (int)targetRPM;
-
-        //add or remove rpm's from the current rpm's
-        currentRPM += rpmToAdd;
-        print(currentRPM);
+        return returnValue;
     }
 
-    public float CalculateSpeedFromWheel()
+    public float ReverseGearbox(float rpm)
     {
-        //calculate the average rpm's from the wheels attached to the engine
-        WheelHit hit;
-        float totalRPM = 0;
+        float returnValue = rpm / gears[currentGear].gearRatio;
 
-        foreach (var wheel in wheelColliders)
-        {
-            if (wheel.GetGroundHit(out hit))
-            {
-                totalRPM += wheel.rpm * (wheel.radius * 2 * Mathf.PI) / 60;
-            }
-        }
-
-        float averageRPM = totalRPM / wheelColliders.Count;
-        averageRPM = averageRPM * 3.6f;
-
-        return averageRPM;
+        return returnValue;
     }
 
-    public float CalculateRPM()
+    public float Differential(float torque)
     {
-        //determine how much throttle the player uses
-        float axis = Input.GetAxis("Vertical");
-        float throttleInput = 0;
+        float returnValue = torque * finalGearRatio;
 
-        if (axis > throttleDeadzone)
-        {
-            throttleInput = axis;
-        }
+        return returnValue;
+    }
 
+    public float ReverseDifferential(float rpm)
+    {
+        float returnValue = rpm / finalGearRatio;
 
-        //get the extra rpm's that should be given from losing grip
-        float totalGripLoss = 0;
-
-        foreach (var wheel in wheelColliders)
-        {
-            WheelHit hit;
-
-            if (wheel.GetGroundHit(out hit))
-            {
-                totalGripLoss += Mathf.Abs(hit.sidewaysSlip);
-            }
-        }
-
-        float gripLossPerWheel = totalGripLoss / wheelColliders.Count;
-        gripLossPerWheel += 1;
-
-        //the output
-        float totalOutput = throttleInput * gripLossPerWheel * gears[currentGear].rpmMultiplier;
-        return totalOutput;
+        return returnValue;
     }
 
     #endregion
 
-    #region torque
+    #region driveTrain
 
-    public float CalculateTotalTorque(GearInfo gear)
+    public void DriveTrain()
     {
-        float totalTorque;
+        //the torque curve
+        float placeInCurve = (currentRPM * 100) / maxRPM;
+        float curveMultiplier = torqueCurve.Evaluate(placeInCurve);
+        float torqueOutput = engineTorque * curveMultiplier;
 
-        if (gear.gearNumber != -1)
+        //the gearbox and dif
+        float torqueAfterGearbox = GearBox(torqueOutput);
+        float torqueAfterDif = Differential(torqueAfterGearbox);
+
+        //the input
+        float axis = Input.GetAxis("Vertical");
+        float outputToWheels = 0;
+
+        if (axis > throttleDeadzone)
         {
-            float placeInCurve = (currentRPM / 2) / (maxRPM / 2);
-            float torqueMultiplier = torqueCurve.Evaluate(placeInCurve);
-
-            totalTorque = gears[currentGear].engineTorque * gear.gearRatio * torqueMultiplier;
+            outputToWheels = torqueAfterDif * axis;
         }
-        else
+
+        print(outputToWheels);
+
+        //the power deliviry
+        if (powerDeliviry == PowerDeliviry.AWD)
         {
-            float placeInCurve = (currentRPM / 2) / (maxRPM / 2);
-            float torqueMultiplier = torqueCurve.Evaluate(placeInCurve);
-
-            totalTorque = backwardTorque * gear.gearRatio * torqueMultiplier;
+            float torquePerWheel = outputToWheels / 4;
+            float outputTorque = torquePerWheel / RL.radius;
+            AllWheelDrive(outputTorque);
         }
-
-        return totalTorque;
+        else if(powerDeliviry == PowerDeliviry.RWD)
+        {
+            float torquePerWheel = outputToWheels / 2;
+            float outputTorque = torquePerWheel / RL.radius;
+            RearWheelDrive(outputTorque);
+        }
+        else if (powerDeliviry == PowerDeliviry.FWD)
+        {
+            float torquePerWheel = outputToWheels / 2;
+            float outputTorque = torquePerWheel / FL.radius;
+            FrontWheelDrive(outputTorque);
+        }
     }
 
     #endregion
 
     #region AllWheelDrive
 
-    public void AllWheelDrive()
+    public void AllWheelDrive(float torque)
     {
-        if (powerDeliviry != PowerDeliviry.AWD)
-        {
-            return;
-        }
-
-        //temporary throttle code. should be changed to the new input system soon
-        float axis = Input.GetAxis("Vertical");
-
-        if (axis > throttleDeadzone)
-        {
-            float wheelTorque = CalculateTotalTorque(gears[currentGear]) * 0.25f;
-
-            FL.motorTorque = wheelTorque;
-            FR.motorTorque = wheelTorque;
-            RL.motorTorque = wheelTorque;
-            RR.motorTorque = wheelTorque;
-        }
-        else
-        {
-            FL.motorTorque = 0;
-            FR.motorTorque = 0;
-            RL.motorTorque = 0;
-            RR.motorTorque = 0;
-        }
+        FL.motorTorque = torque;
+        FR.motorTorque = torque;
+        RL.motorTorque = torque;
+        RR.motorTorque = torque;
     }
 
     #endregion
 
     #region RearWheelDrive
 
-    public void RearWheelDrive()
+    public void RearWheelDrive(float torque)
     {
-        if (powerDeliviry != PowerDeliviry.RWD)
-        {
-            return;
-        }
-
-        //temporary throttle code. should be changed to the new input system soon
-        float axis = Input.GetAxis("Vertical");
-
-        if (axis > throttleDeadzone)
-        {
-            float wheelTorque = CalculateTotalTorque(gears[currentGear]) * 0.5f;
-
-            RL.motorTorque = wheelTorque;
-            RR.motorTorque = wheelTorque;
-        }
-        else
-        {
-            RL.motorTorque = 0;
-            RR.motorTorque = 0;
-        }
+        RL.motorTorque = torque;
+        RR.motorTorque = torque;
     }
 
     #endregion
 
     #region FrontWheelDrive
 
-    public void FrontWheelDrive()
+    public void FrontWheelDrive(float torque)
     {
-        if (powerDeliviry != PowerDeliviry.FWD)
-        {
-            return;
-        }
-
-        //temporary throttle code. should be changed to the new input system soon
-        float axis = Input.GetAxis("Vertical");
-
-        if (axis > throttleDeadzone)
-        {
-            float wheelTorque = CalculateTotalTorque(gears[currentGear]) * 0.5f;
-
-            FL.motorTorque = wheelTorque;
-            FR.motorTorque = wheelTorque;
-        }
-        else
-        {
-            FL.motorTorque = 0;
-            FR.motorTorque = 0;
-        }
+        FL.motorTorque = torque;
+        FR.motorTorque = torque;
     }
 
     #endregion
@@ -415,14 +343,6 @@ public class GearInfo
 {
     [Tooltip("The number of the gear that you are in. (reverse = -1, neutral = 0, 1st gear = 1, etc)")]
     public int gearNumber;
-    [Tooltip("The speed at wich you get rpm's in this gear")]
-    public float rpmMultiplier;
-    [Tooltip("The amount of rpm's you have left from shifting into this gear"), Range(0, 1)]
-    public float rpmLossMultiplier;
-    [Tooltip("The amount of rpm's you get from shifting down into this gear"), Range(0, 1)]
-    public float rpmAddMultiplier;
     [Tooltip("The amount that the engine torque should be multiplied")]
     public float gearRatio;
-    [Tooltip("The total newton meters of torque that the car has in this gear"), Range(0, 5000)]
-    public float engineTorque = 200;
 }
