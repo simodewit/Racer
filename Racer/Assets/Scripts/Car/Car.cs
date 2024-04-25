@@ -29,13 +29,15 @@ public class Car : MonoBehaviour
     [Tooltip("The amount of speed at witch you steer the car"), Range(0, 3)]
     [SerializeField] private float steeringSpeed = 0.1f;
     [Tooltip("The maximum amount at witch you can steer the wheels"), Range(0, 75)]
-    [SerializeField] private float totalSteering = 30;
+    [SerializeField] private float steeringDegrees = 30;
 
     [Header("Brakes")]
     [Tooltip("The total newton meters of torque that the car has"), Range(0, 5000)]
     [SerializeField] private float brakeTorque = 200;
-    [Tooltip("The amount of brakes to the front or back of the car"), Range(0, 100)]
+    [Tooltip("The amount of brakes to the front or back of the car"), Range(100, 0)]
     [SerializeField] private float brakeBalance = 55;
+    [Tooltip("The total amount of force from the pedal that is used"), Range(0, 1)]
+    [SerializeField] private float brakeForce = 1;
     [Tooltip("The deadzone in the pedal before the brake is used"), Range(0, 1)]
     [SerializeField] private float brakeDeadzone = 0.1f;
 
@@ -52,7 +54,7 @@ public class Car : MonoBehaviour
     [SerializeField] private float engineTorque = 200;
     [Tooltip("The final gear ratio of the car")]
     [SerializeField] private float finalGearRatio;
-    [Tooltip("The torque given at specific moments")]
+    [Tooltip("The torque given at specific moments"), Curve(0, 0, 1f, 1f, true)]
     [SerializeField] private AnimationCurve torqueCurve;
     [Tooltip("The info for every gear")]
     [SerializeField] private GearInfo[] gears;
@@ -145,7 +147,7 @@ public class Car : MonoBehaviour
 
     public void Turning()
     {
-        float turnTowards = totalSteering * steeringAxis;
+        float turnTowards = steeringDegrees * steeringAxis;
 
         steeringAmount = Mathf.Lerp(steeringAmount, turnTowards, steeringSpeed * Time.deltaTime);
 
@@ -155,7 +157,7 @@ public class Car : MonoBehaviour
             steeringAmount = 0;
         }
 
-        steeringAmount = Mathf.Clamp(steeringAmount, -totalSteering, totalSteering);
+        steeringAmount = Mathf.Clamp(steeringAmount, -steeringDegrees, steeringDegrees);
 
         FL.steerAngle = steeringAmount;
         FR.steerAngle = steeringAmount;
@@ -306,10 +308,10 @@ public class Car : MonoBehaviour
 
             float wheelTorque = brakeTorque * 0.5f;
 
-            FL.brakeTorque = wheelTorque * frontBrakes * brakeAxis;
-            FR.brakeTorque = wheelTorque * frontBrakes * brakeAxis;
-            RL.brakeTorque = wheelTorque * rearBrakes * brakeAxis;
-            RR.brakeTorque = wheelTorque * rearBrakes * brakeAxis;
+            FL.brakeTorque = wheelTorque * frontBrakes * brakeAxis * brakeForce;
+            FR.brakeTorque = wheelTorque * frontBrakes * brakeAxis * brakeForce;
+            RL.brakeTorque = wheelTorque * rearBrakes * brakeAxis * brakeForce;
+            RR.brakeTorque = wheelTorque * rearBrakes * brakeAxis * brakeForce;
         }
         else
         {

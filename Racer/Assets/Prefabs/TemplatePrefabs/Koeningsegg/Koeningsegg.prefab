@@ -1,5 +1,38 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &89054246860401921
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6249979841428968701}
+  m_Layer: 0
+  m_Name: DownForcePlaces
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6249979841428968701
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 89054246860401921}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5484686485070088449}
+  - {fileID: 6344585766811216940}
+  m_Father: {fileID: 3446177824505812088}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &537222787306763227
 GameObject:
   m_ObjectHideFlags: 0
@@ -14,6 +47,7 @@ GameObject:
   - component: {fileID: 4207316277422292456}
   - component: {fileID: 1759140372012794653}
   - component: {fileID: 6383256353388775634}
+  - component: {fileID: 3231335527875542491}
   - component: {fileID: 3209919372865886815}
   - component: {fileID: 3732466864373775793}
   - component: {fileID: 4077779757253453608}
@@ -40,6 +74,7 @@ Transform:
   - {fileID: 262311943513826165}
   - {fileID: 2961096167775595118}
   - {fileID: 3177764497968067397}
+  - {fileID: 6249979841428968701}
   m_Father: {fileID: 3758294068940416103}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2729827136190648541
@@ -164,15 +199,16 @@ MonoBehaviour:
   RL: {fileID: 1943865835099506112}
   RR: {fileID: 513392428729196495}
   steeringSpeed: 1
-  totalSteering: 25
-  brakeTorque: 3000
-  brakeBalance: 50
+  steeringDegrees: 30
+  brakeTorque: 4093
+  brakeBalance: 55
+  brakeForce: 1
   brakeDeadzone: 0
   powerDeliviry: 0
   throttleDeadzone: 0
-  minRPM: 1000
+  minRPM: 0
   maxRPM: 7500
-  engineTorque: 1100
+  engineTorque: 1200
   finalGearRatio: 3.364
   torqueCurve:
     serializedVersion: 2
@@ -205,13 +241,13 @@ MonoBehaviour:
       inWeight: 0.40937498
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.4
-      value: 0.9
-      inSlope: 0.68909633
-      outSlope: 0.68909633
+      time: 0.3988901
+      value: 0.9245052
+      inSlope: 1.1154052
+      outSlope: 1.1154052
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.8457262
+      inWeight: 0.35405073
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.5
@@ -223,8 +259,8 @@ MonoBehaviour:
       inWeight: 0.49454245
       outWeight: 1
     - serializedVersion: 3
-      time: 0.6
-      value: 1.0502014
+      time: 0.5988709
+      value: 1
       inSlope: -0.030008405
       outSlope: -0.030008405
       tangentMode: 0
@@ -233,39 +269,39 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.7
-      value: 1.0304835
-      inSlope: -1.1841551
-      outSlope: -1.1841551
+      value: 1
+      inSlope: -0.026069544
+      outSlope: -0.026069544
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.6340673
+      inWeight: 0.7149691
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.8
       value: 0.98272365
-      inSlope: -1.0837127
-      outSlope: -1.0837127
+      inSlope: -0.643313
+      outSlope: -0.643313
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.67033273
+      inWeight: 0.67877394
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.9
-      value: 0.8776008
-      inSlope: -1.3307385
-      outSlope: -1.3307385
+      value: 0.9228403
+      inSlope: -0.5777796
+      outSlope: -0.5777796
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.55304945
+      inWeight: 0.78082293
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.8
-      inSlope: -0.7760076
-      outSlope: -0.7760076
-      tangentMode: 34
+      value: 0.8848236
+      inSlope: -0.09886392
+      outSlope: -0.09886392
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.9726033
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -280,14 +316,31 @@ MonoBehaviour:
   - gearNumber: 2
     gearRatio: 1.52
   - gearNumber: 3
-    gearRatio: 1.17
+    gearRatio: 1.4
   - gearNumber: 4
-    gearRatio: 0.94
+    gearRatio: 1.2
   - gearNumber: 5
-    gearRatio: 0.78
+    gearRatio: 0.98
   - gearNumber: 6
-    gearRatio: 0.68
+    gearRatio: 0.78
   currentRPM: 0
+--- !u!114 &3231335527875542491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537222787306763227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b3ff11fd6174bf479574f294fe3918a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frontDiffuser: 2
+  rearWing: 2
+  frontPlace: {fileID: 5484686485070088449}
+  rearPlace: {fileID: 6344585766811216940}
+  totalDownForce: 0
 --- !u!114 &3209919372865886815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,6 +568,68 @@ Transform:
   - {fileID: 3446177824505812088}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3805062280285521789
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5484686485070088449}
+  m_Layer: 0
+  m_Name: FrontPlace
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5484686485070088449
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3805062280285521789}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.123, z: 1.972}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6249979841428968701}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3923686624923511826
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6344585766811216940}
+  m_Layer: 0
+  m_Name: RearPlace
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6344585766811216940
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3923686624923511826}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.241, z: -1.724}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6249979841428968701}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4483352602376572336
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,10 +674,10 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.3
   m_SuspensionSpring:
-    spring: 50000
+    spring: 30000
     damper: 2000
     targetPosition: 0.5
-  m_SuspensionDistance: 0.05
+  m_SuspensionDistance: 0.1
   m_ForceAppPointDistance: 0
   m_Mass: 20
   m_WheelDampingRate: 0.5
@@ -711,10 +826,10 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.3
   m_SuspensionSpring:
-    spring: 50000
+    spring: 30000
     damper: 2000
     targetPosition: 0.5
-  m_SuspensionDistance: 0.05
+  m_SuspensionDistance: 0.1
   m_ForceAppPointDistance: 0
   m_Mass: 20
   m_WheelDampingRate: 0.5
@@ -1076,10 +1191,10 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.3
   m_SuspensionSpring:
-    spring: 50000
+    spring: 30000
     damper: 2000
     targetPosition: 0.5
-  m_SuspensionDistance: 0.05
+  m_SuspensionDistance: 0.1
   m_ForceAppPointDistance: 0
   m_Mass: 20
   m_WheelDampingRate: 0.5
@@ -1275,10 +1390,10 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.3
   m_SuspensionSpring:
-    spring: 50000
+    spring: 30000
     damper: 2000
     targetPosition: 0.5
-  m_SuspensionDistance: 0.05
+  m_SuspensionDistance: 0.1
   m_ForceAppPointDistance: 0
   m_Mass: 20
   m_WheelDampingRate: 0.5
