@@ -42,40 +42,72 @@ Preset:
     value: 
     objectReference: {fileID: 0}
   - target: {fileID: 0}
+    propertyPath: steeringSpeed
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: steeringDegrees
+    value: 30
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: brakeTorque
+    value: 4093
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: brakeBalance
+    value: 55
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: brakeForce
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: brakeDeadzone
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
     propertyPath: powerDeliviry
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
+    propertyPath: throttleDeadzone
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: minRPM
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: maxRPM
+    value: 7500
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
     propertyPath: engineTorque
-    value: 5000
+    value: 1200
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: reverseTorque
-    value: 0.2
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: topSpeed
-    value: 300
+    propertyPath: finalGearRatio
+    value: 3.364
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.size
-    value: 11
+    value: 10
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[0].time
-    value: 0.0018157959
+    value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[0].value
-    value: 0.59905744
+    value: 0.1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[0].inSlope
-    value: 3.2765403
+    value: 3
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[0].outSlope
-    value: 3.2765403
+    value: 3
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[0].tangentMode
@@ -95,19 +127,19 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[1].time
-    value: 0.0765316
+    value: 0.1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[1].value
-    value: 0.84386677
+    value: 0.4
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[1].inSlope
-    value: 1.7451276
+    value: 2.2805462
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[1].outSlope
-    value: 1.7451276
+    value: 2.2805462
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[1].tangentMode
@@ -119,27 +151,27 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[1].inWeight
-    value: 0.1847826
+    value: 0.69468975
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[1].outWeight
-    value: 0.3488546
+    value: 0.5341728
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[2].time
-    value: 0.2
+    value: 0.3
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[2].value
-    value: 1
+    value: 0.8
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[2].inSlope
-    value: -0.018758746
+    value: 1.248627
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[2].outSlope
-    value: -0.018758746
+    value: 1.248627
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[2].tangentMode
@@ -151,7 +183,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[2].inWeight
-    value: 1
+    value: 0.40937498
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[2].outWeight
@@ -159,19 +191,19 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[3].time
-    value: 0.3
+    value: 0.3988901
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[3].value
-    value: 0.95
+    value: 0.9245052
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[3].inSlope
-    value: -0.6618831
+    value: 1.1154052
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[3].outSlope
-    value: -0.6618831
+    value: 1.1154052
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[3].tangentMode
@@ -183,7 +215,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[3].inWeight
-    value: 0.86231893
+    value: 0.35405073
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[3].outWeight
@@ -191,19 +223,19 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[4].time
-    value: 0.4
+    value: 0.5
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[4].value
-    value: 0.9
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[4].inSlope
-    value: -0.67657155
+    value: 0.10650019
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[4].outSlope
-    value: -0.67657155
+    value: 0.10650019
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[4].tangentMode
@@ -215,27 +247,27 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[4].inWeight
-    value: 0.9202901
+    value: 0.49454245
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[4].outWeight
-    value: 0.33333334
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[5].time
-    value: 0.5
+    value: 0.5988709
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[5].value
-    value: 0.8
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[5].inSlope
-    value: -0.8624998
+    value: -0.030008405
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[5].outSlope
-    value: -0.8624998
+    value: -0.030008405
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[5].tangentMode
@@ -247,7 +279,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[5].inWeight
-    value: 0.86956537
+    value: 0.9119735
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[5].outWeight
@@ -255,19 +287,19 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[6].time
-    value: 0.6
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: torqueCurve.m_Curve.Array.data[6].value
     value: 0.7
     objectReference: {fileID: 0}
   - target: {fileID: 0}
+    propertyPath: torqueCurve.m_Curve.Array.data[6].value
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[6].inSlope
-    value: -1.1210686
+    value: -0.026069544
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[6].outSlope
-    value: -1.1210686
+    value: -0.026069544
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[6].tangentMode
@@ -279,7 +311,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[6].inWeight
-    value: 0.7826088
+    value: 0.7149691
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[6].outWeight
@@ -287,19 +319,19 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[7].time
-    value: 0.7
+    value: 0.8
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[7].value
-    value: 0.6
+    value: 0.98272365
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[7].inSlope
-    value: -1.1730548
+    value: -0.643313
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[7].outSlope
-    value: -1.1730548
+    value: -0.643313
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[7].tangentMode
@@ -311,7 +343,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[7].inWeight
-    value: 0.695652
+    value: 0.67877394
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[7].outWeight
@@ -319,19 +351,19 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[8].time
-    value: 0.8011944
+    value: 0.9
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[8].value
-    value: 0.4
+    value: 0.9228403
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[8].inSlope
-    value: -2.0065453
+    value: -0.5777796
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[8].outSlope
-    value: -2.0065453
+    value: -0.5777796
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[8].tangentMode
@@ -343,7 +375,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[8].inWeight
-    value: 0.33333334
+    value: 0.78082293
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[8].outWeight
@@ -351,19 +383,19 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[9].time
-    value: 0.9
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[9].value
-    value: 0.2
+    value: 0.8848236
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[9].inSlope
-    value: -2.0132751
+    value: -0.09886392
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[9].outSlope
-    value: -2.0132751
+    value: -0.09886392
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[9].tangentMode
@@ -375,42 +407,10 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[9].inWeight
-    value: 0.33333334
+    value: 0.9726033
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: torqueCurve.m_Curve.Array.data[9].outWeight
-    value: 0.33333334
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: torqueCurve.m_Curve.Array.data[10].time
-    value: 1
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: torqueCurve.m_Curve.Array.data[10].value
-    value: 0
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: torqueCurve.m_Curve.Array.data[10].inSlope
-    value: -1.9999995
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: torqueCurve.m_Curve.Array.data[10].outSlope
-    value: -1.9999995
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: torqueCurve.m_Curve.Array.data[10].tangentMode
-    value: 34
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: torqueCurve.m_Curve.Array.data[10].weightedMode
-    value: 0
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: torqueCurve.m_Curve.Array.data[10].inWeight
-    value: 0.33333334
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: torqueCurve.m_Curve.Array.data[10].outWeight
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
@@ -426,99 +426,75 @@ Preset:
     value: 4
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: gearInfo.Array.size
+    propertyPath: gears.Array.size
     value: 8
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: gearInfo.Array.data[0].gearNumber
+    propertyPath: gears.Array.data[0].gearNumber
     value: -1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: gearInfo.Array.data[0].maxSpeed
-    value: -20
+    propertyPath: gears.Array.data[0].gearRatio
+    value: -3
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: gearInfo.Array.data[1].gearNumber
+    propertyPath: gears.Array.data[1].gearNumber
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: gearInfo.Array.data[1].maxSpeed
+    propertyPath: gears.Array.data[1].gearRatio
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: gearInfo.Array.data[2].gearNumber
+    propertyPath: gears.Array.data[2].gearNumber
     value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: gearInfo.Array.data[2].maxSpeed
-    value: 30
+    propertyPath: gears.Array.data[2].gearRatio
+    value: 3.13
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: gearInfo.Array.data[3].gearNumber
+    propertyPath: gears.Array.data[3].gearNumber
     value: 2
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: gearInfo.Array.data[3].maxSpeed
-    value: 60
+    propertyPath: gears.Array.data[3].gearRatio
+    value: 1.52
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: gearInfo.Array.data[4].gearNumber
+    propertyPath: gears.Array.data[4].gearNumber
     value: 3
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: gearInfo.Array.data[4].maxSpeed
-    value: 90
+    propertyPath: gears.Array.data[4].gearRatio
+    value: 1.4
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: gearInfo.Array.data[5].gearNumber
+    propertyPath: gears.Array.data[5].gearNumber
     value: 4
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: gearInfo.Array.data[5].maxSpeed
-    value: 115
+    propertyPath: gears.Array.data[5].gearRatio
+    value: 1.2
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: gearInfo.Array.data[6].gearNumber
+    propertyPath: gears.Array.data[6].gearNumber
     value: 5
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: gearInfo.Array.data[6].maxSpeed
-    value: 130
+    propertyPath: gears.Array.data[6].gearRatio
+    value: 0.98
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: gearInfo.Array.data[7].gearNumber
+    propertyPath: gears.Array.data[7].gearNumber
     value: 6
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: gearInfo.Array.data[7].maxSpeed
-    value: 140
+    propertyPath: gears.Array.data[7].gearRatio
+    value: 0.78
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: brakeTorque
-    value: 3000
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: brakeBalance
-    value: 55
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: pedalDeadzone
-    value: 0.1
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: steeringSpeed
-    value: 0.1
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: totalSteering
-    value: 40
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: steeringDeadzone
-    value: 0.05
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: snapBackSpeed
-    value: 0.02
+    propertyPath: currentRPM
+    value: 0
     objectReference: {fileID: 0}
   m_ExcludedProperties: []

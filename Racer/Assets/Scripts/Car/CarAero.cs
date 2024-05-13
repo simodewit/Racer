@@ -1,26 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CarAero : MonoBehaviour
 {
-    #region variables
-
-    [Tooltip("The amount of m2 of the front diffuser")]
-    [SerializeField] private float frontDiffuser;
-    [Tooltip("The amount of m2 of the rear wing")]
-    [SerializeField] private float rearWing;
-    [Tooltip("The place where the front downforce is applied")]
-    [SerializeField] private Transform frontPlace;
-    [Tooltip("The place where the rear downforce is applied")]
-    [SerializeField] private Transform rearPlace;
-
-    [Header("Read data")]
-    public float totalDownForce;
-
+    [SerializeField] private AeroPlaces[] aeroInfo;
     private Rigidbody rb;
-
-    #endregion
 
     #region start and update
 
@@ -29,7 +15,7 @@ public class CarAero : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    public void Update()
+    public void FixedUpdate()
     {
         ApplyDownForce();
     }
@@ -42,14 +28,22 @@ public class CarAero : MonoBehaviour
     {
         float speed = rb.velocity.sqrMagnitude;
 
-        Vector3 downForceFront = -transform.up * (frontDiffuser / 100 * speed);
-        Vector3 downForceRear = -transform.up * (rearWing / 100 * speed);
-
-        rb.AddForceAtPosition(downForceFront, frontPlace.position);
-        rb.AddForceAtPosition(downForceRear, rearPlace.position);
-
-        totalDownForce = downForceFront.y + downForceRear.y;
+        foreach (var info in aeroInfo)
+        {
+            Vector3 totalDownForce = -transform.up * (info.amountOfForce * speed);
+            rb.AddForceAtPosition(totalDownForce, info.downforcePlace.position);
+        }
     }
 
     #endregion
+}
+
+[Serializable]
+
+public class AeroPlaces
+{
+    [Tooltip("The place where the downforce is applied")]
+    public Transform downforcePlace;
+    [Tooltip("The amount of downforce on this place")]
+    public float amountOfForce;
 }
