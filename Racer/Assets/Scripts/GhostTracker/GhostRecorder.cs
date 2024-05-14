@@ -40,6 +40,8 @@ public class GhostRecorder : MonoBehaviour
         }
         
         dataBank = null;
+        totalTime = 0;
+        frequencyTimer = 0;
 
         return data;
     }

@@ -43,6 +43,9 @@ public class GhostPlayer : MonoBehaviour
             return;
         }
 
+        timer = 0;
+        transform.position = dataBank.positions[0];
+        transform.eulerAngles = dataBank.rotations[0];
         isPlaying = true;
     }
 
@@ -76,7 +79,6 @@ public class GhostPlayer : MonoBehaviour
             else if (dataBank.timeStamps[i] < timer && timer < dataBank.timeStamps[i + 1])
             {
                 index1 = i;
-                index2 = i + 1;
             }
         }
     }

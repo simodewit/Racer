@@ -67,9 +67,9 @@ public class GhostCheckpoint : MonoBehaviour
             recorder.StartRecording(tempData, recordFrequency);
         }
 
-        if (tempData2.totalTime < bestData.totalTime)
+        if (prevData.totalTime < bestData.totalTime)
         {
-            bestData = tempData2;
+            bestData = prevData;
         }
     }
 

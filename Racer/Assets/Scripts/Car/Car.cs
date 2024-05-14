@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.InputSystem;
 
 public enum PowerDeliviry
@@ -26,10 +27,10 @@ public class Car : MonoBehaviour
     [SerializeField] private WheelCollider RR;
 
     [Header("Steering")]
-    [Tooltip("The amount of speed at witch you steer the car"), Range(0, 3)]
-    [SerializeField] private float steeringSpeed = 0.1f;
     [Tooltip("The maximum amount at witch you can steer the wheels"), Range(0, 75)]
     [SerializeField] private float steeringDegrees = 30;
+    [Tooltip("The amount of steering that can be done at a certain amount of input given"), Curve(0, 0, 1f, 1f, true)]
+    [SerializeField] private AnimationCurve steeringCurve;
 
     [Header("Brakes")]
     [Tooltip("The total newton meters of torque that the car has"), Range(0, 5000)]
@@ -59,12 +60,11 @@ public class Car : MonoBehaviour
     [Tooltip("The info for every gear")]
     [SerializeField] private GearInfo[] gears;
 
-    [Header("Code refrences")]
+    [HideInInspector]
     public int currentRPM;
 
     private List<WheelCollider> wheelColliders = new List<WheelCollider>();
     private int currentGear;
-    private float steeringAmount;
 
     //all the input axisses
     private float steeringAxis;
@@ -147,18 +147,17 @@ public class Car : MonoBehaviour
 
     public void Turning()
     {
-        float turnTowards = steeringDegrees * steeringAxis;
+        float steeringAmount = 0f;
 
-        steeringAmount = Mathf.Lerp(steeringAmount, turnTowards, steeringSpeed * Time.deltaTime);
-
-        //this is in place for a bug
-        if (steeringAmount < 0.01 && steeringAmount > -0.01)
+        if (steeringAxis > 0)
         {
-            steeringAmount = 0;
+            steeringAmount = steeringCurve.Evaluate(steeringAxis) * steeringDegrees;
         }
-
-        steeringAmount = Mathf.Clamp(steeringAmount, -steeringDegrees, steeringDegrees);
-
+        else
+        {
+            steeringAmount = -steeringCurve.Evaluate(-steeringAxis) * steeringDegrees;
+        }
+        
         FL.steerAngle = steeringAmount;
         FR.steerAngle = steeringAmount;
     }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CarAero : MonoBehaviour
+public class Aerodynamics : MonoBehaviour
 {
     [SerializeField] private AeroPlaces[] aeroInfo;
     private Rigidbody rb;
@@ -30,8 +30,8 @@ public class CarAero : MonoBehaviour
 
         foreach (var info in aeroInfo)
         {
-            Vector3 totalDownForce = -transform.up * (info.amountOfForce * speed);
-            rb.AddForceAtPosition(totalDownForce, info.downforcePlace.position);
+            Vector3 downForce = -transform.up * (info.amountOfForce / 100 * (speed / 15));
+            rb.AddForceAtPosition(downForce, info.downforcePlace.position);
         }
     }
 
@@ -44,6 +44,6 @@ public class AeroPlaces
 {
     [Tooltip("The place where the downforce is applied")]
     public Transform downforcePlace;
-    [Tooltip("The amount of downforce on this place")]
+    [Tooltip("The amount of downforce on this place at 100kph")]
     public float amountOfForce;
 }

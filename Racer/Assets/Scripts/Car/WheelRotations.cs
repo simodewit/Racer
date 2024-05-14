@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wheel : MonoBehaviour
+public class WheelRotations : MonoBehaviour
 {
     [SerializeField] private GameObject wheelModel;
     private WheelCollider wheelCollider;

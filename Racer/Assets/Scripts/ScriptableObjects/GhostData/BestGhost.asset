@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d5b9cc742496eb4db2838f98be2b6d0, type: 3}
   m_Name: BestGhost
   m_EditorClassIdentifier: 
-  totalTime: 1e+20
+  totalTime: 0
   timeStamps: []
   positions: []
   rotations: []
