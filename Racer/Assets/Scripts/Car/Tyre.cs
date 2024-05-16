@@ -82,9 +82,6 @@ public class Tyre : MonoBehaviour
             endTemp = airTemperature;
         }
 
-
-
-
         timer -= Time.deltaTime;
         if (timer < 0)
         {
