@@ -10,6 +10,8 @@ public class AntiRollBar : MonoBehaviour
     [SerializeField] private WheelController rightWheel;
     [SerializeField] private float stiffness;
 
+    private float gizmosForce;
+
     public void FixedUpdate()
     {
         AntiRoll();
@@ -24,6 +26,8 @@ public class AntiRollBar : MonoBehaviour
 
         carRb.AddForceAtPosition(rightWheel.transform.up * -antiRollForce, rightWheel.transform.position);
         carRb.AddForceAtPosition(leftWheel.transform.up * antiRollForce, leftWheel.transform.position);
+
+        gizmosForce = antiRollForce;
     }
 
     public float CalculateTravel(WheelController wheel)
@@ -31,5 +35,16 @@ public class AntiRollBar : MonoBehaviour
         //calculate how much body roll there is
         float travel = wheel.targetPos.localPosition.y - wheel.transform.localPosition.y; ;
         return travel;
+    }
+
+    public void OnDrawGizmos()
+    {
+        Vector3 rightForce = rightWheel.transform.position + new Vector3(0, gizmosForce, 0);
+        Gizmos.color = Color.gray;
+        Gizmos.DrawLine(rightWheel.transform.position, rightForce);
+
+        Vector3 leftForce = leftWheel.transform.position + new Vector3(0, gizmosForce, 0);
+        Gizmos.color = Color.gray;
+        Gizmos.DrawLine(leftWheel.transform.position, leftForce);
     }
 }

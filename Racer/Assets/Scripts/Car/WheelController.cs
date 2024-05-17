@@ -12,17 +12,18 @@ public class WheelController : MonoBehaviour
 
     [Tooltip("The rigidbody of the car")]
     [SerializeField] private Rigidbody carRb;
+    [Tooltip("The size of the tyre")]
+    [SerializeField] private float radius;
 
     [Header("Spring")]
-    [SerializeField] private float springTravel;
-    [Tooltip("The progression of the stiffness of the spring calculated from its position in its travel"), Curve(0f, 0f, 1f, 1f, true)]
-    [SerializeField] private AnimationCurve springCurve;
-    [Tooltip("The offset you can give for the place where the spring wants to go")]
-    [SerializeField] private float targetPosOffset;
     [Tooltip("The stiffness of the spring")]
     [SerializeField] private float spring;
     [Tooltip("The stiffness of the damper")]
     [SerializeField] private float damper;
+    [Tooltip("The amount of movement the spring has")]
+    [SerializeField] private float springTravel;
+    [Tooltip("The progression of the stiffness of the spring calculated from its position in its travel"), Curve(0f, 0f, 1f, 1f, true)]
+    [SerializeField] private AnimationCurve springCurve;
 
     [Header("Grip")]
     [Tooltip("The offset you can give to the wheel. (X = null, Y = toe, Z = camber)")]
@@ -41,6 +42,7 @@ public class WheelController : MonoBehaviour
     //other private variables
     private Rigidbody rb;
     private bool isGrounded;
+    private List<GameObject> colliders = new List<GameObject>();
 
     #endregion
 
@@ -60,6 +62,7 @@ public class WheelController : MonoBehaviour
 
     public void Update()
     {
+        CollisionCheck();
         Clamps();
     }
 
@@ -69,7 +72,7 @@ public class WheelController : MonoBehaviour
 
     private void MakeTargetPos()
     {
-        Vector3 placeToCreate = transform.localPosition + new Vector3(0, targetPosOffset, 0);
+        Vector3 placeToCreate = transform.localPosition;
         targetPos = new GameObject().transform;
         targetPos.parent = transform.parent;
         targetPos.localPosition = placeToCreate;
@@ -82,12 +85,35 @@ public class WheelController : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-        isGrounded = true;
+        colliders.Add(collision.gameObject);
     }
 
     public void OnCollisionExit(Collision collision)
     {
-        isGrounded = false;
+        colliders.Remove(collision.gameObject);
+    }
+
+    private void CollisionCheck()
+    {
+        RaycastHit hit;
+        float distance = radius + 0.1f;
+        if (Physics.Raycast(transform.position, -transform.up, out hit, distance))
+        {
+            if (hit.collider != null)
+            {
+                isGrounded = true;
+                return;
+            }
+        }
+
+        if (colliders.Count == 0)
+        {
+            isGrounded = false;
+        }
+        else
+        {
+            isGrounded = true;
+        }
     }
 
     #endregion
@@ -124,8 +150,18 @@ public class WheelController : MonoBehaviour
 
     private void Suspension()
     {
+        float distance = 0;
+
         //calculate the distance of the wheel position to the target position
-        float distance = targetPos.localPosition.y - transform.localPosition.y;
+        if (isGrounded)
+        {
+            distance = targetPos.localPosition.y - transform.localPosition.y;
+        }
+        else
+        {
+            distance = (targetPos.localPosition.y - springTravel / 2) - transform.localPosition.y;
+        }
+
 
         //calculate the value the force needs according to the spring progression graph
         float graphValue = Mathf.Abs(distance) / (springTravel / 2);
@@ -138,35 +174,24 @@ public class WheelController : MonoBehaviour
         //calculate force to hold the car upwards
         Vector3 carForce = -carRb.transform.up * force;
 
+        //calculate the place where the force towards the car should be added
         Vector3 offset = new Vector3(0, springTravel / 2, 0);
         Vector3 forcePoint = carRb.transform.TransformPoint(targetPos.localPosition + offset);
 
         //calculate force to keep the wheel to the target position
         float weightFactor = rb.mass / carRb.mass;
-        Vector3 wheelForce = -transform.up * force * weightFactor;
+        Vector3 wheelForce = transform.up * force * weightFactor;
 
         //apply the forces
-        if (distance < 0 && isGrounded)
+        if (isGrounded)
         {
-            print("wheel = " + transform.name + ". force = " + carForce + ". forceType = car. distance = " + distance);
             carRb.AddForceAtPosition(carForce, forcePoint);
             gizmosSpringForce = carForce;
         }
-        else if (distance > 0)
-        {
-            print("wheel = " + transform.name + ". force = " + wheelForce + ". forceType = grounded wheel. distance = " + distance);
-            rb.AddForce(wheelForce);
-            gizmosSpringForce = wheelForce;
-        }
-        else if (distance < 0 && !isGrounded)
-        {
-            print("wheel = " + transform.name + ". force = " + wheelForce + ". forceType = wheel. distance = " + distance);
-            rb.AddForce(wheelForce);
-            gizmosSpringForce = wheelForce;
-        }
         else
         {
-            print("no conditions are met");
+            rb.AddForce(wheelForce);
+            gizmosSpringForce = wheelForce * 1000;
         }
 
         //info for the gizmos
@@ -181,7 +206,6 @@ public class WheelController : MonoBehaviour
     private void Grip()
     {
         Vector3 localRotation = transform.localEulerAngles / 90;
-
     }
 
     #endregion
