@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AntiRollBar : MonoBehaviour
 {
     [SerializeField] private Rigidbody carRb;
-    [SerializeField] private GameObject leftWheel;
-    [SerializeField] private GameObject rightWheel;
+    [SerializeField] private WheelController leftWheel;
+    [SerializeField] private WheelController rightWheel;
     [SerializeField] private float stiffness;
 
     public void FixedUpdate()
@@ -25,13 +26,10 @@ public class AntiRollBar : MonoBehaviour
         carRb.AddForceAtPosition(leftWheel.transform.up * antiRollForce, leftWheel.transform.position);
     }
 
-    public float CalculateTravel(GameObject wheel)
+    public float CalculateTravel(WheelController wheel)
     {
         //calculate how much body roll there is
-        float travel = 1;
-
-
-
+        float travel = wheel.targetPos.localPosition.y - wheel.transform.localPosition.y; ;
         return travel;
     }
 }

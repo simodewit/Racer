@@ -21574,7 +21574,7 @@ Transform:
   m_GameObject: {fileID: 1329276184}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.01645033, z: -0, w: 0.9998647}
-  m_LocalPosition: {x: -280.65, y: 22.03, z: 17.88}
+  m_LocalPosition: {x: -272.07, y: 22.03, z: 18.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -27120,6 +27120,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1717204203}
+  - component: {fileID: 1717204204}
   m_Layer: 0
   m_Name: front ARB
   m_TagString: Untagged
@@ -27144,6 +27145,22 @@ Transform:
   - {fileID: 543450652298486897}
   m_Father: {fileID: 1916394394}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1717204204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1717204202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6102afb4b985341429219cd65f92e8c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  carRb: {fileID: 1329276186}
+  leftWheel: {fileID: 3469287837605363260}
+  rightWheel: {fileID: 3469287838363397077}
+  stiffness: 1000
 --- !u!1001 &1717838248
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27860,6 +27877,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1766734594}
+  - component: {fileID: 1766734595}
   m_Layer: 0
   m_Name: rear ARB
   m_TagString: Untagged
@@ -27884,6 +27902,22 @@ Transform:
   - {fileID: 543450653603144473}
   m_Father: {fileID: 1916394394}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1766734595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1766734593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6102afb4b985341429219cd65f92e8c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  carRb: {fileID: 1329276186}
+  leftWheel: {fileID: 3469287836576609896}
+  rightWheel: {fileID: 3469287837587156157}
+  stiffness: 1000
 --- !u!1001 &1767097192
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33916,6 +33950,7 @@ MonoBehaviour:
   spring: 127000
   damper: 3000
   wheelOffset: {x: 0, y: 0, z: 0}
+  targetPos: {fileID: 0}
 --- !u!54 &3469287836576609900
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -33993,6 +34028,7 @@ MonoBehaviour:
   spring: 127000
   damper: 3000
   wheelOffset: {x: 0, y: 0, z: 0}
+  targetPos: {fileID: 0}
 --- !u!54 &3469287837587156161
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -34070,6 +34106,7 @@ MonoBehaviour:
   spring: 127000
   damper: 3000
   wheelOffset: {x: 0, y: 0, z: 0}
+  targetPos: {fileID: 0}
 --- !u!54 &3469287837605363264
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -34147,6 +34184,7 @@ MonoBehaviour:
   spring: 127000
   damper: 3000
   wheelOffset: {x: 0, y: 0, z: 0}
+  targetPos: {fileID: 0}
 --- !u!54 &3469287838363397081
 Rigidbody:
   m_ObjectHideFlags: 0

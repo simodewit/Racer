@@ -27,6 +27,11 @@ public class WheelController : MonoBehaviour
     [Header("Grip")]
     [Tooltip("The offset you can give to the wheel. (X = null, Y = toe, Z = camber)")]
     [SerializeField] private Vector3 wheelOffset;
+    [Tooltip("The in general grip factor. keep this 1 for standard settings")]
+    [SerializeField] private float gripFactor;
+
+    [HideInInspector]
+    public Transform targetPos;
 
     //variables for the gizmos
     private Vector3 gizmosSpringForce;
@@ -35,7 +40,6 @@ public class WheelController : MonoBehaviour
 
     //other private variables
     private Rigidbody rb;
-    private Transform targetPos;
     private bool isGrounded;
 
     #endregion
@@ -150,7 +154,7 @@ public class WheelController : MonoBehaviour
         }
         else if (distance > 0)
         {
-            print("wheel = " + transform.name + ". force = " + wheelForce + ". forceType = wheel. distance = " + distance);
+            print("wheel = " + transform.name + ". force = " + wheelForce + ". forceType = grounded wheel. distance = " + distance);
             rb.AddForce(wheelForce);
             gizmosSpringForce = wheelForce;
         }
@@ -174,8 +178,11 @@ public class WheelController : MonoBehaviour
 
     #region grip
 
-    //could use the dot product between the front of the car and the tyre. then add velocity according to the x value of the dot product.
+    private void Grip()
+    {
+        Vector3 localRotation = transform.localEulerAngles / 90;
 
+    }
 
     #endregion
 
