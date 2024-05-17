@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class AntiRollBar : MonoBehaviour
 {
-    [SerializeField] private Rigidbody rb;
-    [SerializeField] private WheelCollider leftWheel;
-    [SerializeField] private WheelCollider rightWheel;
+    [SerializeField] private Rigidbody carRb;
+    [SerializeField] private GameObject leftWheel;
+    [SerializeField] private GameObject rightWheel;
     [SerializeField] private float stiffness;
 
     public void FixedUpdate()
@@ -21,32 +21,16 @@ public class AntiRollBar : MonoBehaviour
 
         float antiRollForce = (rightTravel - leftTravel) * stiffness;
 
-        if (rightWheel.isGrounded)
-        {
-            rb.AddForceAtPosition(rightWheel.transform.up * -antiRollForce, rightWheel.transform.position);
-        }
-        if(leftWheel.isGrounded)
-        {
-            rb.AddForceAtPosition(leftWheel.transform.up * antiRollForce, leftWheel.transform.position);
-        }
+        carRb.AddForceAtPosition(rightWheel.transform.up * -antiRollForce, rightWheel.transform.position);
+        carRb.AddForceAtPosition(leftWheel.transform.up * antiRollForce, leftWheel.transform.position);
     }
 
-    public float CalculateTravel(WheelCollider wheel)
+    public float CalculateTravel(GameObject wheel)
     {
-        //calculate how far the suspension is in its travel
-        WheelHit hit;
-        float leftDistance = 0;
+        //calculate how much body roll there is
         float travel = 1;
 
-        if (wheel.isGrounded)
-        {
-            if (wheel.GetGroundHit(out hit))
-            {
-                leftDistance = Vector3.Distance(wheel.transform.position, hit.point);
-            }
 
-            travel = (leftDistance - wheel.radius) / wheel.suspensionDistance;
-        }
 
         return travel;
     }

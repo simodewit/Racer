@@ -1,13 +1,16 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WheelController : MonoBehaviour
 {
     #region variables
 
+    [Tooltip("The rigidbody of the car")]
     [SerializeField] private Rigidbody carRb;
 
     [Header("Spring")]
@@ -16,19 +19,23 @@ public class WheelController : MonoBehaviour
     [SerializeField] private AnimationCurve springCurve;
     [Tooltip("The offset you can give for the place where the spring wants to go")]
     [SerializeField] private float targetPosOffset;
+    [Tooltip("The stiffness of the spring")]
     [SerializeField] private float spring;
+    [Tooltip("The stiffness of the damper")]
     [SerializeField] private float damper;
 
-    public bool info;
+    [Header("Grip")]
+    [Tooltip("The offset you can give to the wheel. (X = null, Y = toe, Z = camber)")]
+    [SerializeField] private Vector3 wheelOffset;
 
     //variables for the gizmos
     private Vector3 gizmosSpringForce;
     private Vector3 gizmosSpringApplyPos;
     private float gizmosSpringDistance;
 
+    //other private variables
     private Rigidbody rb;
     private Transform targetPos;
-
     private bool isGrounded;
 
     #endregion
@@ -44,8 +51,12 @@ public class WheelController : MonoBehaviour
 
     public void FixedUpdate()
     {
-        Clamps();
         Suspension();
+    }
+
+    public void Update()
+    {
+        Clamps();
     }
 
     #endregion
@@ -63,21 +74,40 @@ public class WheelController : MonoBehaviour
 
     #endregion
 
+    #region collision
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        isGrounded = true;
+    }
+
+    public void OnCollisionExit(Collision collision)
+    {
+        isGrounded = false;
+    }
+
+    #endregion
+
     #region clamp
 
     private void Clamps()
     {
+        //creates the clamp vector
         Vector3 clamp = transform.localPosition;
 
+        //clamp the suspension in between the correct values
         float startPos = targetPos.localPosition.y;
         clamp.y = Mathf.Clamp(clamp.y, (-springTravel / 2) + startPos, (springTravel / 2) + startPos);
 
+        //keeps the wheels on the correct x and z values
         clamp.x = targetPos.localPosition.x;
         clamp.z = targetPos.localPosition.z;
 
+        //apply position and rotation values to how its needed
         transform.localPosition = clamp;
-        transform.localRotation = Quaternion.identity;
+        transform.localEulerAngles = Vector3.zero + wheelOffset;
 
+        //clamp the velocity
         Vector3 vel = rb.velocity;
         vel.x = 0;
         vel.z = 0;
@@ -90,31 +120,62 @@ public class WheelController : MonoBehaviour
 
     private void Suspension()
     {
+        //calculate the distance of the wheel position to the target position
         float distance = targetPos.localPosition.y - transform.localPosition.y;
 
+        //calculate the value the force needs according to the spring progression graph
         float graphValue = Mathf.Abs(distance) / (springTravel / 2);
         float springProgression = springCurve.Evaluate(graphValue);
 
+        //calculate the force that should be applied to the car
         Vector3 wheelPlace = transform.TransformPoint(transform.localPosition);
         float force = (distance * spring * springProgression) - (carRb.GetPointVelocity(wheelPlace).y * -damper);
 
-        Vector3 direction = -carRb.transform.up * force;
+        //calculate force to hold the car upwards
+        Vector3 carForce = -carRb.transform.up * force;
 
         Vector3 offset = new Vector3(0, springTravel / 2, 0);
         Vector3 forcePoint = carRb.transform.TransformPoint(targetPos.localPosition + offset);
-        
-        carRb.AddForceAtPosition(direction, forcePoint);
+
+        //calculate force to keep the wheel to the target position
+        float weightFactor = rb.mass / carRb.mass;
+        Vector3 wheelForce = -transform.up * force * weightFactor;
+
+        //apply the forces
+        if (distance < 0 && isGrounded)
+        {
+            print("wheel = " + transform.name + ". force = " + carForce + ". forceType = car. distance = " + distance);
+            carRb.AddForceAtPosition(carForce, forcePoint);
+            gizmosSpringForce = carForce;
+        }
+        else if (distance > 0)
+        {
+            print("wheel = " + transform.name + ". force = " + wheelForce + ". forceType = wheel. distance = " + distance);
+            rb.AddForce(wheelForce);
+            gizmosSpringForce = wheelForce;
+        }
+        else if (distance < 0 && !isGrounded)
+        {
+            print("wheel = " + transform.name + ". force = " + wheelForce + ". forceType = wheel. distance = " + distance);
+            rb.AddForce(wheelForce);
+            gizmosSpringForce = wheelForce;
+        }
+        else
+        {
+            print("no conditions are met");
+        }
 
         //info for the gizmos
-        gizmosSpringForce = direction;
         gizmosSpringApplyPos = forcePoint;
         gizmosSpringDistance = distance;
-
-        if (info)
-        {
-            print("Distance = " + distance + "Force = " + force);
-        }
     }
+
+    #endregion
+
+    #region grip
+
+    //could use the dot product between the front of the car and the tyre. then add velocity according to the x value of the dot product.
+
 
     #endregion
 
@@ -146,6 +207,10 @@ public class WheelController : MonoBehaviour
         Vector3 toShow = gizmosSpringForce / spring * 10 + transform.position;
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, toShow);
+
+        //places a cube on the middle of the spring
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawCube(middleOfSpring, new Vector3(0.1f, 0.1f, 0.1f));
     }
 
     #endregion
