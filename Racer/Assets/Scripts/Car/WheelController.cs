@@ -1,19 +1,15 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(Rigidbody))]
 public class WheelController : MonoBehaviour
 {
     #region variables
 
     [Tooltip("The rigidbody of the car")]
     [SerializeField] private Rigidbody carRb;
-    [Tooltip("The size of the tyre")]
-    [SerializeField] private float radius;
 
     [Header("Spring")]
     [Tooltip("The stiffness of the spring")]
@@ -34,15 +30,20 @@ public class WheelController : MonoBehaviour
     [HideInInspector]
     public Transform targetPos;
 
+    public bool debugInfo;
+
     //variables for the gizmos
     private Vector3 gizmosSpringForce;
     private Vector3 gizmosSpringApplyPos;
-    private float gizmosSpringDistance;
+    private Vector3 gizmosGripPoint;
+    private Vector3 gizmosGripDirection;
 
     //other private variables
     private Rigidbody rb;
     private bool isGrounded;
     private List<GameObject> colliders = new List<GameObject>();
+    private float springDistance;
+    private float radius;
 
     #endregion
 
@@ -58,6 +59,7 @@ public class WheelController : MonoBehaviour
     public void FixedUpdate()
     {
         Suspension();
+        SideWaysGrip();
     }
 
     public void Update()
@@ -72,6 +74,7 @@ public class WheelController : MonoBehaviour
 
     private void MakeTargetPos()
     {
+        //create the target position
         Vector3 placeToCreate = transform.localPosition;
         targetPos = new GameObject().transform;
         targetPos.parent = transform.parent;
@@ -85,6 +88,11 @@ public class WheelController : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
+        if (radius == 0)
+        {
+            radius = Vector3.Distance(transform.position, collision.GetContact(0).point);
+        }
+
         colliders.Add(collision.gameObject);
     }
 
@@ -95,17 +103,6 @@ public class WheelController : MonoBehaviour
 
     private void CollisionCheck()
     {
-        RaycastHit hit;
-        float distance = radius + 0.1f;
-        if (Physics.Raycast(transform.position, -transform.up, out hit, distance))
-        {
-            if (hit.collider != null)
-            {
-                isGrounded = true;
-                return;
-            }
-        }
-
         if (colliders.Count == 0)
         {
             isGrounded = false;
@@ -150,33 +147,32 @@ public class WheelController : MonoBehaviour
 
     private void Suspension()
     {
-        float distance = 0;
+        springDistance = 0;
 
         //calculate the distance of the wheel position to the target position
         if (isGrounded)
         {
-            distance = targetPos.localPosition.y - transform.localPosition.y;
+            springDistance = targetPos.localPosition.y - transform.localPosition.y;
         }
         else
         {
-            distance = (targetPos.localPosition.y - springTravel / 2) - transform.localPosition.y;
+            springDistance = (targetPos.localPosition.y - springTravel / 2) - transform.localPosition.y;
         }
 
-
         //calculate the value the force needs according to the spring progression graph
-        float graphValue = Mathf.Abs(distance) / (springTravel / 2);
+        float graphValue = Mathf.Abs(springDistance) / (springTravel / 2);
         float springProgression = springCurve.Evaluate(graphValue);
 
         //calculate the force that should be applied to the car
         Vector3 wheelPlace = transform.TransformPoint(transform.localPosition);
-        float force = (distance * spring * springProgression) - (carRb.GetPointVelocity(wheelPlace).y * -damper);
-
-        //calculate force to hold the car upwards
-        Vector3 carForce = -carRb.transform.up * force;
+        float force = (springDistance * spring * springProgression) - (carRb.GetPointVelocity(wheelPlace).y * -damper);
 
         //calculate the place where the force towards the car should be added
         Vector3 offset = new Vector3(0, springTravel / 2, 0);
         Vector3 forcePoint = carRb.transform.TransformPoint(targetPos.localPosition + offset);
+
+        //calculate force to hold the car upwards
+        Vector3 carForce = -carRb.transform.up * force;
 
         //calculate force to keep the wheel to the target position
         float weightFactor = rb.mass / carRb.mass;
@@ -196,17 +192,54 @@ public class WheelController : MonoBehaviour
 
         //info for the gizmos
         gizmosSpringApplyPos = forcePoint;
-        gizmosSpringDistance = distance;
     }
 
     #endregion
 
-    #region grip
+    #region sideways grip
 
-    private void Grip()
+    private void SideWaysGrip()
     {
-        Vector3 localRotation = transform.localEulerAngles / 90;
+        if (!isGrounded)
+        {
+            gizmosGripDirection = new Vector3(0, 0, 0);
+            return;
+        }
+
+        //calculate the place of the contact patch of the tyre
+        Vector3 offset = new Vector3(0, springDistance - radius, 0);
+        Vector3 forcePoint = carRb.transform.TransformPoint(targetPos.localPosition + offset);
+
+        //get the direction the tyre wants to go
+        Vector3 carRightSide = carRb.transform.TransformPoint(transform.right);
+
+        //get the cars velocity on the position of the tyre
+        Vector3 velocity = carRb.GetPointVelocity(forcePoint);
+
+        //calculate the amount of force of the velocity is against the tyre
+        float angleToCorrect = Vector3.Dot(carRightSide, velocity);
+        angleToCorrect = Mathf.Clamp(angleToCorrect, -1, 1);
+
+        //calculate the amount of force that should be applied
+        float forceToPush = carRb.mass * (carRb.velocity.magnitude * angleToCorrect);
+
+        //add al the modifiers for the grip
+        forceToPush = forceToPush * gripFactor;
+
+        //put the force to the right direction
+        Vector3 forceDirection = transform.right * forceToPush;
+
+        //apply the force to the car
+        carRb.AddForceAtPosition(forceDirection, forcePoint);
+
+        //gizmos info
+        gizmosGripDirection = forceDirection;
+        gizmosGripPoint = forcePoint;
     }
+
+    #endregion
+
+    #region forward grip
 
     #endregion
 
@@ -230,18 +263,22 @@ public class WheelController : MonoBehaviour
 
         //draws the place where the wheel is in the travel of the spring
         Vector3 middleOfSpring = lowestSpringPoint + new Vector3(0, springTravel / 2, 0);
-        Vector3 wheelPos = middleOfSpring + new Vector3(0, gizmosSpringDistance, 0);
-        Gizmos.color = Color.green;
+        Vector3 wheelPos = middleOfSpring + new Vector3(0, springDistance, 0);
+        Gizmos.color = Color.yellow;
         Gizmos.DrawCube(wheelPos, new Vector3(0.1f, 0.1f, 0.1f));
 
         //draws the forces of the springs
         Vector3 toShow = gizmosSpringForce / spring * 10 + transform.position;
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.green;
         Gizmos.DrawLine(transform.position, toShow);
 
         //places a cube on the middle of the spring
-        Gizmos.color = Color.yellow;
+        Gizmos.color = Color.cyan;
         Gizmos.DrawCube(middleOfSpring, new Vector3(0.1f, 0.1f, 0.1f));
+
+        //draws the forces of the springs
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(gizmosGripPoint, gizmosGripPoint + gizmosGripDirection * 0.1f);
     }
 
     #endregion

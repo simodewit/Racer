@@ -17,6 +17,6 @@ public class AddForceTest : MonoBehaviour
             rb.AddForceAtPosition(forceToAdd, offsetPlace + transform.position);
         }
 
-        print(rb.velocity.magnitude);
+        //print(rb.velocity.magnitude);
     }
 }
