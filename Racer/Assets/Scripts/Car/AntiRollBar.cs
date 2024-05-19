@@ -33,13 +33,13 @@ public class AntiRollBar : MonoBehaviour
     public float CalculateTravel(WheelController wheel)
     {
         //calculate how much body roll there is
-        float travel = wheel.targetPos.localPosition.y - wheel.transform.localPosition.y; ;
+        float travel = wheel.targetPos.localPosition.y - wheel.transform.localPosition.y;
         return travel;
     }
 
     public void OnDrawGizmos()
     {
-        Vector3 rightForce = rightWheel.transform.position + new Vector3(0, gizmosForce, 0);
+        Vector3 rightForce = rightWheel.transform.position + new Vector3(0, -gizmosForce, 0);
         Gizmos.color = Color.gray;
         Gizmos.DrawLine(rightWheel.transform.position, rightForce);
 

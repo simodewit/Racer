@@ -37,6 +37,7 @@ public class WheelController : MonoBehaviour
     private Vector3 gizmosSpringApplyPos;
     private Vector3 gizmosGripPoint;
     private Vector3 gizmosGripDirection;
+    private Vector3 gizmosGripVelocity;
 
     //other private variables
     private Rigidbody rb;
@@ -211,23 +212,20 @@ public class WheelController : MonoBehaviour
         Vector3 forcePoint = carRb.transform.TransformPoint(targetPos.localPosition + offset);
 
         //get the direction the tyre wants to go
-        Vector3 carRightSide = carRb.transform.TransformPoint(transform.right);
-
-        //get the cars velocity on the position of the tyre
-        Vector3 velocity = carRb.GetPointVelocity(forcePoint);
+        Vector3 tyreVelocity = carRb.GetPointVelocity(transform.position);
 
         //calculate the amount of force of the velocity is against the tyre
-        float angleToCorrect = Vector3.Dot(carRightSide, velocity);
+        float angleToCorrect = Vector3.Dot(transform.right, tyreVelocity);
         angleToCorrect = Mathf.Clamp(angleToCorrect, -1, 1);
 
         //calculate the amount of force that should be applied
-        float forceToPush = carRb.mass * (carRb.velocity.magnitude * angleToCorrect);
+        float forceToPush = carRb.mass * (tyreVelocity.magnitude * angleToCorrect);
 
         //add al the modifiers for the grip
         forceToPush = forceToPush * gripFactor;
 
         //put the force to the right direction
-        Vector3 forceDirection = transform.right * forceToPush;
+        Vector3 forceDirection = -transform.right * forceToPush;
 
         //apply the force to the car
         carRb.AddForceAtPosition(forceDirection, forcePoint);
@@ -235,6 +233,7 @@ public class WheelController : MonoBehaviour
         //gizmos info
         gizmosGripDirection = forceDirection;
         gizmosGripPoint = forcePoint;
+        gizmosGripVelocity = tyreVelocity;
     }
 
     #endregion
@@ -248,37 +247,45 @@ public class WheelController : MonoBehaviour
     //i am using gizmos for properly understanding and vizualizing the results of the system
     private void OnDrawGizmos()
     {
-        //draws the place where the force is applied
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawCube(gizmosSpringApplyPos, new Vector3(0.1f, 0.1f, 0.1f));
+        ////draws the place where the force is applied
+        //Gizmos.color = Color.cyan;
+        //Gizmos.DrawCube(gizmosSpringApplyPos, new Vector3(0.1f, 0.1f, 0.1f));
 
-        //draws the lowest place of the spring
-        Gizmos.color = Color.cyan;
-        Vector3 lowestSpringPoint = new Vector3(gizmosSpringApplyPos.x, gizmosSpringApplyPos.y - springTravel, gizmosSpringApplyPos.z);
-        Gizmos.DrawCube(lowestSpringPoint, new Vector3(0.1f, 0.1f, 0.1f));
+        ////draws the lowest place of the spring
+        //Gizmos.color = Color.cyan;
+        //Vector3 lowestSpringPoint = new Vector3(gizmosSpringApplyPos.x, gizmosSpringApplyPos.y - springTravel, gizmosSpringApplyPos.z);
+        //Gizmos.DrawCube(lowestSpringPoint, new Vector3(0.1f, 0.1f, 0.1f));
 
-        //draws the travel of the spring
-        Gizmos.color = Color.white;
-        Gizmos.DrawLine(gizmosSpringApplyPos, lowestSpringPoint);
+        ////draws the travel of the spring
+        //Gizmos.color = Color.white;
+        //Gizmos.DrawLine(gizmosSpringApplyPos, lowestSpringPoint);
 
-        //draws the place where the wheel is in the travel of the spring
-        Vector3 middleOfSpring = lowestSpringPoint + new Vector3(0, springTravel / 2, 0);
-        Vector3 wheelPos = middleOfSpring + new Vector3(0, springDistance, 0);
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawCube(wheelPos, new Vector3(0.1f, 0.1f, 0.1f));
+        ////draws the place where the wheel is in the travel of the spring
+        //Vector3 middleOfSpring = lowestSpringPoint + new Vector3(0, springTravel / 2, 0);
+        //Vector3 wheelPos = middleOfSpring + new Vector3(0, springDistance, 0);
+        //Gizmos.color = Color.yellow;
+        //Gizmos.DrawCube(wheelPos, new Vector3(0.1f, 0.1f, 0.1f));
 
-        //draws the forces of the springs
-        Vector3 toShow = gizmosSpringForce / spring * 10 + transform.position;
-        Gizmos.color = Color.green;
-        Gizmos.DrawLine(transform.position, toShow);
+        ////draws the forces of the springs
+        //Vector3 toShow = gizmosSpringForce / spring * 10 + transform.position;
+        //Gizmos.color = Color.green;
+        //Gizmos.DrawLine(transform.position, toShow);
 
-        //places a cube on the middle of the spring
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawCube(middleOfSpring, new Vector3(0.1f, 0.1f, 0.1f));
+        ////places a cube on the middle of the spring
+        //Gizmos.color = Color.cyan;
+        //Gizmos.DrawCube(middleOfSpring, new Vector3(0.1f, 0.1f, 0.1f));
 
-        //draws the forces of the springs
+        ////draws the velocity of the car
+        //Gizmos.color = Color.white;
+        //Gizmos.DrawLine(carRb.position, carRb.position + carRb.velocity);
+
+        //draws the sideways forces of the tyres
         Gizmos.color = Color.red;
         Gizmos.DrawLine(gizmosGripPoint, gizmosGripPoint + gizmosGripDirection * 0.1f);
+
+        //draws the velocity of the car at the wheel contact patch
+        Gizmos.color = Color.white;
+        Gizmos.DrawLine(gizmosGripPoint, gizmosGripPoint + gizmosGripVelocity);
     }
 
     #endregion
