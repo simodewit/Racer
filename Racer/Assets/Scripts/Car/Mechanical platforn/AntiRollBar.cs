@@ -33,7 +33,7 @@ public class AntiRollBar : MonoBehaviour
     public float CalculateTravel(WheelController wheel)
     {
         //calculate how much body roll there is
-        float travel = wheel.targetPos.localPosition.y - wheel.transform.localPosition.y;
+        float travel = wheel.springTargetPos.localPosition.y - wheel.transform.localPosition.y;
         return travel;
     }
 

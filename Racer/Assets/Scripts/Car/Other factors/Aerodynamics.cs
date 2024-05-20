@@ -6,14 +6,9 @@ using UnityEngine;
 public class Aerodynamics : MonoBehaviour
 {
     [SerializeField] private AeroPlaces[] aeroInfo;
-    private Rigidbody rb;
+    [SerializeField] private Rigidbody rb;
 
     #region start and update
-
-    public void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
 
     public void FixedUpdate()
     {
@@ -26,11 +21,11 @@ public class Aerodynamics : MonoBehaviour
 
     public void ApplyDownForce()
     {
-        float speed = rb.velocity.sqrMagnitude;
-
         foreach (var info in aeroInfo)
         {
-            Vector3 downForce = -transform.up * (info.amountOfForce / 100 * (speed / 15));
+            float velocity = rb.GetPointVelocity(info.downforcePlace.position).z;
+            float squaredVelocity = velocity * velocity;
+            Vector3 downForce = -transform.up * (info.amountOfForce / 100 * (squaredVelocity / 15));
             rb.AddForceAtPosition(downForce, info.downforcePlace.position);
         }
     }

@@ -28,7 +28,9 @@ public class WheelController : MonoBehaviour
     [SerializeField] private float gripFactor;
 
     [HideInInspector]
-    public Transform targetPos;
+    public Transform springTargetPos;
+    [HideInInspector]
+    public float engineTorque;
 
     public bool debugInfo;
 
@@ -61,6 +63,7 @@ public class WheelController : MonoBehaviour
     {
         Suspension();
         SideWaysGrip();
+        ForwardGrip();
     }
 
     public void Update()
@@ -77,10 +80,10 @@ public class WheelController : MonoBehaviour
     {
         //create the target position
         Vector3 placeToCreate = transform.localPosition;
-        targetPos = new GameObject().transform;
-        targetPos.parent = transform.parent;
-        targetPos.localPosition = placeToCreate;
-        targetPos.name = "SpringTargetPos";
+        springTargetPos = new GameObject().transform;
+        springTargetPos.parent = transform.parent;
+        springTargetPos.localPosition = placeToCreate;
+        springTargetPos.name = "SpringTargetPos";
     }
 
     #endregion
@@ -124,12 +127,12 @@ public class WheelController : MonoBehaviour
         Vector3 clamp = transform.localPosition;
 
         //clamp the suspension in between the correct values
-        float startPos = targetPos.localPosition.y;
+        float startPos = springTargetPos.localPosition.y;
         clamp.y = Mathf.Clamp(clamp.y, (-springTravel / 2) + startPos, (springTravel / 2) + startPos);
 
         //keeps the wheels on the correct x and z values
-        clamp.x = targetPos.localPosition.x;
-        clamp.z = targetPos.localPosition.z;
+        clamp.x = springTargetPos.localPosition.x;
+        clamp.z = springTargetPos.localPosition.z;
 
         //apply position and rotation values to how its needed
         transform.localPosition = clamp;
@@ -153,11 +156,11 @@ public class WheelController : MonoBehaviour
         //calculate the distance of the wheel position to the target position
         if (isGrounded)
         {
-            springDistance = targetPos.localPosition.y - transform.localPosition.y;
+            springDistance = springTargetPos.localPosition.y - transform.localPosition.y;
         }
         else
         {
-            springDistance = (targetPos.localPosition.y - springTravel / 2) - transform.localPosition.y;
+            springDistance = (springTargetPos.localPosition.y - springTravel / 2) - transform.localPosition.y;
         }
 
         //calculate the value the force needs according to the spring progression graph
@@ -170,7 +173,7 @@ public class WheelController : MonoBehaviour
 
         //calculate the place where the force towards the car should be added
         Vector3 offset = new Vector3(0, springTravel / 2, 0);
-        Vector3 forcePoint = carRb.transform.TransformPoint(targetPos.localPosition + offset);
+        Vector3 forcePoint = carRb.transform.TransformPoint(springTargetPos.localPosition + offset);
 
         //calculate force to hold the car upwards
         Vector3 carForce = -carRb.transform.up * force;
@@ -187,9 +190,10 @@ public class WheelController : MonoBehaviour
         }
         else
         {
-            rb.AddForce(wheelForce);
             gizmosSpringForce = wheelForce * 1000;
         }
+
+        rb.AddForce(wheelForce);
 
         //info for the gizmos
         gizmosSpringApplyPos = forcePoint;
@@ -209,7 +213,7 @@ public class WheelController : MonoBehaviour
 
         //calculate the place of the contact patch of the tyre
         Vector3 offset = new Vector3(0, springDistance - radius, 0);
-        Vector3 forcePoint = carRb.transform.TransformPoint(targetPos.localPosition + offset);
+        Vector3 forcePoint = carRb.transform.TransformPoint(springTargetPos.localPosition + offset);
 
         //get the direction the tyre wants to go
         Vector3 tyreVelocity = carRb.GetPointVelocity(transform.position);
@@ -239,6 +243,24 @@ public class WheelController : MonoBehaviour
     #endregion
 
     #region forward grip
+
+    private void ForwardGrip()
+    {
+
+    }
+
+    public float CalculateRPM()
+    {
+        //get refrences for the calculation
+        float rpm = 0;
+        Vector3 velocity = carRb.GetPointVelocity(transform.position);
+        float frontVelocity = carRb.transform.InverseTransformDirection(velocity).z;
+
+        //rpm calculation
+        rpm = (frontVelocity / radius) * (60 / (2 * Mathf.PI));
+
+        return rpm;
+    }
 
     #endregion
 
