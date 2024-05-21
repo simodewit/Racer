@@ -7,6 +7,7 @@ public class Aerodynamics : MonoBehaviour
 {
     [SerializeField] private AeroPlaces[] aeroInfo;
     [SerializeField] private Rigidbody rb;
+    [SerializeField] private WindSpeeds windSpeed;
 
     #region start and update
 
@@ -21,10 +22,22 @@ public class Aerodynamics : MonoBehaviour
 
     public void ApplyDownForce()
     {
+        //calculate wind speeds
+        float dotProduct = Vector3.Dot(rb.transform.forward, windSpeed.transform.forward);
+
         foreach (var info in aeroInfo)
         {
+            //calculate velocity
             float velocity = rb.GetPointVelocity(info.downforcePlace.position).z;
             float squaredVelocity = velocity * velocity;
+            float endVelocity = squaredVelocity - dotProduct * windSpeed.windSpeed;
+
+            if (endVelocity < 0)
+            {
+                endVelocity = 0;
+            }
+
+            //calculate and apply downforce
             Vector3 downForce = -transform.up * (info.amountOfForce / 100 * (squaredVelocity / 15));
             rb.AddForceAtPosition(downForce, info.downforcePlace.position);
         }

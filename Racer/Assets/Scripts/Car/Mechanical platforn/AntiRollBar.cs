@@ -19,6 +19,11 @@ public class AntiRollBar : MonoBehaviour
 
     public void AntiRoll()
     {
+        if(!leftWheel.isGrounded || !rightWheel.isGrounded)
+        {
+            return;
+        }
+
         float rightTravel = CalculateTravel(rightWheel);
         float leftTravel = CalculateTravel(leftWheel);
 

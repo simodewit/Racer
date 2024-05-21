@@ -31,6 +31,8 @@ public class WheelController : MonoBehaviour
     public Transform springTargetPos;
     [HideInInspector]
     public float engineTorque;
+    [HideInInspector]
+    public bool isGrounded;
 
     public bool debugInfo;
 
@@ -43,9 +45,8 @@ public class WheelController : MonoBehaviour
 
     //other private variables
     private Rigidbody rb;
-    private bool isGrounded;
     private List<GameObject> colliders = new List<GameObject>();
-    private float springDistance;
+    private float distanceInSpring;
     private float radius;
 
     #endregion
@@ -136,7 +137,7 @@ public class WheelController : MonoBehaviour
 
         //apply position and rotation values to how its needed
         transform.localPosition = clamp;
-        transform.localEulerAngles = Vector3.zero + wheelOffset;
+        //should somewhere add the wheelOffset
 
         //clamp the velocity
         Vector3 vel = rb.velocity;
@@ -151,25 +152,25 @@ public class WheelController : MonoBehaviour
 
     private void Suspension()
     {
-        springDistance = 0;
+        distanceInSpring = 0;
 
         //calculate the distance of the wheel position to the target position
         if (isGrounded)
         {
-            springDistance = springTargetPos.localPosition.y - transform.localPosition.y;
+            distanceInSpring = springTargetPos.localPosition.y - transform.localPosition.y;
         }
         else
         {
-            springDistance = (springTargetPos.localPosition.y - springTravel / 2) - transform.localPosition.y;
+            distanceInSpring = (springTargetPos.localPosition.y - springTravel / 2) - transform.localPosition.y;
         }
 
         //calculate the value the force needs according to the spring progression graph
-        float graphValue = Mathf.Abs(springDistance) / (springTravel / 2);
+        float graphValue = Mathf.Abs(distanceInSpring) / (springTravel / 2);
         float springProgression = springCurve.Evaluate(graphValue);
 
         //calculate the force that should be applied to the car
         Vector3 wheelPlace = transform.TransformPoint(transform.localPosition);
-        float force = (springDistance * spring * springProgression) - (carRb.GetPointVelocity(wheelPlace).y * -damper);
+        float force = (distanceInSpring * spring * springProgression) - (carRb.GetPointVelocity(wheelPlace).y * -damper);
 
         //calculate the place where the force towards the car should be added
         Vector3 offset = new Vector3(0, springTravel / 2, 0);
@@ -212,11 +213,11 @@ public class WheelController : MonoBehaviour
         }
 
         //calculate the place of the contact patch of the tyre
-        Vector3 offset = new Vector3(0, springDistance - radius, 0);
+        Vector3 offset = new Vector3(0, distanceInSpring - radius, 0);
         Vector3 forcePoint = carRb.transform.TransformPoint(springTargetPos.localPosition + offset);
 
         //get the direction the tyre wants to go
-        Vector3 tyreVelocity = carRb.GetPointVelocity(transform.position);
+        Vector3 tyreVelocity = carRb.GetPointVelocity(forcePoint);
 
         //calculate the amount of force of the velocity is against the tyre
         float angleToCorrect = Vector3.Dot(transform.right, tyreVelocity);
@@ -303,11 +304,11 @@ public class WheelController : MonoBehaviour
 
         //draws the sideways forces of the tyres
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(gizmosGripPoint, gizmosGripPoint + gizmosGripDirection * 0.1f);
+        Gizmos.DrawLine(gizmosGripPoint, gizmosGripPoint + gizmosGripDirection * 0.01f);
 
-        //draws the velocity of the car at the wheel contact patch
-        Gizmos.color = Color.white;
-        Gizmos.DrawLine(gizmosGripPoint, gizmosGripPoint + gizmosGripVelocity);
+        ////draws the velocity of the car at the wheel contact patch
+        //Gizmos.color = Color.white;
+        //Gizmos.DrawLine(gizmosGripPoint, gizmosGripPoint + gizmosGripVelocity);
     }
 
     #endregion
