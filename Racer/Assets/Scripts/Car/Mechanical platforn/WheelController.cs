@@ -27,27 +27,21 @@ public class WheelController : MonoBehaviour
     [Tooltip("The in general grip factor. keep this 1 for standard settings")]
     [SerializeField] private float gripFactor;
 
-    [HideInInspector]
-    public Transform springTargetPos;
-    [HideInInspector]
-    public float engineTorque;
-    [HideInInspector]
-    public bool isGrounded;
+    //get variables
+    [HideInInspector] public Transform springTargetPos;
+    [HideInInspector] public bool isGrounded;
+    [HideInInspector] public float rpm;
+    [HideInInspector] public float radius;
 
-    public bool debugInfo;
+    //set variables
+    [HideInInspector] public float motorTorque;
+    [HideInInspector] public float brakeTorque;
+    [HideInInspector] public float steerAngle;
 
-    //variables for the gizmos
-    private Vector3 gizmosSpringForce;
-    private Vector3 gizmosSpringApplyPos;
-    private Vector3 gizmosGripPoint;
-    private Vector3 gizmosGripDirection;
-    private Vector3 gizmosGripVelocity;
-
-    //other private variables
+    //private variables
     private Rigidbody rb;
     private List<GameObject> colliders = new List<GameObject>();
     private float distanceInSpring;
-    private float radius;
 
     #endregion
 
@@ -56,7 +50,6 @@ public class WheelController : MonoBehaviour
     public void Start()
     {
         MakeTargetPos();
-
         rb = GetComponent<Rigidbody>();
     }
 
@@ -65,6 +58,7 @@ public class WheelController : MonoBehaviour
         Suspension();
         SideWaysGrip();
         ForwardGrip();
+        StoppingGrip();
     }
 
     public void Update()
@@ -124,22 +118,43 @@ public class WheelController : MonoBehaviour
 
     private void Clamps()
     {
-        //creates the clamp vector
+        ClampPosition();
+        ClampRotation();
+        ClampVelocity();
+    }
+
+    private void ClampPosition()
+    {
         Vector3 clamp = transform.localPosition;
-
-        //clamp the suspension in between the correct values
         float startPos = springTargetPos.localPosition.y;
-        clamp.y = Mathf.Clamp(clamp.y, (-springTravel / 2) + startPos, (springTravel / 2) + startPos);
 
-        //keeps the wheels on the correct x and z values
+        clamp.y = Mathf.Clamp(clamp.y, (-springTravel / 2) + startPos, (springTravel / 2) + startPos);
         clamp.x = springTargetPos.localPosition.x;
         clamp.z = springTargetPos.localPosition.z;
 
-        //apply position and rotation values to how its needed
         transform.localPosition = clamp;
-        //should somewhere add the wheelOffset
+    }
 
-        //clamp the velocity
+    private void ClampRotation()
+    {
+        Vector3 localEulers = transform.localEulerAngles;
+
+        if (transform.localPosition.x < 0)
+        {
+            localEulers.y = steerAngle + wheelOffset.y;
+            localEulers.z = wheelOffset.z;
+        }
+        else
+        {
+            localEulers.y = steerAngle - wheelOffset.y;
+            localEulers.z = -wheelOffset.z;
+        }
+
+        transform.localEulerAngles = localEulers;
+    }
+
+    private void ClampVelocity()
+    {
         Vector3 vel = rb.velocity;
         vel.x = 0;
         vel.z = 0;
@@ -152,8 +167,6 @@ public class WheelController : MonoBehaviour
 
     private void Suspension()
     {
-        distanceInSpring = 0;
-
         //calculate the distance of the wheel position to the target position
         if (isGrounded)
         {
@@ -187,17 +200,9 @@ public class WheelController : MonoBehaviour
         if (isGrounded)
         {
             carRb.AddForceAtPosition(carForce, forcePoint);
-            gizmosSpringForce = carForce;
-        }
-        else
-        {
-            gizmosSpringForce = wheelForce * 1000;
         }
 
         rb.AddForce(wheelForce);
-
-        //info for the gizmos
-        gizmosSpringApplyPos = forcePoint;
     }
 
     #endregion
@@ -208,7 +213,6 @@ public class WheelController : MonoBehaviour
     {
         if (!isGrounded)
         {
-            gizmosGripDirection = new Vector3(0, 0, 0);
             return;
         }
 
@@ -216,11 +220,11 @@ public class WheelController : MonoBehaviour
         Vector3 offset = new Vector3(0, distanceInSpring - radius, 0);
         Vector3 forcePoint = carRb.transform.TransformPoint(springTargetPos.localPosition + offset);
 
-        //get the direction the tyre wants to go
+        //get the direction the car wants to go at the tyre position
         Vector3 tyreVelocity = carRb.GetPointVelocity(forcePoint);
 
-        //calculate the amount of force of the velocity is against the tyre
-        float angleToCorrect = Vector3.Dot(transform.right, tyreVelocity);
+        //calculate how much of the velocity is in the sideways axis of the tyre
+        float angleToCorrect = Vector3.Dot(transform.right, tyreVelocity.normalized);
         angleToCorrect = Mathf.Clamp(angleToCorrect, -1, 1);
 
         //calculate the amount of force that should be applied
@@ -234,11 +238,6 @@ public class WheelController : MonoBehaviour
 
         //apply the force to the car
         carRb.AddForceAtPosition(forceDirection, forcePoint);
-
-        //gizmos info
-        gizmosGripDirection = forceDirection;
-        gizmosGripPoint = forcePoint;
-        gizmosGripVelocity = tyreVelocity;
     }
 
     #endregion
@@ -247,68 +246,40 @@ public class WheelController : MonoBehaviour
 
     private void ForwardGrip()
     {
+        if (!isGrounded)
+        {
+            return;
+        }
 
+        //calculate the place of the contact patch of the tyre
+        Vector3 offset = new Vector3(0, distanceInSpring - radius, 0);
+        Vector3 forcePoint = carRb.transform.TransformPoint(springTargetPos.localPosition + offset);
+
+        Vector3 torque = carRb.transform.forward * motorTorque;
+
+        if (torque != Vector3.zero)
+        {
+            carRb.AddForceAtPosition(torque, forcePoint);
+        }
     }
 
-    public float CalculateRPM()
+    private void StoppingGrip()
     {
-        //get refrences for the calculation
-        float rpm = 0;
-        Vector3 velocity = carRb.GetPointVelocity(transform.position);
-        float frontVelocity = carRb.transform.InverseTransformDirection(velocity).z;
+        if (!isGrounded)
+        {
+            return;
+        }
 
-        //rpm calculation
-        rpm = (frontVelocity / radius) * (60 / (2 * Mathf.PI));
+        //calculate the place of the contact patch of the tyre
+        Vector3 offset = new Vector3(0, distanceInSpring - radius, 0);
+        Vector3 forcePoint = carRb.transform.TransformPoint(springTargetPos.localPosition + offset);
 
-        return rpm;
-    }
+        Vector3 torque = -carRb.transform.forward * brakeTorque;
 
-    #endregion
-
-    #region gizmos
-
-    //i am using gizmos for properly understanding and vizualizing the results of the system
-    private void OnDrawGizmos()
-    {
-        ////draws the place where the force is applied
-        //Gizmos.color = Color.cyan;
-        //Gizmos.DrawCube(gizmosSpringApplyPos, new Vector3(0.1f, 0.1f, 0.1f));
-
-        ////draws the lowest place of the spring
-        //Gizmos.color = Color.cyan;
-        //Vector3 lowestSpringPoint = new Vector3(gizmosSpringApplyPos.x, gizmosSpringApplyPos.y - springTravel, gizmosSpringApplyPos.z);
-        //Gizmos.DrawCube(lowestSpringPoint, new Vector3(0.1f, 0.1f, 0.1f));
-
-        ////draws the travel of the spring
-        //Gizmos.color = Color.white;
-        //Gizmos.DrawLine(gizmosSpringApplyPos, lowestSpringPoint);
-
-        ////draws the place where the wheel is in the travel of the spring
-        //Vector3 middleOfSpring = lowestSpringPoint + new Vector3(0, springTravel / 2, 0);
-        //Vector3 wheelPos = middleOfSpring + new Vector3(0, springDistance, 0);
-        //Gizmos.color = Color.yellow;
-        //Gizmos.DrawCube(wheelPos, new Vector3(0.1f, 0.1f, 0.1f));
-
-        ////draws the forces of the springs
-        //Vector3 toShow = gizmosSpringForce / spring * 10 + transform.position;
-        //Gizmos.color = Color.green;
-        //Gizmos.DrawLine(transform.position, toShow);
-
-        ////places a cube on the middle of the spring
-        //Gizmos.color = Color.cyan;
-        //Gizmos.DrawCube(middleOfSpring, new Vector3(0.1f, 0.1f, 0.1f));
-
-        ////draws the velocity of the car
-        //Gizmos.color = Color.white;
-        //Gizmos.DrawLine(carRb.position, carRb.position + carRb.velocity);
-
-        //draws the sideways forces of the tyres
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(gizmosGripPoint, gizmosGripPoint + gizmosGripDirection * 0.01f);
-
-        ////draws the velocity of the car at the wheel contact patch
-        //Gizmos.color = Color.white;
-        //Gizmos.DrawLine(gizmosGripPoint, gizmosGripPoint + gizmosGripVelocity);
+        if (torque != Vector3.zero)
+        {
+            carRb.AddForceAtPosition(torque, forcePoint);
+        }
     }
 
     #endregion

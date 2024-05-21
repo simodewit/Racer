@@ -18,13 +18,13 @@ public class Car : MonoBehaviour
 
     [Header("Wheels")]
     [Tooltip("The front left wheelCollider")]
-    [SerializeField] private WheelCollider FL;
+    [SerializeField] private WheelController FL;
     [Tooltip("The front right wheelCollider")]
-    [SerializeField] private WheelCollider FR;
+    [SerializeField] private WheelController FR;
     [Tooltip("The rear left wheelCollider")]
-    [SerializeField] private WheelCollider RL;
+    [SerializeField] private WheelController RL;
     [Tooltip("The rear right wheelCollider")]
-    [SerializeField] private WheelCollider RR;
+    [SerializeField] private WheelController RR;
 
     [Header("Steering")]
     [Tooltip("The maximum amount at witch you can steer the wheels"), Range(0, 75)]
@@ -63,7 +63,7 @@ public class Car : MonoBehaviour
     [HideInInspector]
     public int currentRPM;
 
-    private List<WheelCollider> wheelColliders = new List<WheelCollider>();
+    private List<WheelController> wheelColliders = new List<WheelController>();
     private int currentGear;
 
     //all the input axisses
@@ -145,7 +145,7 @@ public class Car : MonoBehaviour
 
     #region turning
 
-    public void Turning()
+    private void Turning()
     {
         float steeringAmount = 0f;
 
@@ -166,7 +166,7 @@ public class Car : MonoBehaviour
 
     #region RPM's
 
-    public void CalculateRPM()
+    private void CalculateRPM()
     {
         float averageRPM = CalculateWheelRPM();
         float rpmAfterDif = Differential(averageRPM);
@@ -182,7 +182,7 @@ public class Car : MonoBehaviour
         currentRPM = newRPM;
     }
 
-    public float CalculateWheelRPM()
+    private float CalculateWheelRPM()
     {
         //calculate the average rpm's from the wheels attached to the engine
         float addedRPM = 0;
@@ -200,14 +200,14 @@ public class Car : MonoBehaviour
 
     #region gearbox and differential
 
-    public float GearBox(float torque)
+    private float GearBox(float torque)
     {
         float returnValue = torque * gears[currentGear].gearRatio;
 
         return returnValue;
     }
 
-    public float Differential(float torque)
+    private float Differential(float torque)
     {
         float returnValue = torque * finalGearRatio;
 
@@ -218,7 +218,7 @@ public class Car : MonoBehaviour
 
     #region driveTrain
 
-    public void DriveTrain()
+    private void DriveTrain()
     {
         //the torque curve
         float placeInCurve = currentRPM / maxRPM;
@@ -266,7 +266,7 @@ public class Car : MonoBehaviour
 
     #region AllWheelDrive
 
-    public void AllWheelDrive(float torque)
+    private void AllWheelDrive(float torque)
     {
         FL.motorTorque = torque;
         FR.motorTorque = torque;
@@ -278,7 +278,7 @@ public class Car : MonoBehaviour
 
     #region RearWheelDrive
 
-    public void RearWheelDrive(float torque)
+    private void RearWheelDrive(float torque)
     {
         RL.motorTorque = torque;
         RR.motorTorque = torque;
@@ -288,7 +288,7 @@ public class Car : MonoBehaviour
 
     #region FrontWheelDrive
 
-    public void FrontWheelDrive(float torque)
+    private void FrontWheelDrive(float torque)
     {
         FL.motorTorque = torque;
         FR.motorTorque = torque;
@@ -298,7 +298,7 @@ public class Car : MonoBehaviour
 
     #region braking
 
-    public void Braking()
+    private void Braking()
     {
         if (brakeAxis > brakeDeadzone)
         {
