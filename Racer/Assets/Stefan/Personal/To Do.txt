@@ -1,0 +1,33 @@
+Controller Icons
+
+Playstation   			|   	    	    iksbocks
+
+Driehoek	x					Y
+Cirkel		x					B
+Kruis		x					A
+Vierkant	x					X
+
+				DPAD						
+				DPAD-Up
+				DPAD-Down
+				DPAD-Left
+				DPAD-Right
+
+				Left Joystick			x
+				Left Joystick Vertical		x
+				Left Joystick Horizontal	x
+				Left Joystick Press		x
+
+				Right Joystick			x
+				Right Joystick Vertical		x
+				Right Joystick Horizontal	x
+				Right Joystick Press		x
+
+Touchpad						-
+Options						     Options
+
+L1		x					LB
+L2		x					LT
+
+R1		x					RB
+R2		x					RT
