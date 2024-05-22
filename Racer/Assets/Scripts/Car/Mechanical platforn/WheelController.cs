@@ -21,11 +21,15 @@ public class WheelController : MonoBehaviour
     [Tooltip("The progression of the stiffness of the spring calculated from its position in its travel"), Curve(0f, 0f, 1f, 1f, true)]
     [SerializeField] private AnimationCurve springCurve;
 
-    [Header("Grip")]
+    [Header("General Grip")]
     [Tooltip("The offset you can give to the wheel. (X = null, Y = toe, Z = camber)")]
     [SerializeField] private Vector3 wheelOffset;
     [Tooltip("The in general grip factor. keep this 1 for standard settings")]
     [SerializeField] private float gripFactor;
+
+    [Header("sideways grip")]
+    [Tooltip("The grip curve of the tyre that decides how much grip you have at certain slip angles"), Curve(0f, 0f, 1f, 1f, true)]
+    [SerializeField] private AnimationCurve gripCurve;
 
     //get variables
     [HideInInspector] public Transform springTargetPos;
@@ -224,11 +228,28 @@ public class WheelController : MonoBehaviour
         Vector3 tyreVelocity = carRb.GetPointVelocity(forcePoint);
 
         //calculate how much of the velocity is in the sideways axis of the tyre
-        float angleToCorrect = Vector3.Dot(transform.right, tyreVelocity.normalized);
-        angleToCorrect = Mathf.Clamp(angleToCorrect, -1, 1);
+        float dotProduct = Vector3.Dot(transform.right, tyreVelocity.normalized);
+        dotProduct = Mathf.Clamp(dotProduct, -1, 1);
+
+        //calculate grip from grip curve
+        float slipDegrees = dotProduct * 90 / 100;
+        float availableGrip = gripCurve.Evaluate(Mathf.Abs(slipDegrees));
+
+        //assign the resistance to the left or right side
+        float resistance = 0;
+        if(slipDegrees > 0)
+        {
+            resistance = availableGrip;
+        }
+        else
+        {
+            resistance = -availableGrip;
+        }
+
+        print("Slip angle = " + slipDegrees + " available grip = " + availableGrip + " resistance to give = " + resistance);
 
         //calculate the amount of force that should be applied
-        float forceToPush = carRb.mass * (tyreVelocity.magnitude * angleToCorrect);
+        float forceToPush = carRb.mass * (tyreVelocity.magnitude * resistance);
 
         //add al the modifiers for the grip
         forceToPush = forceToPush * gripFactor;
@@ -257,6 +278,11 @@ public class WheelController : MonoBehaviour
 
         Vector3 torque = carRb.transform.forward * motorTorque;
 
+        //add modifiers
+        torque = torque;
+
+        //lessen addforce, increase rpm. calculate rpm based on velocity + inversed torque
+
         if (torque != Vector3.zero)
         {
             carRb.AddForceAtPosition(torque, forcePoint);
@@ -274,7 +300,19 @@ public class WheelController : MonoBehaviour
         Vector3 offset = new Vector3(0, distanceInSpring - radius, 0);
         Vector3 forcePoint = carRb.transform.TransformPoint(springTargetPos.localPosition + offset);
 
-        Vector3 torque = -carRb.transform.forward * brakeTorque;
+        Vector3 torque = Vector3.zero;
+
+        if (carRb.velocity.z > 0)
+        {
+            torque = -carRb.transform.forward * brakeTorque;
+        }
+        else
+        {
+            torque = carRb.transform.forward * brakeTorque;
+        }
+
+        //add modifiers
+        torque = torque;
 
         if (torque != Vector3.zero)
         {

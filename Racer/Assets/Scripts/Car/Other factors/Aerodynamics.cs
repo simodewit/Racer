@@ -7,9 +7,14 @@ public class Aerodynamics : MonoBehaviour
 {
     [SerializeField] private AeroPlaces[] aeroInfo;
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private WindSpeeds windSpeed;
+    private WindSpeeds windSpeed;
 
     #region start and update
+
+    public void Start()
+    {
+        windSpeed = FindAnyObjectByType<WindSpeeds>();
+    }
 
     public void FixedUpdate()
     {
