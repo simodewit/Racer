@@ -11964,13 +11964,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aeroInfo:
   - downforcePlace: {fileID: 1241147344}
-    amountOfForce: 150
+    amountOfForce: 500
   - downforcePlace: {fileID: 748716759}
-    amountOfForce: 200
+    amountOfForce: 0
   - downforcePlace: {fileID: 910192113}
-    amountOfForce: 100
+    amountOfForce: 0
   rb: {fileID: 1329276186}
-  windSpeed: {fileID: 0}
 --- !u!1 &699822344
 GameObject:
   m_ObjectHideFlags: 0
@@ -29141,7 +29140,7 @@ MonoBehaviour:
   carRb: {fileID: 1329276186}
   leftWheel: {fileID: 3469287836576609896}
   rightWheel: {fileID: 3469287837587156157}
-  stiffness: 1000
+  stiffness: 10000
 --- !u!1001 &1767097192
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35223,7 +35222,13 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   wheelOffset: {x: 0, y: 0, z: -5}
-  gripFactor: 2
+  gripFactor: 0.5
+  gripCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   springTargetPos: {fileID: 0}
   isGrounded: 0
   rpm: 0
@@ -35307,7 +35312,13 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   wheelOffset: {x: 0, y: 0, z: -5}
-  gripFactor: 2
+  gripFactor: 0.5
+  gripCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   springTargetPos: {fileID: 0}
   isGrounded: 0
   rpm: 0
@@ -35391,7 +35402,13 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   wheelOffset: {x: 0, y: 0, z: -5}
-  gripFactor: 2
+  gripFactor: 1
+  gripCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   springTargetPos: {fileID: 0}
   isGrounded: 0
   rpm: 0
@@ -35475,7 +35492,13 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   wheelOffset: {x: 0, y: 0, z: -5}
-  gripFactor: 2
+  gripFactor: 1
+  gripCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   springTargetPos: {fileID: 0}
   isGrounded: 0
   rpm: 0
