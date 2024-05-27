@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Animations;
 using UnityEngine.InputSystem;
 
 public enum PowerDeliviry
@@ -26,6 +25,14 @@ public class Car : MonoBehaviour
     [Tooltip("The rear right wheelCollider")]
     [SerializeField] private WheelController RR;
 
+    [Header("Assists")]
+    [Tooltip("If this is enabled it will stop you from shifting down into a gear that would create to much rpm's")]
+    [SerializeField] private bool shiftAssist = true;
+    //[Tooltip("Cuts the power to the wheels if you lose grip while adding power to the wheels")]
+    //[SerializeField] private int tractionControl;
+    //[Tooltip("Lowers the amount of braking force to stop you from locking a wheel")]
+    //[SerializeField] private int antiLockBrakeSystem;
+
     [Header("Steering")]
     [Tooltip("The maximum amount at witch you can steer the wheels"), Range(0, 75)]
     [SerializeField] private float steeringDegrees = 30;
@@ -48,7 +55,7 @@ public class Car : MonoBehaviour
     [Tooltip("The deadzone in the pedal before the throttle is used"), Range(0, 1)]
     [SerializeField] private float throttleDeadzone = 0.1f;
     [Tooltip("The minimum rpm that the engine can run")]
-    [SerializeField] private int minRPM = 1000;
+    [SerializeField] private int minRPM = 0;
     [Tooltip("The maximum rpm that the engine can run")]
     [SerializeField] private int maxRPM = 5000;
     [Tooltip("The total newton meters of torque that the car has"), Range(0, 5000)]
@@ -135,7 +142,30 @@ public class Car : MonoBehaviour
 
     public void ShiftDown(InputAction.CallbackContext context)
     {
-        if (context.performed && currentGear > 0)
+        if (!context.performed)
+        {
+            return;
+        }
+
+        if (currentGear <= 0)
+        {
+            return;
+        }
+
+        if (shiftAssist)
+        {
+            float afterShiftRPM = currentRPM / gears[currentGear].gearRatio * gears[currentGear - 1].gearRatio;
+
+            if (afterShiftRPM < maxRPM)
+            {
+                currentGear -= 1;
+            }
+            else
+            {
+                print("you moneyshifted");
+            }
+        }
+        else
         {
             currentGear -= 1;
         }

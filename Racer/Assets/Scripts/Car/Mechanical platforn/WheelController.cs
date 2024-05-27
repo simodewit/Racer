@@ -8,8 +8,12 @@ public class WheelController : MonoBehaviour
 {
     #region variables
 
+    [Header("Main info")]
     [Tooltip("The rigidbody of the car")]
     [SerializeField] private Rigidbody carRb;
+    [Tooltip("The ride height offset from the standard ride height place. this lowers or raises the tyre")]
+    [SerializeField] private float rideHeight;
+    // ^^^^^^ can only be set at start of the game at this moment ^^^^^^
 
     [Header("Spring")]
     [Tooltip("The stiffness of the spring")]
@@ -82,7 +86,7 @@ public class WheelController : MonoBehaviour
     private void MakeTargetPos()
     {
         //create the target position
-        Vector3 placeToCreate = transform.localPosition;
+        Vector3 placeToCreate = transform.localPosition + new Vector3(0, rideHeight, 0);
         springTargetPos = new GameObject().transform;
         springTargetPos.parent = transform.parent;
         springTargetPos.localPosition = placeToCreate;

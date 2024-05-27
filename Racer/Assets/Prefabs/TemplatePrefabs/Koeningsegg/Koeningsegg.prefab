@@ -49,7 +49,7 @@ MonoBehaviour:
   carRb: {fileID: 6902096611858862870}
   leftWheel: {fileID: 3609953726184213086}
   rightWheel: {fileID: 2089610361345068060}
-  stiffness: 1000
+  stiffness: 5000
 --- !u!1 &1181918108469200165
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,7 +111,7 @@ Transform:
   m_GameObject: {fileID: 1492724884510073517}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.8147888, y: -0.23000002, z: -1.251915}
+  m_LocalPosition: {x: -0.8147888, y: -0.15999997, z: -1.251915}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -180,29 +180,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carRb: {fileID: 6902096611858862870}
+  rideHeight: -0.05
   spring: 100000
   damper: 5000
-  springTravel: 0.5
+  springTravel: 0.2
   springCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.500473
-      inSlope: 0.49952698
-      outSlope: 0.49952698
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0.49952698
-      outSlope: 0.49952698
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -215,24 +216,24 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 14.021873
-      outSlope: 14.021873
+      inSlope: 34.162174
+      outSlope: 34.162174
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.051926285
-      value: 0.7281038
-      inSlope: 6.453295
-      outSlope: 6.453295
+      time: 0.018620573
+      value: 0.63611925
+      inSlope: 4.216247
+      outSlope: 4.216247
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.06978099
+      outWeight: 0.08458366
     - serializedVersion: 3
-      time: 0.16402929
-      value: 0.13424167
+      time: 0.09126245
+      value: 0.07529149
       inSlope: -0.14578317
       outSlope: -0.14578317
       tangentMode: 0
@@ -664,7 +665,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aeroInfo:
   - downforcePlace: {fileID: 4532369832460167380}
-    amountOfForce: 0
+    amountOfForce: 100
   - downforcePlace: {fileID: 5602402035555762460}
     amountOfForce: 100
   rb: {fileID: 6902096611858862870}
@@ -760,7 +761,7 @@ Transform:
   m_GameObject: {fileID: 6268939558800659435}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.83281326, y: -0.23, z: -1.251915}
+  m_LocalPosition: {x: 0.83281326, y: -0.16, z: -1.251915}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -829,29 +830,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carRb: {fileID: 6902096611858862870}
+  rideHeight: -0.05
   spring: 100000
   damper: 5000
-  springTravel: 0.5
+  springTravel: 0.2
   springCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.500473
-      inSlope: 0.49952698
-      outSlope: 0.49952698
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0.49952698
-      outSlope: 0.49952698
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -864,24 +866,24 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 14.021873
-      outSlope: 14.021873
+      inSlope: 34.162174
+      outSlope: 34.162174
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.051926285
-      value: 0.7281038
-      inSlope: 6.453295
-      outSlope: 6.453295
+      time: 0.018620573
+      value: 0.63611925
+      inSlope: 4.216247
+      outSlope: 4.216247
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.06978099
+      outWeight: 0.08458366
     - serializedVersion: 3
-      time: 0.16402929
-      value: 0.13424167
+      time: 0.09126245
+      value: 0.07529149
       inSlope: -0.14578317
       outSlope: -0.14578317
       tangentMode: 0
@@ -987,7 +989,7 @@ Transform:
   m_GameObject: {fileID: 6398338707139433867}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.7995987, y: -0.29980505, z: 1.2897415}
+  m_LocalPosition: {x: -0.7995987, y: -0.21, z: 1.2897415}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1056,29 +1058,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carRb: {fileID: 6902096611858862870}
-  spring: 125000
-  damper: 3000
-  springTravel: 0.5
+  rideHeight: 0
+  spring: 100000
+  damper: 5000
+  springTravel: 0.2
   springCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.6079254
-      inSlope: 0.39207458
-      outSlope: 0.39207458
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0.39207458
-      outSlope: 0.39207458
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -1091,24 +1094,24 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 14.021873
-      outSlope: 14.021873
+      inSlope: 34.162174
+      outSlope: 34.162174
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.051926285
-      value: 0.7281038
-      inSlope: 6.453295
-      outSlope: 6.453295
+      time: 0.018620573
+      value: 0.63611925
+      inSlope: 4.216247
+      outSlope: 4.216247
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.06978099
+      outWeight: 0.08458366
     - serializedVersion: 3
-      time: 0.16402929
-      value: 0.13424167
+      time: 0.09126245
+      value: 0.07529149
       inSlope: -0.14578317
       outSlope: -0.14578317
       tangentMode: 0
@@ -1349,6 +1352,7 @@ MonoBehaviour:
   FR: {fileID: 2568504401368434045}
   RL: {fileID: 3609953726184213086}
   RR: {fileID: 2089610361345068060}
+  shiftAssist: 1
   steeringDegrees: 10
   steeringCurve:
     serializedVersion: 2
@@ -1720,7 +1724,7 @@ MonoBehaviour:
   carRb: {fileID: 6902096611858862870}
   leftWheel: {fileID: 1124663474563628273}
   rightWheel: {fileID: 2568504401368434045}
-  stiffness: 3000
+  stiffness: 5000
 --- !u!1 &8414128346344772997
 GameObject:
   m_ObjectHideFlags: 0
@@ -1845,7 +1849,7 @@ Transform:
   m_GameObject: {fileID: 9086347792920532267}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.81762695, y: -0.299805, z: 1.2897415}
+  m_LocalPosition: {x: 0.81762695, y: -0.20999998, z: 1.2897415}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1914,29 +1918,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carRb: {fileID: 6902096611858862870}
-  spring: 125000
-  damper: 3000
-  springTravel: 0.5
+  rideHeight: 0
+  spring: 100000
+  damper: 5000
+  springTravel: 0.2
   springCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.6079254
-      inSlope: 0.39207458
-      outSlope: 0.39207458
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0.39207458
-      outSlope: 0.39207458
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -1949,24 +1954,24 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 14.021873
-      outSlope: 14.021873
+      inSlope: 34.162174
+      outSlope: 34.162174
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.051926285
-      value: 0.7281038
-      inSlope: 6.453295
-      outSlope: 6.453295
+      time: 0.018620573
+      value: 0.63611925
+      inSlope: 4.216247
+      outSlope: 4.216247
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.06978099
+      outWeight: 0.08458366
     - serializedVersion: 3
-      time: 0.16402929
-      value: 0.13424167
+      time: 0.09126245
+      value: 0.07529149
       inSlope: -0.14578317
       outSlope: -0.14578317
       tangentMode: 0
