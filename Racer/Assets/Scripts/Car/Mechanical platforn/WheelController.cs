@@ -245,7 +245,7 @@ public class WheelController : MonoBehaviour
         float curveProduct = gripCurve.Evaluate(Mathf.Abs(dotProduct));
 
         //calculate the amount of force from the rest of the car
-        float weightFactor = springForce / ((carRb.mass * Physics.gravity.y) / 4);
+        float weightFactor = springForce / (carRb.mass * Physics.gravity.y / 4);
 
         //add al the modifiers for the grip
         forceToPush = forceToPush * gripFactor * curveProduct * weightFactor;
