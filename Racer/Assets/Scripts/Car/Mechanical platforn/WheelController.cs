@@ -35,8 +35,6 @@ public class WheelController : MonoBehaviour
     [Tooltip("The grip curve of the tyre that decides how much grip you have at certain slip angles"), Curve(0f, 0f, 1f, 1f, true)]
     [SerializeField] private AnimationCurve gripCurve;
 
-    public bool debug;
-
     //get variables
     [HideInInspector] public Transform springTargetPos;
     [HideInInspector] public bool isGrounded;
@@ -245,13 +243,12 @@ public class WheelController : MonoBehaviour
 
         //calculate available grip of tyre
         float curveProduct = gripCurve.Evaluate(Mathf.Abs(dotProduct));
-        float gripPercentage = 1 + (curveProduct - Mathf.Abs(dotProduct));
 
         //calculate the amount of force from the rest of the car
         float weightFactor = springForce / ((carRb.mass * Physics.gravity.y) / 4);
 
         //add al the modifiers for the grip
-        forceToPush = forceToPush * gripFactor * gripPercentage * weightFactor;
+        forceToPush = forceToPush * gripFactor * curveProduct * weightFactor;
 
         //put the force to the right direction
         Vector3 forceDirection = -transform.right * forceToPush;
@@ -275,7 +272,7 @@ public class WheelController : MonoBehaviour
         Vector3 offset = new Vector3(0, distanceInSpring - radius, 0);
         Vector3 forcePoint = carRb.transform.TransformPoint(springTargetPos.localPosition + offset);
 
-        Vector3 torque = carRb.transform.forward * motorTorque;
+        Vector3 torque = carRb.transform.forward * (motorTorque / radius);
 
         //add modifiers
 
@@ -305,11 +302,11 @@ public class WheelController : MonoBehaviour
 
         if (velocity > 0)
         {
-            torque = -carRb.transform.forward * brakeTorque;
+            torque = -carRb.transform.forward * (brakeTorque / radius);
         }
         else
         {
-            torque = carRb.transform.forward * brakeTorque;
+            torque = carRb.transform.forward * (brakeTorque / radius);
         }
 
         //add modifiers

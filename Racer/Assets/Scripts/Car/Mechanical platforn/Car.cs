@@ -64,6 +64,8 @@ public class Car : MonoBehaviour
     [SerializeField] private float finalGearRatio;
     [Tooltip("The torque given at specific moments"), Curve(0, 0, 1f, 1f, true)]
     [SerializeField] private AnimationCurve torqueCurve;
+    [Tooltip("How much of the differential can be opened or closed"), Range(0, 100)]
+    [SerializeField] private float diffLock;
     [Tooltip("The info for every gear")]
     [SerializeField] private GearInfo[] gears;
 
@@ -242,6 +244,18 @@ public class Car : MonoBehaviour
         float returnValue = torque * finalGearRatio;
 
         return returnValue;
+    }
+
+    private Vector2 NewDif(float torque, WheelController leftWheel, WheelController rightWheel)
+    {
+        Vector2 output = new Vector2();
+
+        float leftRPM = leftWheel.rpm;
+        float rightRPM = rightWheel.rpm;
+
+
+
+        return output;
     }
 
     #endregion
