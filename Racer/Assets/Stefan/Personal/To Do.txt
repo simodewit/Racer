@@ -2,10 +2,10 @@ Controller Icons
 
 Playstation   			|   	    	    iksbocks
 
-Driehoek	x					Y
-Cirkel		x					B
-Kruis		x					A
-Vierkant	x					X
+Driehoek	x					Y	x
+Cirkel		x					B	x
+Kruis		x					A	x
+Vierkant	x					X	x
 
 				DPAD						
 				DPAD-Up
@@ -26,8 +26,63 @@ Vierkant	x					X
 Touchpad						-
 Options						     Options
 
-L1		x					LB
-L2		x					LT
+L1		x					LB	x
+L2		x					LT	x
 
-R1		x					RB
-R2		x					RT
+R1		x					RB	x
+R2		x					RT	x
+
+
+
+
+Main Menu
+
+Start Screen
+
+press X to continue
+Username input
+
+
+
+Main Screen
+
+Car selection system
+Map Selection System
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

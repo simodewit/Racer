@@ -68,6 +68,18 @@ public static class Authenticator
         AuthenticatorData.hasSignedIn = true;
     }
 
+    public static void Save ( )
+    {
+        string json = JsonUtility.ToJson ( AuthenticatorData );
+
+        string path = Path.Combine (Application.persistentDataPath, SAVE_FILE_NAME);
+
+        File.WriteAllText (path, json);
+
+        Debug.Log ("Saved!");
+
+    }
+
     private class AuthData
     {
         public string name;
