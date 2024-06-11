@@ -7,6 +7,19 @@ using UnityEngine;
 /// </summary>
 public class OptionInputReceiver : MonoBehaviour
 {
+    private bool m_selected;
+
+    public bool Selected
+    {
+        get
+        {
+            return m_selected;
+        }
+        private set
+        {
+            m_selected = value;
+        }
+    }
     /// <summary>
     /// Called whenever the user presses enter or X on controllers
     /// </summary>

@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class CarSelector : MonoBehaviour
 {
-    public ExampleCarData[] exampleCars;
+    public CarObject[] cars;
 
+    private int scrollSelectedCarIndex;
     private int selectedCarIndex;
 
     [Header ("Settings")]
@@ -20,7 +23,27 @@ public class CarSelector : MonoBehaviour
     public Transform carButtonsParent;
     public HorizontalLayoutGroup layout;
 
+    [Header ("Events")]
+    public UnityEvent onScroll;
+    public UnityEvent onCarSelected;
+
     float smoothVelocity;
+
+    public CarObject ScrollSelectedCar
+    {
+        get
+        {
+            return cars[scrollSelectedCarIndex];
+        }
+    }
+
+    public CarObject SelectedCar
+    {
+        get
+        {
+            return cars[selectedCarIndex];
+        }
+    }
 
     private void Start ( )
     {
@@ -29,7 +52,7 @@ public class CarSelector : MonoBehaviour
 
     void Initialize ( )
     {
-        foreach ( var car in exampleCars )
+        foreach ( var car in cars )
         {
             CarButton button = Instantiate (carButtonPrefab, carButtonsParent).GetComponent<CarButton> ( );
 
@@ -52,31 +75,48 @@ public class CarSelector : MonoBehaviour
 
             if(hor < 0) // Go Left
             {
-                if ( selectedCarIndex > 0 )
+                if ( scrollSelectedCarIndex > 0 )
                 {
-                    SetButtonSelectedState (selectedCarIndex, false);
-                    selectedCarIndex--;
-                    SetButtonSelectedState (selectedCarIndex, true);
+                    SetButtonSelectedState (scrollSelectedCarIndex, false);
+                    scrollSelectedCarIndex--;
+                    SetButtonSelectedState (scrollSelectedCarIndex, true);
+
+                    onScroll.Invoke ( );
+
                 }
 
             }
             else // Go Right
             {
-                if ( selectedCarIndex < exampleCars.Length - 1 )
+                if ( scrollSelectedCarIndex < cars.Length - 1 )
                 {
-                    SetButtonSelectedState (selectedCarIndex, false);
-                    selectedCarIndex++;
-                    SetButtonSelectedState (selectedCarIndex, true);
+                    SetButtonSelectedState (scrollSelectedCarIndex, false);
+                    scrollSelectedCarIndex++;
+                    SetButtonSelectedState (scrollSelectedCarIndex, true);
+
+                    onScroll.Invoke ( );
                 }
             }
         }
+    }
+
+    public void TrySelect (InputAction.CallbackContext context)
+    {
+        if ( scrollSelectedCarIndex == selectedCarIndex )
+            return;
+
+        selectedCarIndex = scrollSelectedCarIndex;
+
+        Debug.Log ($"Selected index {selectedCarIndex}");
+
+        onCarSelected.Invoke ( );
     }
 
     void UpdateLayout ( )
     {
         int currentPadding = layout.padding.left;
 
-        int targetPadding = startPadding - (buttonWidth + Mathf.RoundToInt( layout.spacing)) * selectedCarIndex;
+        int targetPadding = startPadding - (buttonWidth + Mathf.RoundToInt( layout.spacing)) * scrollSelectedCarIndex;
 
         layout.padding.left = Mathf.RoundToInt( Mathf.SmoothDamp (currentPadding, targetPadding, ref smoothVelocity, smoothTime));
         layout.SetLayoutHorizontal ( );

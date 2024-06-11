@@ -8,10 +8,16 @@ public class TestInput : OptionInputReceiver
 
     public override void OnReceiveHorizontalInput ( System.Single input )
     {
+        if ( input == 0 )
+            return;
+
         Debug.Log ($"Received {input} horizontal input on option: {option.optionName}");
     }
     public override void OnReceiveVerticalInput ( System.Single input )
     {
+        if(input == 0)
+            return;
+
         Debug.Log ($"Received {input} vertical input on option: {option.optionName}");
     }
     public override void OnReceiveXInput ()

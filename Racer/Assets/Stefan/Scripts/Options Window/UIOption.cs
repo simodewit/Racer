@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,12 +8,14 @@ public class UIOption : MonoBehaviour
 {
     [Header ("Option Data")]
     public string optionName = "Option";
+    [TextArea(3,5)]
     public string optionDescription = "Description";
     public Sprite optionSprite;
 
     [Header ("References")]
     public Image background;
     public Image border, lines;
+    public TextMeshProUGUI labelText;
 
     public OptionInputReceiver inputReceiver;
 
@@ -41,13 +44,18 @@ public class UIOption : MonoBehaviour
 
     }
 
+    private void OnValidate ( )
+    {
+        labelText.text = optionName;
+    }
+
     private void Update ( )
     {
         _lerpTimer += Time.deltaTime;
 
         if ( _lerpTimer < lerpTime )
         {
-            UpdateAnimation (Mathf.InverseLerp (0, lerpTime, _lerpTimer));
+            UpdateAnimation (CalculateAnimationProgress());
         }
         else if ( shouldUpdate )
         {
@@ -71,5 +79,10 @@ public class UIOption : MonoBehaviour
         m_selected = selected;
         _lerpTimer = 0;
         shouldUpdate = true;
+    }
+
+    public float CalculateAnimationProgress ( )
+    {
+        return Mathf.InverseLerp (0, lerpTime, _lerpTimer);
     }
 }

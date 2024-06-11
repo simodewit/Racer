@@ -1,20 +1,41 @@
 using com.cyborgAssets.inspectorButtonPro;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using UnityEngine;
 using UnityEngine.Events;
 
+[System.Serializable]
+public class ScreenEvents
+{
+    public UnityEvent onScreenEnabled;
+    public UnityEvent onScreenDisabled;
+}
+
 public class MainMenuManager : MonoBehaviour
 {
+    private static MainMenuManager _instance;
+    public static MainMenuManager Instance
+    {
+        get
+        {
+            if(_instance == null )
+            {
+                _instance = FindObjectOfType<MainMenuManager> ( );
+            }
+            return _instance;
+        }
+        set
+        {
+            _instance = value;
+        }
+    }
+
     public enum MenuState
     {
         StartScreen,
         InputScreen,
         MainMenu,
         CarSelection,
-        MapSelection
+        MapSelection,
+        OptionScreen,
     }
 
     [SerializeField]
@@ -27,7 +48,7 @@ public class MainMenuManager : MonoBehaviour
     public UIGroup mapSelectionScreen;
     public UIGroup userInputScreen;
 
-    public UIGroup mainWindow, startWindow;
+    public UIGroup mainWindow, startWindow, optionsWindow;
     public MenuState State
     {
         get
@@ -45,7 +66,13 @@ public class MainMenuManager : MonoBehaviour
         }
     }
 
+    [Header("Events")]
     public UnityEvent<MenuState> onMenuStateChanged;
+
+    public ScreenEvents carSelectionEvents;
+    public ScreenEvents mapSelectionEvents;
+    public ScreenEvents optionsEvents;
+
 
     private void OnMenuStateChanged ( )
     {
@@ -64,10 +91,11 @@ public class MainMenuManager : MonoBehaviour
         if ( activeScreen != null )
             ToggleScreen (activeScreen);
 
-        bool inMainWindow = State != MenuState.StartScreen && State != MenuState.InputScreen;
+        bool inMainWindow = State != MenuState.StartScreen && State != MenuState.InputScreen && State != MenuState.OptionScreen;
 
         mainWindow.Toggle (inMainWindow);
-        startWindow.Toggle (!inMainWindow);
+        startWindow.Toggle (State == MenuState.StartScreen || State == MenuState.InputScreen );
+        optionsWindow.Toggle (State == MenuState.OptionScreen);
     }
 
     public void ToggleScreen(UIGroup activeScreen )

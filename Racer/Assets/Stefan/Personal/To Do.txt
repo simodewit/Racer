@@ -47,7 +47,35 @@ Username input
 Main Screen
 
 Car selection system
+- Car Stats
+	1. Top Speed
+	2. Acceleration
+	3. Weight
+	4. HP
+	5. 
 Map Selection System
+
+
+Input Action Map
+	-Car Selection
+		- Rotation
+		- Zooming
+		- Moving
+		- Resetting
+	-Options
+		- Scrolling Up
+		- Slider Movement
+		- Toggling
+		- Selector Scrolling
+		- Applying
+		- Resetting
+	- Map Selection
+		- Size Selector
+		- Leaderboard Ghost Selector
+		- Leaderboard Scroller
+		- Map Movement
+		- Map Zooming
+
 
 
 

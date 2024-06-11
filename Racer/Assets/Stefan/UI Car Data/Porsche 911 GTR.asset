@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32deee5470d87384d8525280e6dd27f7, type: 3}
+  m_Name: Porsche 911 GTR
+  m_EditorClassIdentifier: 
+  carModel: 911 GTR
+  carBrand: Porsche
+  brandSprite: {fileID: 21300000, guid: 08733bd71421cf94298f0f16bb878ab3, type: 3}
+  carImage: {fileID: 21300000, guid: 035d6b41911ab4740a46b2da01c53d65, type: 3}
+  carColor: {r: 0.86415094, g: 0.05688027, b: 0, a: 1}
+  unlocked: 1
+  carPrefab: {fileID: 0}
+  showcasePrefab: {fileID: 0}
+  value1: 55
+  value2: 24
+  value3: 74
+  value4: 32
+  value5: 80

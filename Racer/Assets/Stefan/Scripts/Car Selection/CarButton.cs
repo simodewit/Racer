@@ -14,15 +14,28 @@ public class CarButton : MonoBehaviour
     public TextMeshProUGUI carNameText, selectText;
     public GameObject lockedObject;
 
+    [Header ("Settings")]
+    public Vector3 hoveredScale;
+    public Vector3 unhoveredScale;
+    public float hoverSmoothTime;
+
+    private Vector3 _velocity;
+    private bool _selected;
     private void Awake ( )
     {
         animator = GetComponent<Animator> ( );
     }
 
-    public void Initialize ( ExampleCarData carData )
+    private void Update ( )
+    {
+        Vector3 target = _selected ? hoveredScale : unhoveredScale;
+        carImg.transform.localScale = Vector3.SmoothDamp (carImg.transform.localScale, target, ref _velocity, hoverSmoothTime);
+    }
+
+    public void Initialize ( CarObject carData )
     {
         carImg.sprite = carData.carImage;
-        brandImg.sprite = carData.brandLogo;
+        brandImg.sprite = carData.brandSprite;
         carColorImg.color = carData.carColor;
 
         carNameText.text = carData.FullName;
@@ -36,6 +49,7 @@ public class CarButton : MonoBehaviour
 
     public void SetSelected ( bool selected )
     {
+        _selected = selected;
         animator.SetBool ("Selected", selected);
     }
 }

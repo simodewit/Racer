@@ -150,7 +150,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -992,11 +992,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carImg: {fileID: 3174912312682896880}
-  brandImg: {fileID: 8106089478985949097}
-  carColorImg: {fileID: 7408524893068205910}
+  brandImg: {fileID: 7408524893068205910}
+  carColorImg: {fileID: 5623637648575567035}
   carNameText: {fileID: 1190297995079023575}
   selectText: {fileID: 5206978226268907555}
   lockedObject: {fileID: 2770939767407009715}
+  hoveredScale: {x: 1.2, y: 1.2, z: 1.2}
+  unhoveredScale: {x: 1, y: 1, z: 1}
+  hoverSmoothTime: 0.4
 --- !u!1 &5765047602673551066
 GameObject:
   m_ObjectHideFlags: 0
@@ -1464,7 +1467,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 46573d56b6233014f8028666d4f10f62, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1587,18 +1590,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8815674914003031161}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4261251761117135889}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 11, y: 2.9454346}
-  m_SizeDelta: {x: 87.9622, y: 87.9617}
-  m_Pivot: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -222.04517, y: -99.80536}
+  m_SizeDelta: {x: 80, y: 80}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &450649313445085508
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1627,7 +1630,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 46573d56b6233014f8028666d4f10f62, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
