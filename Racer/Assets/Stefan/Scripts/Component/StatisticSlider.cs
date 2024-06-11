@@ -60,6 +60,7 @@ public class StatisticSlider : MonoBehaviour
             {
                 _targetPositiveFill = compareLerp;
                 _targetFill = lerp;
+                _targetNegativeFill = lerp;
             }
 
             compareText.gameObject.SetActive (true);

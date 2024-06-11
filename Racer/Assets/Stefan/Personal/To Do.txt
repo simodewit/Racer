@@ -55,13 +55,19 @@ Car selection system
 	5. 
 Map Selection System
 
+BUGS
+
+Screens reageren op input wanneer ze niet actief zijn
+
+
 
 Input Action Map
 	-Car Selection
-		- Rotation
-		- Zooming
-		- Moving
-		- Resetting
+		- Rotation / right joystick horizontal
+		- Zooming / right joystick vertical
+		- Moving / left joystick
+		- Resetting / right joystick press
+		- Back to main / Circle
 	-Options
 		- Scrolling Up
 		- Slider Movement

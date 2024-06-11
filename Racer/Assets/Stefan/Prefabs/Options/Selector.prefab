@@ -304,7 +304,7 @@ MonoBehaviour:
   openColor: {r: 1, g: 1, b: 1, a: 1}
   closedColor: {r: 0.7433963, g: 0.7433963, b: 0.7433963, a: 0.627451}
   animationTime: 0.15
-  inputDelay: 0.2
+  inputDelay: 0.13
   m_currentIndex: 0
   m_inputTimer: 0
 --- !u!1 &7945823751468444790

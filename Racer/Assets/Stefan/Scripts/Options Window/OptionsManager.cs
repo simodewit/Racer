@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class OptionsManager : MonoBehaviour
@@ -34,11 +35,20 @@ public class OptionsManager : MonoBehaviour
 
     public float minHeight, maxHeight, heightOffset, heightSmoothSpeed;
 
+    [Header("Input Settings")]
+    public float scrollDeadzone = 0.5f;
+    public float dpadInputSensitivity = 1;
+    public float rightJoystickSensitivity = 0.4f;
+
+    [Range(0,0.2f)]
+    public float inputCooldown = 0.07f;
+
     [Header ("References")]
     public Image optionImage;
     public TextMeshProUGUI optionNameText,optionDescriptionText;
     public VerticalLayoutGroup layout;
     public GameObject applyButton;
+    public PlayerInput input;
 
     [Header ("Options")]
     public UnityEvent<OptionsData> onOptionsLoaded;
@@ -60,12 +70,16 @@ public class OptionsManager : MonoBehaviour
     public UISlider sfxVolumeSlider;
     public UISlider musicVolumeSlider;
 
+
+    //Private variables
     [SerializeField]
     private int currentOptionIndex;
 
     float layoutVelocity;
 
     bool m_isDirty;
+
+    float _cooldownTimer;
     private void Start ( )
     {
         if ( Instance == null )
@@ -86,49 +100,82 @@ public class OptionsManager : MonoBehaviour
 
     private void Update ( )
     {
-        CheckScrolling ( );
-
-        HandleInput ( );
-
         HandleScrollView ( );
+
+        _cooldownTimer -= Time.deltaTime;
     }
 
     #region Input
-    void HandleInput ( )
+
+    public void ToggleInput (InputAction.CallbackContext context )
     {
+        if ( context.phase != InputActionPhase.Started )
+            return;
+
         UIOption option = allOptions[currentOptionIndex];
 
         if ( option == null || option.inputReceiver == null )
             return;
 
-        //TODO: Change to new input system
-        float horizontalInput = Input.GetAxisRaw ("Horizontal");
+        option.inputReceiver.OnReceiveXInput ( );
 
-        option.inputReceiver.OnReceiveHorizontalInput (horizontalInput);
-
-        //float verticalInput = Input.GetAxisRaw ("Vertical");
-
-        //if(verticalInput != 0 )
-        //{
-        //    option.inputReceiver.OnReceiveVerticalInput (verticalInput);
-        //}
-
-        //TODO: Add controller input support
-        if ( Input.GetButtonDown ("Jump"))
-        {
-            option.inputReceiver.OnReceiveXInput ( );
-        }
     }
-    void CheckScrolling ( )
+
+    public void LeftJoystick(InputAction.CallbackContext context )
     {
-        if ( !Input.GetButtonDown ("Vertical"))
+        var input = context.ReadValue<Vector2> ( );
+
+        //Handle Scrolling
+
+        CheckScrollInput ( input.y);
+    }
+
+    public void RightJoystick(InputAction.CallbackContext context )
+    {
+        var input = context.ReadValue<Vector2> ( );
+
+
+        //Send input to option
+        UIOption option = allOptions[currentOptionIndex];
+
+        if ( option == null || option.inputReceiver == null )
             return;
 
-        if ( Input.GetAxisRaw ("Vertical") < 0 ) // scrolling down
+        option.inputReceiver.OnReceiveHorizontalInput (input.x * rightJoystickSensitivity);
+        option.inputReceiver.OnReceiveVerticalInput (input.y * rightJoystickSensitivity);
+    }
+
+    public void DpadInput(InputAction.CallbackContext context )
+    {
+        var input = context.ReadValue<Vector2> ( );
+
+        //Handle Scrolling
+
+        CheckScrollInput (input.y);
+
+        //Send input to option
+        UIOption option = allOptions[currentOptionIndex];
+
+        if ( option == null || option.inputReceiver == null )
+            return;
+
+        option.inputReceiver.OnReceiveHorizontalInput (input.x * dpadInputSensitivity);
+    }
+
+    void CheckScrollInput (float input )
+    {
+        if ( _cooldownTimer > 0 )
+            return;
+
+        if ( Mathf.Abs(input) < scrollDeadzone ) //Not sensitive enough to scroll
+            return;
+
+        if ( input < 0 ) // scrolling down
         {
             if ( currentOptionIndex < allOptions.Count - 1 )
             {
                 SetCurrentOptionIndex (currentOptionIndex + 1);
+                _cooldownTimer = inputCooldown;
             }
         }
         else //Scrolling up
@@ -136,8 +183,36 @@ public class OptionsManager : MonoBehaviour
             if ( currentOptionIndex > 0)
             {
                 SetCurrentOptionIndex (currentOptionIndex - 1);
+                _cooldownTimer = inputCooldown;
             }
         }
+    }
+
+    #endregion
+
+    #region Screen Events
+
+    public void TryGoBack ( )
+    {
+        //TODO: check if user has unnaplied changed
+        GoBack ( );
+    }
+
+    public void GoBack ( )
+    {
+        //TODO: Go bbakc to previous screen
+        MainMenuManager.Instance.ExitOptions ( );
+
+    }
+
+    public void OnScreenEnable ( )
+    {
+        input.enabled = true;
+    }
+
+    public void OnScreenDisable ( )
+    {
+        input.enabled = false;
     }
 
     #endregion

@@ -19,6 +19,7 @@ public class CarPreview : MonoBehaviour
 
     //Private Variables
 
+    [SerializeField]
     private float _zoomProgress;
     [SerializeField]
     private bool _active;
@@ -28,9 +29,11 @@ public class CarPreview : MonoBehaviour
         if ( prefab == null )
             return;
 
+        ResetView ();
+
         //Destroy current previewed object
 
-        while(spawnPoint.childCount > 0 )
+        if(spawnPoint.childCount > 0 )
         {
             Destroy (spawnPoint.GetChild (0).gameObject);
         }
@@ -48,21 +51,25 @@ public class CarPreview : MonoBehaviour
         if ( !_active )
             return;
         
-        transform.localEulerAngles += context.ReadValue<float>() * Time.deltaTime * rotationSpeed;
+        transform.localEulerAngles += context.ReadValue<Vector2>().x * Time.deltaTime * rotationSpeed;
     }
 
     public void ZoomInput ( InputAction.CallbackContext context )
     {
+        return;
+
         if ( !_active )
             return;
 
-        _zoomProgress += Time.deltaTime * context.ReadValue<float> ( );
+        _zoomProgress += Time.deltaTime * context.ReadValue<Vector2> ( ).x;
 
-        transform.position = Vector3.Lerp (minZoom, maxZoom, _zoomProgress);
+        cameraPivot.position = Vector3.Lerp (minZoom, maxZoom, _zoomProgress);
     }
 
     public void MoveInput(InputAction.CallbackContext context )
     {
+        return;
+
         if ( !_active )
             return;
 

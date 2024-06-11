@@ -1,17 +1,12 @@
-using JetBrains.Annotations;
-using System.Collections;
 using System.Collections.Generic;
-using System.Transactions;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
 
 public class UISelector : OptionInputReceiver
 {
     [SerializeField]
-    private List<string> options = new ( ){"Option 1", "Option 2", "Option 3" };
+    private List<string> options = new ( ) { "Option 1", "Option 2", "Option 3" };
 
     [Header ("References")]
     public TextMeshProUGUI textElement;
@@ -24,8 +19,8 @@ public class UISelector : OptionInputReceiver
     public float inputDelay = 0.2f;
 
     private float m_animationTimer;
-    private float m_leftArrowTimer,m_rightArrowTimer;
-    private bool m_leftClosed,m_rightClosed;
+    private float m_leftArrowTimer, m_rightArrowTimer;
+    private bool m_leftClosed, m_rightClosed;
 
     [SerializeField]
     private int m_currentIndex;
@@ -42,7 +37,8 @@ public class UISelector : OptionInputReceiver
         {
             int newValue = Mathf.Clamp (value, 0, options.Count - 1);
 
-            if ( newValue == m_currentIndex ) return;
+            if ( newValue == m_currentIndex )
+                return;
 
             m_currentIndex = newValue;
 
@@ -63,30 +59,32 @@ public class UISelector : OptionInputReceiver
         m_animationTimer += Time.deltaTime;
         float progress = Mathf.InverseLerp (0, animationTime, m_animationTimer);
 
+        m_inputTimer -= Time.deltaTime;
+
         UpdateAnimation (progress);
     }
 
-    private void UpdateAnimation (float progress)
+    private void UpdateAnimation ( float progress )
     {
         //Check if arrows should be closed
 
-        if(m_leftClosed && CurrentIndex != 0) // is closed but should open
+        if ( m_leftClosed && CurrentIndex != 0 ) // is closed but should open
         {
             m_leftClosed = false;
             m_leftArrowTimer = 0;
         }
-        else if(!m_leftClosed && CurrentIndex == 0) // is open but should close
+        else if ( !m_leftClosed && CurrentIndex == 0 ) // is open but should close
         {
             m_leftClosed = true;
             m_leftArrowTimer = 0;
         }
 
-        if(m_rightClosed && CurrentIndex != options.Count-1) // is closed but should open
+        if ( m_rightClosed && CurrentIndex != options.Count - 1 ) // is closed but should open
         {
             m_rightClosed = false;
             m_rightArrowTimer = 0;
         }
-        else if(!m_rightClosed && CurrentIndex == options.Count-1) // is open but should close
+        else if ( !m_rightClosed && CurrentIndex == options.Count - 1 ) // is open but should close
         {
             m_rightClosed = true;
             m_rightArrowTimer = 0;
@@ -104,32 +102,24 @@ public class UISelector : OptionInputReceiver
 
     public override void OnReceiveHorizontalInput ( System.Single input )
     {
-        if(input == 0 )
+        if ( m_inputTimer < 0 )
         {
-            m_inputTimer = 0;
-        }
-        else
-        {
-            m_inputTimer -= Time.deltaTime;
+            m_inputTimer = inputDelay;
 
-            if(m_inputTimer < 0 )
+            if ( input < 0 ) // go left
             {
-                m_inputTimer = inputDelay;
+                CurrentIndex--;
 
-                if(input < 0 ) // go left
-                {
-                    CurrentIndex--;
-
-                    return;
-                }
-                //go right
-                CurrentIndex++;
+                return;
             }
+            //go right
+            CurrentIndex++;
         }
+
     }
 
 
-    public void SetIndex(int value )
+    public void SetIndex ( int value )
     {
         m_currentIndex = Mathf.Clamp (value, 0, options.Count - 1);
 

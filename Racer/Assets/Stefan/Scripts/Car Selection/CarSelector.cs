@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -22,6 +21,8 @@ public class CarSelector : MonoBehaviour
     public GameObject carButtonPrefab;
     public Transform carButtonsParent;
     public HorizontalLayoutGroup layout;
+    public CarPreview preview;
+    public PlayerInput input;
 
     [Header ("Events")]
     public UnityEvent onScroll;
@@ -62,26 +63,21 @@ public class CarSelector : MonoBehaviour
 
     private void Update ( )
     {
-        CheckInput ( );
-
         UpdateLayout ( );
     }
 
-    void CheckInput ( )
+    #region Input
+    public void ScrollInput ( InputAction.CallbackContext context )
     {
-        if ( Input.GetButtonDown ("Horizontal") )
+        if ( context.phase == InputActionPhase.Started )
         {
-            float hor = Input.GetAxisRaw ("Horizontal");
+            float hor = context.ReadValue<float> ( );
 
-            if(hor < 0) // Go Left
+            if ( hor < 0 ) // Go Left
             {
                 if ( scrollSelectedCarIndex > 0 )
                 {
-                    SetButtonSelectedState (scrollSelectedCarIndex, false);
-                    scrollSelectedCarIndex--;
-                    SetButtonSelectedState (scrollSelectedCarIndex, true);
-
-                    onScroll.Invoke ( );
+                    Scroll (scrollSelectedCarIndex - 1);
 
                 }
 
@@ -90,51 +86,111 @@ public class CarSelector : MonoBehaviour
             {
                 if ( scrollSelectedCarIndex < cars.Length - 1 )
                 {
-                    SetButtonSelectedState (scrollSelectedCarIndex, false);
-                    scrollSelectedCarIndex++;
-                    SetButtonSelectedState (scrollSelectedCarIndex, true);
-
-                    onScroll.Invoke ( );
+                    Scroll (scrollSelectedCarIndex + 1);
                 }
             }
         }
     }
 
-    public void TrySelect (InputAction.CallbackContext context)
+    private void Scroll(int newIndex )
+    {
+        SetButtonSelectedState (scrollSelectedCarIndex, false);
+        scrollSelectedCarIndex = newIndex;
+        SetButtonSelectedState (scrollSelectedCarIndex, true);
+
+        onScroll.Invoke ( );
+
+        SetPreviewCar (scrollSelectedCarIndex);
+    }
+
+
+    public void TrySelect ( InputAction.CallbackContext context )
     {
         if ( scrollSelectedCarIndex == selectedCarIndex )
             return;
 
+        Transform toDeselect = carButtonsParent.GetChild (selectedCarIndex);
+
+        if ( toDeselect )
+        {
+            toDeselect.GetComponent<CarButton> ( ).SetHovered (false);
+        }
+
         selectedCarIndex = scrollSelectedCarIndex;
+
+        Transform toSelect = carButtonsParent.GetChild (selectedCarIndex);
+
+        if ( toSelect )
+        {
+            toSelect.GetComponent<CarButton> ( ).SetHovered (true);
+        }
 
         Debug.Log ($"Selected index {selectedCarIndex}");
 
         onCarSelected.Invoke ( );
     }
 
+    public void ToMenu(InputAction.CallbackContext context )
+    {
+        MainMenuManager.Instance.ToOptionsMenu ( );
+    }
+
+    #endregion
+
+    public void SetPreviewCar ( int index )
+    {
+        preview.SetPrefab (cars[index].showcasePrefab);
+    }
+
     void UpdateLayout ( )
     {
         int currentPadding = layout.padding.left;
 
-        int targetPadding = startPadding - (buttonWidth + Mathf.RoundToInt( layout.spacing)) * scrollSelectedCarIndex;
+        int targetPadding = startPadding - ( buttonWidth + Mathf.RoundToInt (layout.spacing) ) * scrollSelectedCarIndex;
 
-        layout.padding.left = Mathf.RoundToInt( Mathf.SmoothDamp (currentPadding, targetPadding, ref smoothVelocity, smoothTime));
+        layout.padding.left = Mathf.RoundToInt (Mathf.SmoothDamp (currentPadding, targetPadding, ref smoothVelocity, smoothTime));
         layout.SetLayoutHorizontal ( );
     }
 
-    void SetButtonSelectedState(int index, bool selected )
+    void SetButtonSelectedState ( int index, bool selected )
     {
-        if(index > carButtonsParent.childCount - 1 )
+        if ( index > carButtonsParent.childCount - 1 )
         {
             Debug.Log ($"Index {index} larger than childcount {carButtonsParent.childCount}");
             return;
         }
 
-        Transform child =  carButtonsParent.GetChild (index);
+        Transform child = carButtonsParent.GetChild (index);
 
         if ( child )
         {
-            child.GetComponent<CarButton> ( ).SetSelected (selected);
+            child.GetComponent<CarButton> ( ).SetHovered (selected);
         }
     }
+
+    #region Active Events
+    public void OnScreenEnable ( )
+    {
+        //Select selected car
+        //set scroll index to selected car
+
+        //TODO: Read selected and saved car index
+        int savedSelectedCarIndex = 0;
+
+        selectedCarIndex = savedSelectedCarIndex;
+        scrollSelectedCarIndex = savedSelectedCarIndex;
+
+        Scroll (scrollSelectedCarIndex);
+
+        SetPreviewCar (selectedCarIndex);
+
+        input.enabled = true;
+    }
+
+    public void OnScreenDisable ( )
+    {
+        input.enabled = false;
+    }
+
+    #endregion
 }

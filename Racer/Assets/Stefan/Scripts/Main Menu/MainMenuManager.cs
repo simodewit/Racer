@@ -70,8 +70,12 @@ public class MainMenuManager : MonoBehaviour
     public UnityEvent<MenuState> onMenuStateChanged;
 
     public ScreenEvents carSelectionEvents;
+    public ScreenEvents mainScreenEvents;
     public ScreenEvents mapSelectionEvents;
     public ScreenEvents optionsEvents;
+
+    //Private Variables
+    private MenuState _menuBeforeOptions;
 
 
     private void OnMenuStateChanged ( )
@@ -85,6 +89,7 @@ public class MainMenuManager : MonoBehaviour
             MenuState.MainMenu => mainScreen,
             MenuState.CarSelection => carSelectionScreen,
             MenuState.MapSelection => mapSelectionScreen,
+            MenuState.OptionScreen => optionsWindow,
             _ => null
         };
 
@@ -106,12 +111,60 @@ public class MainMenuManager : MonoBehaviour
         {
             if(screen == activeScreen )
             {
+                if(screen.isActive == false )
+                {
+                    var events = GetScreenEvents (screen);
+                    events?.onScreenEnabled.Invoke ( );
+                }
+
                 screen.Toggle (true);
                 continue;
             }
+            if ( screen.isActive)
+            {
+                var events = GetScreenEvents (screen);
+                events?.onScreenDisabled.Invoke ( );
+            }
+
             screen.Toggle (false);
         }
     }
+
+    public ScreenEvents GetScreenEvents (UIGroup group)
+    {
+        if ( group == mapSelectionScreen )
+            return mapSelectionEvents;
+        if ( group == carSelectionScreen )
+            return carSelectionEvents;
+        if ( group == optionsWindow )
+        if(group == mainScreen)
+            return mainScreenEvents;
+
+        return null;
+    }
+
+    #region Options
+
+    public void ToOptionsMenu ( )
+    {
+        _menuBeforeOptions = State;
+
+        State = MenuState.OptionScreen;
+
+        optionsEvents.onScreenEnabled.Invoke ( );
+    }
+
+    public void ExitOptions ( )
+    {
+        State = _menuBeforeOptions;
+
+        optionsWindow.Toggle (false);
+
+        _menuBeforeOptions = MenuState.MainMenu;
+        optionsEvents.onScreenDisabled.Invoke ( );
+    }
+
+    #endregion
 
     public void StartScreenContinue ( )
     {

@@ -20,7 +20,10 @@ public class CarButton : MonoBehaviour
     public float hoverSmoothTime;
 
     private Vector3 _velocity;
+    private bool _hovered;
     private bool _selected;
+    private CarObject _car;
+
     private void Awake ( )
     {
         animator = GetComponent<Animator> ( );
@@ -28,7 +31,7 @@ public class CarButton : MonoBehaviour
 
     private void Update ( )
     {
-        Vector3 target = _selected ? hoveredScale : unhoveredScale;
+        Vector3 target = _hovered ? hoveredScale : unhoveredScale;
         carImg.transform.localScale = Vector3.SmoothDamp (carImg.transform.localScale, target, ref _velocity, hoverSmoothTime);
     }
 
@@ -45,11 +48,27 @@ public class CarButton : MonoBehaviour
         lockedObject.SetActive (!carData.unlocked);
         animator.SetBool ("Unlocked", carData.unlocked);
 
+        _car = carData;
+    }
+
+    public void SetHovered ( bool hovererd )
+    {
+        _hovered = hovererd;
+        animator.SetBool ("Hovered", hovererd);
     }
 
     public void SetSelected ( bool selected )
     {
         _selected = selected;
         animator.SetBool ("Selected", selected);
+
+        if ( selected )
+        {
+            selectText.text = $"Already Selected {_car.FullName}";
+        }
+        else
+        {
+            selectText.text = $"Select {_car.FullName}!";
+        }
     }
 }

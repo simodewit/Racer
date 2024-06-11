@@ -19,7 +19,8 @@ MonoBehaviour:
   carColor: {r: 0.96981126, g: 0.96981126, b: 0.96981126, a: 1}
   unlocked: 1
   carPrefab: {fileID: 0}
-  showcasePrefab: {fileID: 0}
+  showcasePrefab: {fileID: 3778023400280228929, guid: 8a085b0a2537b9d45aa408ffea5d9bdc,
+    type: 3}
   value1: 100
   value2: 100
   value3: 100
