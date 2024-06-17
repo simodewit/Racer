@@ -184,7 +184,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -1000,6 +1000,14 @@ MonoBehaviour:
   hoveredScale: {x: 1.2, y: 1.2, z: 1.2}
   unhoveredScale: {x: 1, y: 1, z: 1}
   hoverSmoothTime: 0.4
+  animationTime: 0.2
+  linesImg: {fileID: 5969788124500560724}
+  borderImg: {fileID: 4155913458470554851}
+  selectedImg: {fileID: 7475980445358954453}
+  selectedMainColor: {r: 1, g: 1, b: 1, a: 1}
+  unselectedMainColor: {r: 1, g: 0, b: 0, a: 1}
+  selectedTextColor: {r: 0, g: 0, b: 0, a: 1}
+  unselectedTextColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &5765047602673551066
 GameObject:
   m_ObjectHideFlags: 0

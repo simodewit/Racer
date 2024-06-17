@@ -113,7 +113,7 @@ public class CarSelector : MonoBehaviour
 
         if ( toDeselect )
         {
-            toDeselect.GetComponent<CarButton> ( ).SetHovered (false);
+            toDeselect.GetComponent<CarButton> ( ).SetSelected (false);
         }
 
         selectedCarIndex = scrollSelectedCarIndex;
@@ -122,7 +122,7 @@ public class CarSelector : MonoBehaviour
 
         if ( toSelect )
         {
-            toSelect.GetComponent<CarButton> ( ).SetHovered (true);
+            toSelect.GetComponent<CarButton> ( ).SetSelected (true);
         }
 
         Debug.Log ($"Selected index {selectedCarIndex}");

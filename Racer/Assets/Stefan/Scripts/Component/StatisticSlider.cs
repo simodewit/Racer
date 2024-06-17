@@ -10,6 +10,7 @@ public class StatisticSlider : MonoBehaviour
     public float maxValue;
     public string labelFormat = "F2";
     public float smoothTime = 0.1f;
+    public bool showDifference = true;
 
     [Header ("Colors")]
     public Color defaultColor;
@@ -63,7 +64,7 @@ public class StatisticSlider : MonoBehaviour
                 _targetNegativeFill = lerp;
             }
 
-            compareText.gameObject.SetActive (true);
+            compareText.gameObject.SetActive (true & showDifference);
             compareText.text = _compareValue.ToString (labelFormat);
         }
         else

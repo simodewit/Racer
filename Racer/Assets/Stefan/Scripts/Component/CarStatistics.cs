@@ -49,8 +49,6 @@ public class CarStatistics : MonoBehaviour
 
     public void UpdateStatistics ( )
     {
-        _textTimer = 0;
-
         UpdateText ( );
 
         if ( selector.SelectedCar == null ) return;
@@ -78,5 +76,10 @@ public class CarStatistics : MonoBehaviour
 
         selectedObject.Toggle (selector.SelectedCar != selector.ScrollSelectedCar);
 
+    }
+
+    public void ResetText ( )
+    {
+        _textTimer = 0;
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class UISelector : OptionInputReceiver
@@ -21,6 +22,9 @@ public class UISelector : OptionInputReceiver
     private float m_animationTimer;
     private float m_leftArrowTimer, m_rightArrowTimer;
     private bool m_leftClosed, m_rightClosed;
+
+    [Header ("Events")]
+    public UnityEvent<int> onIndexChanged;
 
     [SerializeField]
     private int m_currentIndex;
@@ -131,5 +135,7 @@ public class UISelector : OptionInputReceiver
         m_animationTimer = 0;
 
         textElement.text = options[CurrentIndex];
+
+        onIndexChanged.Invoke (CurrentIndex);
     }
 }

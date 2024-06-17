@@ -1,3 +1,4 @@
+using System.Reflection;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +11,6 @@ public class CarButton : MonoBehaviour
     public Image carImg;
     public Image brandImg;
     public Image carColorImg;
-
     public TextMeshProUGUI carNameText, selectText;
     public GameObject lockedObject;
 
@@ -19,10 +19,20 @@ public class CarButton : MonoBehaviour
     public Vector3 unhoveredScale;
     public float hoverSmoothTime;
 
+    [Header ("Animation")]
+    public float animationTime;
+    public Image linesImg;
+    public Image borderImg, selectedImg;
+    public Color selectedMainColor, unselectedMainColor;
+
+    public Color selectedTextColor, unselectedTextColor;
+
+    // Private Variables
     private Vector3 _velocity;
     private bool _hovered;
     private bool _selected;
     private CarObject _car;
+    private float _animationTimer;
 
     private void Awake ( )
     {
@@ -33,6 +43,25 @@ public class CarButton : MonoBehaviour
     {
         Vector3 target = _hovered ? hoveredScale : unhoveredScale;
         carImg.transform.localScale = Vector3.SmoothDamp (carImg.transform.localScale, target, ref _velocity, hoverSmoothTime);
+
+        UpdateAnimation ( );
+    }
+
+    void UpdateAnimation ( )
+    {
+        _animationTimer += Time.deltaTime;
+
+        float progress = Mathf.InverseLerp (0, animationTime , _animationTimer);
+
+        Animate(linesImg,selectedMainColor,unselectedMainColor, _selected);
+        Animate(borderImg,selectedMainColor,unselectedMainColor, _selected);
+        Animate(selectedImg,selectedMainColor,unselectedMainColor, _selected);
+        Animate(selectText,selectedTextColor,unselectedTextColor, _selected);
+
+        void Animate ( Graphic graphic, Color a, Color b, bool reverse = false )
+        {
+            graphic.color = Color.Lerp (reverse ? b : a, reverse ? a : b, progress);
+        }
     }
 
     public void Initialize ( CarObject carData )
@@ -53,15 +82,17 @@ public class CarButton : MonoBehaviour
 
     public void SetHovered ( bool hovererd )
     {
+        Debug.Log ("TODO: Add Selected Ainanmtion", this);
         _hovered = hovererd;
-        animator.SetBool ("Hovered", hovererd);
+
+        animator.SetBool ("Selected", hovererd);
+
     }
 
     public void SetSelected ( bool selected )
     {
         _selected = selected;
-        animator.SetBool ("Selected", selected);
-
+        _animationTimer = 0;
         if ( selected )
         {
             selectText.text = $"Already Selected {_car.FullName}";
@@ -69,6 +100,7 @@ public class CarButton : MonoBehaviour
         else
         {
             selectText.text = $"Select {_car.FullName}!";
+
         }
     }
 }
