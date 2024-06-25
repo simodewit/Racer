@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32deee5470d87384d8525280e6dd27f7, type: 3}
-  m_Name: Porsche 911 GTR
+  m_Name: Porsche 911 GTR 2
   m_EditorClassIdentifier: 
   carModel: 911 GTR
   carBrand: Porsche

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class UISpeedometer : MonoBehaviour
 {
     [Header ("References")]
+    private CarData _carData;
     public TextMeshProUGUI speedText;
     public TextMeshProUGUI gearText;
     public Transform meterPivot;
@@ -24,9 +25,33 @@ public class UISpeedometer : MonoBehaviour
     public float maxRpm;
     public float speed;
 
+    public CarData CarData
+    {
+        get
+        {
+            if(_carData == null )
+            {
+                _carData = FindObjectOfType<CarData> ( );
+            }
+            return _carData;
+        }
+    }
+
     private void Update ( )
     {
+        FetchInformation ( );
         UpdateSpeedometer ( );
+    }
+
+    void FetchInformation ( )
+    {
+        if ( CarData == null )
+            return;
+
+        gear = CarData.gear;
+        speed = CarData.speed;
+        //maxRpm = CarData.maxRPM;
+        rpm = CarData.rpm;
     }
 
     void UpdateSpeedometer ( )

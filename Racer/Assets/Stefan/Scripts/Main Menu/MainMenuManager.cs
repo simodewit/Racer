@@ -70,6 +70,7 @@ public class MainMenuManager : MonoBehaviour
     public UnityEvent<MenuState> onMenuStateChanged;
 
     public ScreenEvents carSelectionEvents;
+    public ScreenEvents startWindowEvents;
     public ScreenEvents mainScreenEvents;
     public ScreenEvents mapSelectionEvents;
     public ScreenEvents optionsEvents;
@@ -132,6 +133,8 @@ public class MainMenuManager : MonoBehaviour
 
     public ScreenEvents GetScreenEvents (UIGroup group)
     {
+        if ( group == startScreen )
+            return startWindowEvents;
         if ( group == mapSelectionScreen )
             return mapSelectionEvents;
         if ( group == carSelectionScreen )

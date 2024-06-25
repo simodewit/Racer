@@ -22,6 +22,15 @@ public static class Authenticator
                     string json = File.ReadAllText (path);
 
                     _data = JsonUtility.FromJson<AuthData> (json);
+
+                    if(_data == null )
+                    {
+                        _data = new AuthData
+                        {
+                            name = null,
+                            hasSignedIn = false,
+                        };
+                    }
                 }
                 else
                 {
@@ -66,6 +75,8 @@ public static class Authenticator
     {
         AuthenticatorData.name = name;
         AuthenticatorData.hasSignedIn = true;
+
+        Save ( );
     }
 
     public static void Save ( )

@@ -17,7 +17,7 @@ MonoBehaviour:
   brandSprite: {fileID: 21300000, guid: 2ff5b0c4052d5454ba295d5a4b64a7f5, type: 3}
   carImage: {fileID: 21300000, guid: caecbaeab86bb0a45974f58fa74ef699, type: 3}
   carColor: {r: 0.96981126, g: 0.96981126, b: 0.96981126, a: 1}
-  unlocked: 1
+  unlocked: 0
   carPrefab: {fileID: 0}
   showcasePrefab: {fileID: 3778023400280228929, guid: 8a085b0a2537b9d45aa408ffea5d9bdc,
     type: 3}

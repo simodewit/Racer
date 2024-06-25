@@ -1,3 +1,4 @@
+using com.cyborgAssets.inspectorButtonPro;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -162,6 +163,7 @@ public class OptionsManager : MonoBehaviour
         option.inputReceiver.OnReceiveHorizontalInput (input.x * dpadInputSensitivity);
     }
 
+    [ProButton]
     void CheckScrollInput (float input )
     {
         if ( _cooldownTimer > 0 )
