@@ -48,9 +48,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aeroInfo:
   - downforcePlace: {fileID: 4624009480969326279}
-    amountOfForce: 100
+    amountOfForce: 64
   - downforcePlace: {fileID: 127716201841813781}
-    amountOfForce: 100
+    amountOfForce: 64
   rb: {fileID: 2157798225474838651}
 --- !u!1 &440370119540302418
 GameObject:
@@ -136,12 +136,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95c67afd384843e4da1f192c6c289011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FL: {fileID: 0}
-  FR: {fileID: 0}
-  RL: {fileID: 0}
-  RR: {fileID: 0}
-  brakeTorque: 200
-  brakeBalance: 55
+  FL: {fileID: 4870866856160935275}
+  FR: {fileID: 8615054799739809869}
+  RL: {fileID: 715966311788873593}
+  RR: {fileID: 4497351962314013747}
+  brakeTorque: 3150
+  brakeBalance: 50
   maxForce: 100
   brakeDeadzone: 0
   brakeOutput: 0
@@ -192,11 +192,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carRb: {fileID: 2157798225474838651}
-  leftSuspension: {fileID: 0}
-  rightSuspension: {fileID: 0}
-  leftTyre: {fileID: 0}
-  rightTyre: {fileID: 0}
-  stiffness: 0
+  leftSuspension: {fileID: 6635871250808990176}
+  rightSuspension: {fileID: 3580786141119307254}
+  leftTyre: {fileID: 4870866856160935275}
+  rightTyre: {fileID: 8615054799739809869}
+  stiffness: 5000
 --- !u!1 &946100093256628978
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,16 +241,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68eca68d535a3f447bba6b79847c1fd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FL: {fileID: 0}
-  FR: {fileID: 0}
-  RL: {fileID: 0}
-  RR: {fileID: 0}
+  FL: {fileID: 4870866856160935275}
+  FR: {fileID: 8615054799739809869}
+  RL: {fileID: 715966311788873593}
+  RR: {fileID: 4497351962314013747}
   steeringSort: 0
   steeringPercentage: 75
   steeringDegrees: 30
   steeringCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -267,6 +285,7 @@ GameObject:
   - component: {fileID: 1849153422422172703}
   - component: {fileID: 174304206251218799}
   - component: {fileID: 715966311788873593}
+  - component: {fileID: 4283847006892486986}
   m_Layer: 6
   m_Name: RL
   m_TagString: Untagged
@@ -347,7 +366,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1032102229716777931}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 20
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -378,13 +397,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951d3d83961184d40bf15d7f3eb2a9d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  suspension: {fileID: 0}
+  suspension: {fileID: 6931794233046804143}
   carRb: {fileID: 2157798225474838651}
   wheelOffset: {x: 0, y: 0, z: 0}
-  gripFactor: 0
+  gripFactor: 1
   gripCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.32880443
+      outSlope: -0.32880443
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.078902215
+    - serializedVersion: 3
+      time: 0.22944584
+      value: 0.9092979
+      inSlope: -0.703408
+      outSlope: -0.703408
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.7902622
+      value: 0.23255944
+      inSlope: -0.011730416
+      outSlope: -0.011730416
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.1304848
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.23348999
+      inSlope: -0.028652707
+      outSlope: -0.028652707
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.58327365
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -395,6 +450,28 @@ MonoBehaviour:
   motorTorque: 0
   brakeTorque: 0
   steerAngle: 0
+--- !u!64 &4283847006892486986
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032102229716777931}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5770464298013584046, guid: 70c3ed67a2b91b749851ce0daa770146, type: 3}
 --- !u!1 &1131096691618370163
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,14 +518,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carRb: {fileID: 2157798225474838651}
-  tyre: {fileID: 0}
-  spring: 0
-  damper: 0
-  springTravel: 0
+  tyre: {fileID: 4497351962314013747}
+  spring: 150000
+  damper: 5000
+  springTravel: 0.1
   rideHeight: 0
   springCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -582,11 +677,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc638e3ccfe8eb2468d9ac2d89c9c209, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  engine: {fileID: 0}
-  clutch: {fileID: 0}
-  differential: {fileID: 0}
+  engine: {fileID: 4127278126039397156}
+  clutch: {fileID: 1385838666175826884}
+  differential: {fileID: 248533638111362929}
   shiftAssist: 1
-  gears: []
+  gears:
+  - gearNumber: -1
+    gearRatio: -3.982
+    maxSpeed: 0
+  - gearNumber: 0
+    gearRatio: 0
+    maxSpeed: 0
+  - gearNumber: 1
+    gearRatio: 3.982
+    maxSpeed: 0
+  - gearNumber: 2
+    gearRatio: 2.612
+    maxSpeed: 0
+  - gearNumber: 3
+    gearRatio: 1.905
+    maxSpeed: 0
+  - gearNumber: 4
+    gearRatio: 1.479
+    maxSpeed: 0
+  - gearNumber: 5
+    gearRatio: 1.16
+    maxSpeed: 0
+  - gearNumber: 6
+    gearRatio: 0.906
+    maxSpeed: 0
+  - gearNumber: 7
+    gearRatio: 0.686
+    maxSpeed: 0
   currentGear: 0
   outputTorque: 0
   rollingResistance: 0
@@ -637,11 +759,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carRb: {fileID: 2157798225474838651}
-  leftSuspension: {fileID: 0}
-  rightSuspension: {fileID: 0}
-  leftTyre: {fileID: 0}
-  rightTyre: {fileID: 0}
-  stiffness: 0
+  leftSuspension: {fileID: 6931794233046804143}
+  rightSuspension: {fileID: 5316265714851950115}
+  leftTyre: {fileID: 715966311788873593}
+  rightTyre: {fileID: 4497351962314013747}
+  stiffness: 5000
 --- !u!1 &1785362148892560593
 GameObject:
   m_ObjectHideFlags: 0
@@ -790,19 +912,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56837a6d873224c418e5d82b9ccca91f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carRb: {fileID: 0}
-  engine: {fileID: 0}
-  gearBox: {fileID: 0}
-  brakes: {fileID: 0}
-  fuelTank: {fileID: 0}
-  tyreFR: {fileID: 0}
-  suspensionFR: {fileID: 0}
-  tyreFL: {fileID: 0}
-  suspensionFL: {fileID: 0}
-  tyreRR: {fileID: 0}
-  suspensionRR: {fileID: 0}
-  tyreRL: {fileID: 0}
-  suspensionRL: {fileID: 0}
+  carRb: {fileID: 2157798225474838651}
+  engine: {fileID: 4127278126039397156}
+  gearBox: {fileID: 3860679555879803894}
+  brakes: {fileID: 440602129192703939}
+  fuelTank: {fileID: 8186737743181974889}
+  tyreFR: {fileID: 8615054799739809869}
+  suspensionFR: {fileID: 3580786141119307254}
+  tyreFL: {fileID: 4870866856160935275}
+  suspensionFL: {fileID: 6635871250808990176}
+  tyreRR: {fileID: 4497351962314013747}
+  suspensionRR: {fileID: 5316265714851950115}
+  tyreRL: {fileID: 715966311788873593}
+  suspensionRL: {fileID: 6931794233046804143}
   gear: 0
   rpm: 0
   speed: 0
@@ -862,6 +984,7 @@ GameObject:
   - component: {fileID: 4935225989434933727}
   - component: {fileID: 1019499687512578929}
   - component: {fileID: 8615054799739809869}
+  - component: {fileID: 7897228994777849166}
   m_Layer: 6
   m_Name: FR
   m_TagString: Untagged
@@ -942,7 +1065,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3374261151651698898}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 20
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -973,13 +1096,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951d3d83961184d40bf15d7f3eb2a9d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  suspension: {fileID: 0}
+  suspension: {fileID: 3580786141119307254}
   carRb: {fileID: 2157798225474838651}
   wheelOffset: {x: 0, y: 0, z: 0}
-  gripFactor: 0
+  gripFactor: 1
   gripCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.32880443
+      outSlope: -0.32880443
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.078902215
+    - serializedVersion: 3
+      time: 0.22944584
+      value: 0.9092979
+      inSlope: -0.703408
+      outSlope: -0.703408
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.7902622
+      value: 0.23255944
+      inSlope: -0.011730416
+      outSlope: -0.011730416
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.1304848
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.23348999
+      inSlope: -0.028652707
+      outSlope: -0.028652707
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.58327365
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -990,6 +1149,28 @@ MonoBehaviour:
   motorTorque: 0
   brakeTorque: 0
   steerAngle: 0
+--- !u!64 &7897228994777849166
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3374261151651698898}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5770464298013584046, guid: 70c3ed67a2b91b749851ce0daa770146, type: 3}
 --- !u!1 &3479345411058387758
 GameObject:
   m_ObjectHideFlags: 0
@@ -1171,6 +1352,7 @@ GameObject:
   - component: {fileID: 8937341373849974690}
   - component: {fileID: 7919487945643380783}
   - component: {fileID: 4497351962314013747}
+  - component: {fileID: 4971046989105958234}
   m_Layer: 6
   m_Name: RR
   m_TagString: Untagged
@@ -1251,7 +1433,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5091882296338494300}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 20
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1282,13 +1464,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951d3d83961184d40bf15d7f3eb2a9d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  suspension: {fileID: 0}
+  suspension: {fileID: 5316265714851950115}
   carRb: {fileID: 2157798225474838651}
   wheelOffset: {x: 0, y: 0, z: 0}
-  gripFactor: 0
+  gripFactor: 1
   gripCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.32880443
+      outSlope: -0.32880443
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.078902215
+    - serializedVersion: 3
+      time: 0.22944584
+      value: 0.9092979
+      inSlope: -0.703408
+      outSlope: -0.703408
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.7902622
+      value: 0.23255944
+      inSlope: -0.011730416
+      outSlope: -0.011730416
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.1304848
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.23348999
+      inSlope: -0.028652707
+      outSlope: -0.028652707
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.58327365
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -1299,6 +1517,28 @@ MonoBehaviour:
   motorTorque: 0
   brakeTorque: 0
   steerAngle: 0
+--- !u!64 &4971046989105958234
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5091882296338494300}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5770464298013584046, guid: 70c3ed67a2b91b749851ce0daa770146, type: 3}
 --- !u!1 &5559054768310798474
 GameObject:
   m_ObjectHideFlags: 0
@@ -1428,14 +1668,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carRb: {fileID: 2157798225474838651}
-  tyre: {fileID: 0}
-  spring: 0
-  damper: 0
-  springTravel: 0
+  tyre: {fileID: 8615054799739809869}
+  spring: 150000
+  damper: 5000
+  springTravel: 0.1
   rideHeight: 0
   springCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -1451,6 +1709,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6286673133829895075}
+  - component: {fileID: 6797440129056241114}
+  - component: {fileID: 8186737743181974889}
   m_Layer: 0
   m_Name: Fueltank
   m_TagString: Untagged
@@ -1473,6 +1733,47 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4200074329390190431}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &6797440129056241114
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5761891097884798615}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &8186737743181974889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5761891097884798615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ead433fcb782b4b438def771fefed5f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fuel: 50
+  energyContent: 34.2
 --- !u!1 &5762538624515541168
 GameObject:
   m_ObjectHideFlags: 0
@@ -1514,6 +1815,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8163401581740234161}
   - component: {fileID: 2157798225474838651}
+  - component: {fileID: 874646083274110412}
   m_Layer: 0
   m_Name: Mclaren Senna
   m_TagString: Untagged
@@ -1548,7 +1850,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5898127842451578181}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 1200
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: -0.3, z: 0}
@@ -1567,6 +1869,161 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &874646083274110412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5898127842451578181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: a75835a16d84cf649b0e6b9732e0c038,
+    type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4127278126039397156}
+        m_TargetAssemblyTypeName: UnrealisticEngine, Assembly-CSharp
+        m_MethodName: ThrottleInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 8a8e5e46-bf54-4b3d-b7b7-a97f8fdbd9e0
+    m_ActionName: Car controller/Throttle[/Keyboard/w]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1385838666175826884}
+        m_TargetAssemblyTypeName: Clutch, Assembly-CSharp
+        m_MethodName: ClutchInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b6640803-213c-41a5-b051-5ba47cb8a1d9
+    m_ActionName: Car controller/Clutch[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 440602129192703939}
+        m_TargetAssemblyTypeName: Brakes, Assembly-CSharp
+        m_MethodName: BrakeInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: cfadcf16-96fe-4e86-a801-b9f9dc3aef2b
+    m_ActionName: Car controller/Brake[/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4907378430026560401}
+        m_TargetAssemblyTypeName: Steering, Assembly-CSharp
+        m_MethodName: SteeringInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 50575d79-4a27-4f9f-9700-990fe4e6808a
+    m_ActionName: Car controller/Steering[/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3860679555879803894}
+        m_TargetAssemblyTypeName: GearBox, Assembly-CSharp
+        m_MethodName: ShiftUp
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7f6036d2-5455-4115-a076-2db981a14ea5
+    m_ActionName: Car controller/Shifting up[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3860679555879803894}
+        m_TargetAssemblyTypeName: GearBox, Assembly-CSharp
+        m_MethodName: ShiftDown
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 220e71e7-9c08-4e61-b10e-e22b1cac95b1
+    m_ActionName: Car controller/Shifting down[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 842297757508478448}
+        m_TargetAssemblyTypeName: CameraPos, Assembly-CSharp
+        m_MethodName: ChangeCamera
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0c0c950f-69b5-47dd-b0bc-fb17c533f589
+    m_ActionName: Car controller/Camera position[/Keyboard/c]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9b215a71-a7e6-4a82-9dbd-4fe4a2e63759
+    m_ActionName: Car controller/Look left[/Keyboard/leftArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 224f7a97-5361-4ae0-874f-2a6aab57092f
+    m_ActionName: Car controller/Look right[/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d4a17aee-6215-4f10-82af-f2dc3627249a
+    m_ActionName: Car controller/Look behind[/Keyboard/downArrow]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Car controller
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &5960465608840454609
 GameObject:
   m_ObjectHideFlags: 0
@@ -1592,7 +2049,7 @@ Transform:
   m_GameObject: {fileID: 5960465608840454609}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1.957}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1644,14 +2101,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carRb: {fileID: 2157798225474838651}
-  tyre: {fileID: 0}
-  spring: 0
-  damper: 0
-  springTravel: 0
+  tyre: {fileID: 4870866856160935275}
+  spring: 150000
+  damper: 5000
+  springTravel: 0.1
   rideHeight: 0
   springCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -1850,10 +2325,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carRb: {fileID: 2157798225474838651}
-  leftWheel: {fileID: 0}
-  rightWheel: {fileID: 0}
-  gearBox: {fileID: 0}
-  finalGearRatio: 0
+  leftWheel: {fileID: 715966311788873593}
+  rightWheel: {fileID: 4497351962314013747}
+  gearBox: {fileID: 3860679555879803894}
+  finalGearRatio: 2.27
   diffLock: 0
   rollingCoefficient: 0.02
   rollingResistance: 0
@@ -2186,14 +2661,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carRb: {fileID: 2157798225474838651}
-  tyre: {fileID: 0}
-  spring: 0
-  damper: 0
-  springTravel: 0
+  tyre: {fileID: 715966311788873593}
+  spring: 150000
+  damper: 5000
+  springTravel: 0.1
   rideHeight: 0
   springCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -2209,7 +2702,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 51561726684286385}
-  - component: {fileID: 559020082366910827}
+  - component: {fileID: 4127278126039397156}
   m_Layer: 0
   m_Name: Engine
   m_TagString: Untagged
@@ -2232,7 +2725,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4200074329390190431}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &559020082366910827
+--- !u!114 &4127278126039397156
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2241,27 +2734,59 @@ MonoBehaviour:
   m_GameObject: {fileID: 7275796535783712773}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80591deafa5bcf24e888b508b275b40d, type: 3}
+  m_Script: {fileID: 11500000, guid: 0347c38b6499ba8429996c4b13dda775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gearBox: {fileID: 0}
-  differential: {fileID: 0}
-  throttleBody: {fileID: 0}
-  fuelTank: {fileID: 0}
-  clutch: {fileID: 0}
-  carRb: {fileID: 2157798225474838651}
-  maxRPM: 5000
-  cutRPM: 4500
-  engineCapacity: 2
-  cylinders: 4
-  fuelAirRatio: 14.7
-  engineEfficiency: 25
-  engineFriction: 0.05
-  inertia: 0.3
-  crankDiameter: 0.3
-  rollingCoefficient: 0.02
+  gearBox: {fileID: 3860679555879803894}
+  rb: {fileID: 2157798225474838651}
+  maxRPM: 7250
+  minRPM: 1000
+  torqueCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.47503662
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.46494
+      value: 1
+      inSlope: 0.02413375
+      outSlope: 0.02413375
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.16799743
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.7309854
+      value: 1
+      inSlope: 0.0000007136302
+      outSlope: 0.0000007136302
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.31394324
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.8548546
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  maxTorque: 675
   rpm: 0
   outputTorque: 0
+  rpmFactor: 1
 --- !u!1 &7288410742810767836
 GameObject:
   m_ObjectHideFlags: 0
@@ -2350,7 +2875,7 @@ Transform:
   m_GameObject: {fileID: 7781179711716536715}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.846, z: -1.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2545,8 +3070,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7a27247449e2b849840a5a07a5ec85e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  engine: {fileID: 0}
-  gearBox: {fileID: 0}
+  engine: {fileID: 4127278126039397156}
+  gearBox: {fileID: 3860679555879803894}
   outputTorque: 0
   clutchAxis: 0
 --- !u!1 &8577551671610495490
@@ -2645,6 +3170,7 @@ GameObject:
   - component: {fileID: 6115816449397759163}
   - component: {fileID: 1853896284668740036}
   - component: {fileID: 4870866856160935275}
+  - component: {fileID: 1138119142882683386}
   m_Layer: 6
   m_Name: FL
   m_TagString: Untagged
@@ -2725,7 +3251,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8847145794694109290}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 20
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -2756,13 +3282,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951d3d83961184d40bf15d7f3eb2a9d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  suspension: {fileID: 0}
+  suspension: {fileID: 6635871250808990176}
   carRb: {fileID: 2157798225474838651}
   wheelOffset: {x: 0, y: 0, z: 0}
-  gripFactor: 0
+  gripFactor: 1
   gripCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.32880443
+      outSlope: -0.32880443
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.078902215
+    - serializedVersion: 3
+      time: 0.22944584
+      value: 0.9092979
+      inSlope: -0.703408
+      outSlope: -0.703408
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.7902622
+      value: 0.23255944
+      inSlope: -0.011730416
+      outSlope: -0.011730416
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.1304848
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.23348999
+      inSlope: -0.028652707
+      outSlope: -0.028652707
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.58327365
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -2773,6 +3335,28 @@ MonoBehaviour:
   motorTorque: 0
   brakeTorque: 0
   steerAngle: 0
+--- !u!64 &1138119142882683386
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8847145794694109290}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5770464298013584046, guid: 70c3ed67a2b91b749851ce0daa770146, type: 3}
 --- !u!1 &8876427953230969493
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,6 +15,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Clutch",
+                    "type": "Value",
+                    "id": "b6640803-213c-41a5-b051-5ba47cb8a1d9",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Brake",
                     "type": "Value",
                     "id": "cfadcf16-96fe-4e86-a801-b9f9dc3aef2b",
@@ -329,152 +338,15 @@
                     "action": "Brake",
                     "isComposite": false,
                     "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "UI Controls",
-            "id": "e180c807-b52e-427d-a7e2-dee8a7cab07f",
-            "actions": [
-                {
-                    "name": "Triangle",
-                    "type": "Button",
-                    "id": "7c1f6b58-026b-4629-9f35-668e5ac388d2",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Square",
-                    "type": "Value",
-                    "id": "6099d185-08e1-4070-bc28-46ed0328c209",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "Circle",
-                    "type": "Button",
-                    "id": "f6f6c9b3-31c8-4d18-a6c4-e768011196b0",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Cross",
-                    "type": "Button",
-                    "id": "a08ca58a-3af8-4d81-b4b3-a16a4b0bcf26",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Options",
-                    "type": "Button",
-                    "id": "4b6014c7-4442-4883-9d14-8fcdb63eb687",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Right Joystick",
-                    "type": "Button",
-                    "id": "a57f67fc-347d-455e-8346-8fd77272a014",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Left Joystick",
-                    "type": "Button",
-                    "id": "180652e1-5f3b-4c64-bcb0-7728347821f9",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "4fd4765f-e1ea-4ffb-ae65-225f9ec332ac",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Triangle",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "470cf8f3-f346-41a0-b2aa-a56739c8a0b2",
-                    "path": "<Keyboard>/k",
+                    "id": "5ee35bc0-bebf-4d6e-a54a-5671d75b2114",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Square",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c688ab53-91e1-49ff-8fcd-d7261987a091",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Circle",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e4f8c140-9589-4af4-b4dc-efd56022086c",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Options",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a70e68f6-9226-4a7a-bf23-9489afd3583c",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Right Joystick",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "6c4b23cd-9765-4cca-a363-7d34dfe5fe27",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Left Joystick",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3f26557c-d17e-4658-b86f-8fd6387e42c1",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Cross",
+                    "action": "Clutch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
