@@ -28,6 +28,13 @@ public class GhostRecorder : MonoBehaviour
 
     #region toggle recording
 
+    public void StartRecording(GhostData data, float frequency)
+    {
+        recordFrequency = frequency;
+        dataBank = data;
+        isRecording = true;
+    }
+
     public GhostData StopRecording()
     {
         isRecording = false;
@@ -44,13 +51,6 @@ public class GhostRecorder : MonoBehaviour
         frequencyTimer = 0;
 
         return data;
-    }
-
-    public void StartRecording(GhostData data, float frequency)
-    {
-        recordFrequency = frequency;
-        dataBank = data;
-        isRecording = true;
     }
 
     #endregion
