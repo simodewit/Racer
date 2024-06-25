@@ -2502,7 +2502,7 @@ MonoBehaviour:
     maxSpeed: 50
   - gearNumber: 0
     gearRatio: 0
-    maxSpeed: 0
+    maxSpeed: 80
   - gearNumber: 1
     gearRatio: 3.154
     maxSpeed: 80

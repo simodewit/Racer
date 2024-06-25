@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class PauseManager : MonoBehaviour
 {
@@ -77,5 +78,13 @@ public class PauseManager : MonoBehaviour
     public void Toggle ( )
     {
         Paused = !Paused;
+    }
+
+    public void PauseInput(InputAction.CallbackContext context )
+    {
+        if(context.phase == InputActionPhase.Started )
+        {
+            Toggle ( );
+        }
     }
 }

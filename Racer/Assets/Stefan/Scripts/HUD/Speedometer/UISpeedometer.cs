@@ -51,7 +51,7 @@ public class UISpeedometer : MonoBehaviour
         gear = CarData.gear;
         speed = CarData.speed;
         //maxRpm = CarData.maxRPM;
-        rpm = CarData.rpm;
+        rpm = CarData.rpm; 
     }
 
     void UpdateSpeedometer ( )

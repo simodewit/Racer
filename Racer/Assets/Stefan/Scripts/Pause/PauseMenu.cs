@@ -31,7 +31,7 @@ public class PauseMenu : MonoBehaviour
     {
         if ( _paused )
         {
-            _buttonTimer += Time.deltaTime;
+            _buttonTimer += Time.unscaledDeltaTime;
 
             float progress = Mathf.InverseLerp (0, animationTime, _buttonTimer);
             UpdateButtons (progress);

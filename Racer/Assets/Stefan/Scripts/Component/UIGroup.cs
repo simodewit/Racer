@@ -34,7 +34,7 @@ public class UIGroup : MonoBehaviour
         canvasGroup.alpha = Mathf.Lerp (isActive ? 0 : 1, isActive ? 1 : 0, progress);
 
         canvasGroup.blocksRaycasts = canvasGroup.alpha > 0;
-        _transitionTimer += Time.deltaTime;
+        _transitionTimer += Time.unscaledDeltaTime;
 
     }
     public void Toggle ( ) => Toggle (!isActive);
