@@ -2929,7 +2929,7 @@ MonoBehaviour:
   RR: {fileID: 3866798443959613022}
   steeringSort: 0
   steeringPercentage: 50
-  steeringDegrees: 30
+  steeringDegrees: 15
   steeringCurve:
     serializedVersion: 2
     m_Curve:

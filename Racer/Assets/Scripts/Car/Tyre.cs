@@ -284,11 +284,11 @@ public class Tyre : MonoBehaviour
 
         if (velocity > 0)
         {
-            torque = -carRb.transform.forward * (brakeTorque / radius);
+            torque = carRb.transform.forward * (brakeTorque / radius);
         }
         else
         {
-            torque = carRb.transform.forward * (brakeTorque / radius);
+            torque = -carRb.transform.forward * (brakeTorque / radius);
         }
 
         //add modifiers
