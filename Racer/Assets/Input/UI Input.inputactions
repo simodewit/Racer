@@ -105,6 +105,17 @@
                 },
                 {
                     "name": "",
+                    "id": "84be20e0-aeac-4890-bebc-9b72fc2bdda4",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Circle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "f3108dd1-5bab-4fd5-b890-875bca6a3cff",
                     "path": "",
                     "interactions": "",
@@ -832,12 +843,12 @@
                 },
                 {
                     "name": "",
-                    "id": "5e11920f-ae5b-478c-9ffb-f97e06be3b47",
+                    "id": "70fb9913-c5bf-4a1b-8754-8591718affc1",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Options",
+                    "action": "Back",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

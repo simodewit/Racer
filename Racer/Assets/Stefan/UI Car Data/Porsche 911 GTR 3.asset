@@ -12,17 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32deee5470d87384d8525280e6dd27f7, type: 3}
   m_Name: Porsche 911 GTR 3
   m_EditorClassIdentifier: 
-  carModel: 911 GTR
-  carBrand: Porsche
-  brandSprite: {fileID: 21300000, guid: 08733bd71421cf94298f0f16bb878ab3, type: 3}
-  carImage: {fileID: 21300000, guid: 035d6b41911ab4740a46b2da01c53d65, type: 3}
-  carColor: {r: 0.86415094, g: 0.05688027, b: 0, a: 1}
+  carModel: ???
+  carBrand: ???
+  brandSprite: {fileID: 21300000, guid: 1cc62f68ce6119f4d82bdaadfdf0d90f, type: 3}
+  carImage: {fileID: 21300000, guid: 1cc62f68ce6119f4d82bdaadfdf0d90f, type: 3}
+  carColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
   unlocked: 0
   carPrefab: {fileID: 0}
-  showcasePrefab: {fileID: 3615331447620217917, guid: e1435ec74bcd2ce4cb312b3231d4e9e4,
-    type: 3}
-  value1: 55
-  value2: 24
-  value3: 74
-  value4: 32
-  value5: 80
+  showcasePrefab: {fileID: 0}
+  value1: 0
+  value2: 0
+  value3: 0
+  value4: 0
+  value5: 0

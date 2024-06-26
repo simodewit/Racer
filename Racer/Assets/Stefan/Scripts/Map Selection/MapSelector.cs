@@ -19,7 +19,7 @@ public class MapSelector : MonoBehaviour
     public Vector2 startPos;
 
     [Header ("References")]
-    public OptionInputReceiver sizeSelector;
+    public UISelector sizeSelector;
     public TextMeshProUGUI distanceText;
     public TextMeshProUGUI prText;
     public Image mapImage;
@@ -33,6 +33,32 @@ public class MapSelector : MonoBehaviour
     private float _zoom;
     private float _zoomInput;
     private bool _isZooming;
+    private int _selectedMapIndex;
+
+    private void Start ( )
+    {
+        Initialize ( );
+    }
+
+    void Initialize ( )
+    {
+        string selectedMap = Player.SavedData.SelectedMapSize ?? maps[0].mapName;
+
+        int mapIndex = GetMapIndexFromName (selectedMap);
+
+        sizeSelector.SetIndex (mapIndex);
+    }
+
+    public int GetMapIndexFromName(string name )
+    {
+        for ( int i = 0; i < maps.Length; i++ )
+        {
+            if ( maps[i].mapName == name )
+                return i;
+        }
+
+        return 0;
+    }
 
     private void Update ( )
     {
@@ -92,6 +118,7 @@ public class MapSelector : MonoBehaviour
 
     public void OnMapIndexChanged(int index )
     {
+        _selectedMapIndex = index;
         MapData currentMap = maps[index];
 
         distanceText.text = $"{currentMap.distance:F2} KM";
@@ -99,6 +126,19 @@ public class MapSelector : MonoBehaviour
         prText.text = TimeSpan.FromSeconds (currentMap.prTime).ToString ();
 
         mapImage.sprite = currentMap.mapSprite;
+
+        SaveSelectedMapName ( );
+    }
+
+    void SaveSelectedMapName ( )
+    {
+        string mapName = maps[_selectedMapIndex].mapName;
+
+        UserData data = Player.SavedData;
+
+        data.SelectedMapSize = mapName;
+
+        Player.SaveData (data);
     }
 
     public void ResetMap ( )

@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -46,19 +47,53 @@ public class CarSelector : MonoBehaviour
         }
     }
 
-    private void Start ( )
+    private void OnEnable ( )
     {
         Initialize ( );
     }
 
     void Initialize ( )
     {
+        SelectCarByName (Player.SavedData.SelectedCarName);
+
+
         foreach ( var car in cars )
         {
             CarButton button = Instantiate (carButtonPrefab, carButtonsParent).GetComponent<CarButton> ( );
 
             button.Initialize (car);
         }
+    }
+
+    public void SelectCarByName(string name )
+    {
+        for(int i = 0; i < cars.Length; i++ )
+        {
+            if(cars[i].FullName == name )
+            {
+                selectedCarIndex = i;
+
+                SetPreviewCar (selectedCarIndex);
+                Scroll (selectedCarIndex);
+
+                return;
+            }
+        }
+
+        selectedCarIndex = 0;
+    }
+
+    public string GetCarNameByIndex(int index )
+    {
+        for ( int i = 0; i < cars.Length; i++ )
+        {
+            if ( i == index)
+            {
+                return cars[i].FullName;
+            }
+        }
+
+        return cars[0].FullName;
     }
 
     private void Update ( )
@@ -127,7 +162,25 @@ public class CarSelector : MonoBehaviour
 
         Debug.Log ($"Selected index {selectedCarIndex}");
 
+        SaveSelectedCar ( );
+
         onCarSelected.Invoke ( );
+    }
+
+    private void SaveSelectedCar ( )
+    {
+        string carName = GetCarNameByIndex (selectedCarIndex);
+
+        if(carName == null || carName.Length == 0 )
+        {
+            carName = cars[0].FullName;
+        }
+
+        UserData data = Player.SavedData;
+
+        data.SelectedCarName = carName;
+
+        Player.SaveData (data);
     }
 
     public void ToMenu(InputAction.CallbackContext context )
@@ -185,6 +238,8 @@ public class CarSelector : MonoBehaviour
         SetPreviewCar (selectedCarIndex);
 
         input.enabled = true;
+
+        OnEnable ( );
     }
 
     public void OnScreenDisable ( )

@@ -99,6 +99,15 @@ public class MainMenuManager : MonoBehaviour
 
         bool inMainWindow = State != MenuState.StartScreen && State != MenuState.InputScreen && State != MenuState.OptionScreen;
 
+        if ( inMainWindow && !mainWindow.isActive )
+        {
+            mainScreenEvents.onScreenEnabled?.Invoke ( );
+        }
+        else if(!inMainWindow && mainWindow.isActive )
+        {
+            mainScreenEvents.onScreenDisabled?.Invoke ( );
+        }
+
         mainWindow.Toggle (inMainWindow);
         startWindow.Toggle (State == MenuState.StartScreen || State == MenuState.InputScreen );
         optionsWindow.Toggle (State == MenuState.OptionScreen);
@@ -140,6 +149,7 @@ public class MainMenuManager : MonoBehaviour
         if ( group == carSelectionScreen )
             return carSelectionEvents;
         if ( group == optionsWindow )
+            return optionsEvents;
         if(group == mainScreen)
             return mainScreenEvents;
 
@@ -168,22 +178,6 @@ public class MainMenuManager : MonoBehaviour
     }
 
     #endregion
-
-    public void StartScreenContinue ( )
-    {
-        if ( Authenticator.IsSignedIn ) // Continue to main screen
-        {
-            mainScreen.Toggle (true);
-        }
-        else // Let user select a name
-        {
-            userInputScreen.Toggle (true);
-        }
-
-        startScreen.Toggle (false);
-
-        State = MenuState.MainMenu;
-    }
 
     [ProButton]
     public void SetMenuState(MenuState state )

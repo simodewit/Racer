@@ -21,16 +21,13 @@ public static class Authenticator
                 {
                     string json = File.ReadAllText (path);
 
-                    _data = JsonUtility.FromJson<AuthData> (json);
-
-                    if(_data == null )
+                    _data = JsonUtility.FromJson<AuthData> (json) ??  new AuthData
                     {
-                        _data = new AuthData
-                        {
-                            name = null,
-                            hasSignedIn = false,
-                        };
-                    }
+                        name = null,
+                        hasSignedIn = false,
+                    };
+                    ;
+
                 }
                 else
                 {
@@ -81,6 +78,12 @@ public static class Authenticator
 
     public static void Save ( )
     {
+        UserData data = Player.SavedData;
+
+        data.UserName = AuthenticatorData.name;
+
+        Player.SaveData (data);
+
         string json = JsonUtility.ToJson ( AuthenticatorData );
 
         string path = Path.Combine (Application.persistentDataPath, SAVE_FILE_NAME);

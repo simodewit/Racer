@@ -54,37 +54,40 @@ public class CarPreview : MonoBehaviour
         transform.localEulerAngles += context.ReadValue<Vector2>().x * Time.deltaTime * rotationSpeed;
     }
 
-    public void ZoomInput ( InputAction.CallbackContext context )
-    {
-        return;
+    #region Zooming (Obsolete)
+    //public void ZoomInput ( InputAction.CallbackContext context )
+    //{
+    //    return;
 
-        if ( !_active )
-            return;
+    //    if ( !_active )
+    //        return;
 
-        _zoomProgress += Time.deltaTime * context.ReadValue<Vector2> ( ).x;
+    //    _zoomProgress += Time.deltaTime * context.ReadValue<Vector2> ( ).x;
 
-        cameraPivot.position = Vector3.Lerp (minZoom, maxZoom, _zoomProgress);
-    }
+    //    cameraPivot.position = Vector3.Lerp (minZoom, maxZoom, _zoomProgress);
+    //}
 
-    public void MoveInput(InputAction.CallbackContext context )
-    {
-        return;
+    //public void MoveInput(InputAction.CallbackContext context )
+    //{
+    //    return;
 
-        if ( !_active )
-            return;
+    //    if ( !_active )
+    //        return;
 
-        Vector3 pos = cameraPivot.position;
+    //    Vector3 pos = cameraPivot.position;
 
-        Vector2 input = context.ReadValue<Vector2> ( );
+    //    Vector2 input = context.ReadValue<Vector2> ( );
 
-        pos.x += input.x * Time.deltaTime * moveSpeed;
-        pos.z += input.y * Time.deltaTime * moveSpeed;
+    //    pos.x += input.x * Time.deltaTime * moveSpeed;
+    //    pos.z += input.y * Time.deltaTime * moveSpeed;
 
-        pos.x = Mathf.Clamp (pos.x, -moveBounds.x, moveBounds.x);
-        pos.y = Mathf.Clamp (pos.y, -moveBounds.y, moveBounds.y);
+    //    pos.x = Mathf.Clamp (pos.x, -moveBounds.x, moveBounds.x);
+    //    pos.y = Mathf.Clamp (pos.y, -moveBounds.y, moveBounds.y);
 
-        cameraPivot.position = pos;
-    }
+    //    cameraPivot.position = pos;
+    //}
+
+    #endregion
 
     public void ResetView ( )
     {
@@ -95,6 +98,7 @@ public class CarPreview : MonoBehaviour
 
         ResetCameraOffset ( );
     }
+
 
     public void ResetCameraOffset ( )
     {

@@ -36,6 +36,7 @@ public class MainScreenInput : MonoBehaviour
 
     public void OnScreenEnable ( )
     {
+        Debug.Log ("Enable");
         carPreview.ResetView ( );
         input.enabled = true;
     }

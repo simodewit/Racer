@@ -137,6 +137,11 @@ public class SizeSelector : OptionInputReceiver
             CurrentIndex++;
     }
 
+    public void SetIndex(int index )
+    {
+        CurrentIndex = Mathf.Clamp (index, 0, options.Length);
+    }
+
 
     // Classes
 
