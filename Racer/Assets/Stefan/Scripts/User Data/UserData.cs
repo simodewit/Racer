@@ -69,7 +69,7 @@ public class UserData
             return new ("User")
             {
                 _selectedCarName = "MCLaren Senna",
-                _selectedMapSize = "Small",
+                _selectedMapSize = "Nationals 2",
                 _raceData = new List<MapUserData> ( ),
             };
         }

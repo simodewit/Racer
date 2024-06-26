@@ -1300,6 +1300,17 @@
                 },
                 {
                     "name": "",
+                    "id": "048ccf2f-6ec0-4ddf-b8f6-2c88aaf06ce2",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Continue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "f21da1ce-1436-4c0c-9608-37bc00ff111e",
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",

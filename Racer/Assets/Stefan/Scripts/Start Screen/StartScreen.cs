@@ -34,6 +34,9 @@ public class StartScreen : MonoBehaviour
 
     public void CreateUser ( )
     {
+        if ( inputField.text.Length < 3 )
+            return;
+        
         if ( !input.enabled )
             return;
 
