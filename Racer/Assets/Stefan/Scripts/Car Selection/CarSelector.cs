@@ -47,16 +47,18 @@ public class CarSelector : MonoBehaviour
         }
     }
 
-    private void OnEnable ( )
+    private void Start ( )
     {
-        Initialize ( );
+        InitializeButtons ( );
     }
 
-    void Initialize ( )
+    private void OnEnable ( )
     {
         SelectCarByName (Player.SavedData.SelectedCarName);
+    }
 
-
+    void InitializeButtons ( )
+    {
         foreach ( var car in cars )
         {
             CarButton button = Instantiate (carButtonPrefab, carButtonsParent).GetComponent<CarButton> ( );

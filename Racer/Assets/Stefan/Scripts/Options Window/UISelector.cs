@@ -54,7 +54,10 @@ public class UISelector : OptionInputReceiver
 
     private void Start ( )
     {
-        OnValueChanged ( );
+        m_animationTimer = 0;
+
+        textElement.text = options[CurrentIndex];
+
         UpdateAnimation (1);
     }
 
