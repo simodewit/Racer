@@ -1,7 +1,9 @@
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
@@ -10,6 +12,7 @@ public class PauseMenu : MonoBehaviour
 
     [SerializeField]
     private PauseButton[] buttons;
+    public GameObject loading;
 
     [Header ("Animation Settings")]
     public float animationTime = 0.2f;
@@ -20,6 +23,7 @@ public class PauseMenu : MonoBehaviour
 
     private int _selectedIndex;
     private float _buttonTimer;
+
     [SerializeField]
     private bool _paused;
     private void Update ( )
@@ -63,6 +67,9 @@ public class PauseMenu : MonoBehaviour
 
     public void ButtonNavigation ( InputAction.CallbackContext context )
     {
+        if ( !_paused )
+            return;
+
         if ( context.phase == InputActionPhase.Started )
         {
 
@@ -81,6 +88,9 @@ public class PauseMenu : MonoBehaviour
 
     public void SelectButton ( InputAction.CallbackContext context )
     {
+        if ( !_paused )
+            return;
+
         buttons[_selectedIndex].onButtonClicked.Invoke ( );
     }
 
@@ -116,6 +126,12 @@ public class PauseMenu : MonoBehaviour
         input.enabled = false;
     }
 
+    public void ToMainMenu ( )
+    {
+        SceneManager.LoadSceneAsync ("Main Menu");
+
+        loading.SetActive (true);
+    }
 
     [System.Serializable]
     class PauseButton

@@ -143,6 +143,8 @@ public class CarSelector : MonoBehaviour
 
     public void TrySelect ( InputAction.CallbackContext context )
     {
+        if ( carButtonsParent.GetChild (scrollSelectedCarIndex).GetComponent<CarButton> ( ).CarData.unlocked == false )
+            return;
         if ( scrollSelectedCarIndex == selectedCarIndex )
             return;
 

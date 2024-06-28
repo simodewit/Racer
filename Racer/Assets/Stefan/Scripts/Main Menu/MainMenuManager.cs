@@ -113,6 +113,10 @@ public class MainMenuManager : MonoBehaviour
         optionsWindow.Toggle (State == MenuState.OptionScreen);
     }
 
+    /// <summary>
+    /// Toggles a screen and handles its events
+    /// </summary>
+    /// <param name="activeScreen">The screen that should be enabled</param>
     public void ToggleScreen(UIGroup activeScreen )
     {
         var screens = new UIGroup[] { startScreen, mainScreen, carSelectionScreen, mapSelectionScreen, userInputScreen };
@@ -121,7 +125,7 @@ public class MainMenuManager : MonoBehaviour
         {
             if(screen == activeScreen )
             {
-                if(screen.isActive == false )
+                if(screen.isActive == false ) // Call enable screen events
                 {
                     var events = GetScreenEvents (screen);
                     events?.onScreenEnabled.Invoke ( );
@@ -130,7 +134,7 @@ public class MainMenuManager : MonoBehaviour
                 screen.Toggle (true);
                 continue;
             }
-            if ( screen.isActive)
+            if ( screen.isActive) // Call disable screen
             {
                 var events = GetScreenEvents (screen);
                 events?.onScreenDisabled.Invoke ( );
@@ -140,6 +144,11 @@ public class MainMenuManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Gets the screen events for an individual UIGroup
+    /// </summary>
+    /// <param name="group">The group to find events for</param>
+    /// <returns>The events of the screen, null if none found</returns>
     public ScreenEvents GetScreenEvents (UIGroup group)
     {
         if ( group == startScreen )
@@ -184,4 +193,6 @@ public class MainMenuManager : MonoBehaviour
     {
         State = state;
     }
+
+
 }

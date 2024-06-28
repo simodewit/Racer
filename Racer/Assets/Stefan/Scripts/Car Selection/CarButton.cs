@@ -31,7 +31,9 @@ public class CarButton : MonoBehaviour
     private Vector3 _velocity;
     private bool _hovered;
     private bool _selected;
-    private CarObject _car;
+    public CarObject CarData {
+        get; private set;
+    }
     private float _animationTimer;
 
     private void Awake ( )
@@ -77,7 +79,7 @@ public class CarButton : MonoBehaviour
         lockedObject.SetActive (!carData.unlocked);
         animator.SetBool ("Unlocked", carData.unlocked);
 
-        _car = carData;
+        CarData = carData;
     }
 
     public void SetHovered ( bool hovererd )
@@ -95,11 +97,11 @@ public class CarButton : MonoBehaviour
         _animationTimer = 0;
         if ( selected )
         {
-            selectText.text = $"Already Selected {_car.FullName}";
+            selectText.text = $"Already Selected {CarData.FullName}";
         }
         else
         {
-            selectText.text = $"Select {_car.FullName}!";
+            selectText.text = $"Select {CarData.FullName}!";
 
         }
     }

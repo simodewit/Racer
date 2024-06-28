@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class ScreenApplier : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Res[] resolutions;
+    [System.Serializable]
+    public struct Res
     {
-        
-    }
+        public int width;
+        public int height;
 
-    // Update is called once per frame
-    void Update()
+    }
+    public void ApplyScreen ( )
     {
-        
+        var data = OptionsData.Saved;
+
+        Screen.SetResolution (resolutions[data.resolutionIndex].width, resolutions[data.resolutionIndex].height, data.fullscreenMode);
     }
 }

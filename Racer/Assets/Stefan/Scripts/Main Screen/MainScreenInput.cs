@@ -2,12 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class MainScreenInput : MonoBehaviour
 {
     [Header("References")]
     public PlayerInput input;
     public CarPreview carPreview;
+
+    public PlayerInput[] allInputs;
+    public GameObject loadingScreen;
+
+    private void Start ( )
+    {
+        allInputs = FindObjectsOfType<PlayerInput> ( );
+    }
 
     public void Options (InputAction.CallbackContext context )
     {
@@ -32,6 +41,15 @@ public class MainScreenInput : MonoBehaviour
     public void StartGame (InputAction.CallbackContext context )
     {
         Debug.Log ("Start Game");
+
+        SceneManager.LoadSceneAsync ("MainScene");
+
+        foreach ( var input in allInputs )
+        {
+            input.enabled = false;
+        }
+
+        loadingScreen.SetActive (true);
     }
 
     public void OnScreenEnable ( )
