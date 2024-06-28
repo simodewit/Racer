@@ -132,7 +132,12 @@ public class PauseMenu : MonoBehaviour
 
         loading.SetActive (true);
     }
+    public void RestartGame ( )
+    {
+        SceneManager.LoadSceneAsync ("MainScene");
 
+        loading.SetActive (true);
+    }
     [System.Serializable]
     class PauseButton
     {
