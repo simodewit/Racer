@@ -94,7 +94,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 381194144028370409}
   serializedVersion: 4
-  m_Mass: 20
+  m_Mass: 30
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -135,15 +135,15 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: -0.047386423
-      outSlope: -0.047386423
+      inSlope: -0.040417828
+      outSlope: -0.040417828
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.4521836
+      outWeight: 0.40653807
     - serializedVersion: 3
-      time: 0.14851323
-      value: 0.9507662
+      time: 0.22944584
+      value: 0.94699854
       inSlope: -0.703408
       outSlope: -0.703408
       tangentMode: 0
@@ -151,14 +151,14 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.6393528
-      value: 0.2513888
-      inSlope: -0.2178004
-      outSlope: -0.2178004
+      time: 0.7902622
+      value: 0.23255944
+      inSlope: -0.011730416
+      outSlope: -0.011730416
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.1304848
-      outWeight: 0.21266373
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
       value: 0.23348999
@@ -354,7 +354,7 @@ MonoBehaviour:
   rightSuspension: {fileID: 6483334105223339876}
   leftTyre: {fileID: 4854782016681627555}
   rightTyre: {fileID: 3866798443959613022}
-  stiffness: 5000
+  stiffness: 4000
 --- !u!1 &838712372373394024
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,13 +499,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aeroInfo:
   - downforcePlace: {fileID: 7521974939257094960}
-    amountOfForce: 30
+    amountOfForce: 15
   - downforcePlace: {fileID: 7863221596756325063}
-    amountOfForce: 20
+    amountOfForce: 15
   - downforcePlace: {fileID: 5625566945808385444}
-    amountOfForce: 20
+    amountOfForce: 0
   - downforcePlace: {fileID: 9087837883912954073}
-    amountOfForce: 10
+    amountOfForce: 0
   rb: {fileID: 5875228716191928938}
 --- !u!1 &1696453984831093369
 GameObject:
@@ -598,7 +598,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  maxTorque: 675
+  maxTorque: 1300
   rpm: 0
   outputTorque: 0
   rpmFactor: 1
@@ -665,30 +665,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   carRb: {fileID: 5875228716191928938}
   tyre: {fileID: 2529108709087429678}
-  spring: 150000
-  damper: 5000
-  springTravel: 0.1
-  rideHeight: 0
+  spring: 250000
+  damper: 10000
+  springTravel: 0.2
+  rideHeight: -0.1
   springCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.79953
-      inSlope: 0.20046997
-      outSlope: 0.20046997
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0.20046997
-      outSlope: 0.20046997
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -826,30 +826,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   carRb: {fileID: 5875228716191928938}
   tyre: {fileID: 3866798443959613022}
-  spring: 150000
-  damper: 5000
-  springTravel: 0.1
-  rideHeight: 0
+  spring: 250000
+  damper: 10000
+  springTravel: 0.2
+  rideHeight: -0.1
   springCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.79953
-      inSlope: 0.20046997
-      outSlope: 0.20046997
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0.20046997
-      outSlope: 0.20046997
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -1022,7 +1022,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1932674392212015260}
   serializedVersion: 4
-  m_Mass: 20
+  m_Mass: 30
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1056,22 +1056,22 @@ MonoBehaviour:
   suspension: {fileID: 5291346110737327928}
   carRb: {fileID: 5875228716191928938}
   wheelOffset: {x: 0, y: 0, z: 0}
-  gripFactor: 1
+  gripFactor: 0.95
   gripCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.9245987
-      inSlope: 0.022171626
-      outSlope: 0.022171626
+      value: 1
+      inSlope: -0.040417828
+      outSlope: -0.040417828
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.370667
+      outWeight: 0.40653807
     - serializedVersion: 3
-      time: 0.21023503
-      value: 0.86970896
+      time: 0.22944584
+      value: 0.94699854
       inSlope: -0.703408
       outSlope: -0.703408
       tangentMode: 0
@@ -1364,7 +1364,7 @@ MonoBehaviour:
   FR: {fileID: 2030063514607282381}
   RL: {fileID: 4854782016681627555}
   RR: {fileID: 3866798443959613022}
-  brakeTorque: 3150
+  brakeTorque: 12000
   brakeBalance: 50
   maxForce: 100
   brakeDeadzone: 0
@@ -1597,10 +1597,10 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5342489646092734430}
   serializedVersion: 4
-  m_Mass: 1250
+  m_Mass: 4000
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: -0.3, z: 0}
+  m_CenterOfMass: {x: 0, y: -0.3, z: 0.2}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
@@ -1766,6 +1766,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: b6640803-213c-41a5-b051-5ba47cb8a1d9
     m_ActionName: Car controller/Clutch[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2d2c2ddd-7945-460b-9986-5dca8aa88804
+    m_ActionName: Car controller/Pause[/Keyboard/escape,/DualShock4GamepadHID/start]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Car controller
@@ -2342,7 +2346,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7285832015642238154}
   serializedVersion: 4
-  m_Mass: 20
+  m_Mass: 30
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -2383,15 +2387,15 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: -0.047386423
-      outSlope: -0.047386423
+      inSlope: -0.040417828
+      outSlope: -0.040417828
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.4521836
+      outWeight: 0.40653807
     - serializedVersion: 3
-      time: 0.14851323
-      value: 0.9507662
+      time: 0.22944584
+      value: 0.94699854
       inSlope: -0.703408
       outSlope: -0.703408
       tangentMode: 0
@@ -2399,14 +2403,14 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.6393528
-      value: 0.2513888
-      inSlope: -0.2178004
-      outSlope: -0.2178004
+      time: 0.7902622
+      value: 0.23255944
+      inSlope: -0.011730416
+      outSlope: -0.011730416
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.1304848
-      outWeight: 0.21266373
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
       value: 0.23348999
@@ -2681,7 +2685,7 @@ MonoBehaviour:
   rightSuspension: {fileID: 3770206932899571009}
   leftTyre: {fileID: 2529108709087429678}
   rightTyre: {fileID: 2030063514607282381}
-  stiffness: 5000
+  stiffness: 4000
 --- !u!1 &7847396571871995575
 GameObject:
   m_ObjectHideFlags: 0
@@ -2929,25 +2933,25 @@ MonoBehaviour:
   RR: {fileID: 3866798443959613022}
   steeringSort: 0
   steeringPercentage: 50
-  steeringDegrees: 15
+  steeringDegrees: 20
   steeringCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
@@ -3079,7 +3083,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8634223686665037778}
   serializedVersion: 4
-  m_Mass: 20
+  m_Mass: 30
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -3113,22 +3117,22 @@ MonoBehaviour:
   suspension: {fileID: 3770206932899571009}
   carRb: {fileID: 5875228716191928938}
   wheelOffset: {x: 0, y: 0, z: 0}
-  gripFactor: 1
+  gripFactor: 0.95
   gripCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.9245987
-      inSlope: 0.022171626
-      outSlope: 0.022171626
+      value: 1
+      inSlope: -0.040417828
+      outSlope: -0.040417828
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.370667
+      outWeight: 0.40653807
     - serializedVersion: 3
-      time: 0.21023503
-      value: 0.86970896
+      time: 0.22944584
+      value: 0.94699854
       inSlope: -0.703408
       outSlope: -0.703408
       tangentMode: 0
@@ -3232,30 +3236,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   carRb: {fileID: 5875228716191928938}
   tyre: {fileID: 4854782016681627555}
-  spring: 150000
-  damper: 5000
-  springTravel: 0.1
-  rideHeight: 0
+  spring: 250000
+  damper: 10000
+  springTravel: 0.2
+  rideHeight: -0.1
   springCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.79953
-      inSlope: 0.20046997
-      outSlope: 0.20046997
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0.20046997
-      outSlope: 0.20046997
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -3310,30 +3314,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   carRb: {fileID: 5875228716191928938}
   tyre: {fileID: 2030063514607282381}
-  spring: 150000
-  damper: 5000
-  springTravel: 0.1
-  rideHeight: 0
+  spring: 250000
+  damper: 10000
+  springTravel: 0.2
+  rideHeight: -0.1
   springCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.79953
-      inSlope: 0.20046997
-      outSlope: 0.20046997
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0.20046997
-      outSlope: 0.20046997
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

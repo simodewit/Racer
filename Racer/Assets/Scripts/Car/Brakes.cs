@@ -18,7 +18,7 @@ public class Brakes : MonoBehaviour
     [SerializeField] private Tyre RR;
 
     [Header("Brakes")]
-    [Tooltip("The total newton meters of torque that the car has"), Range(0, 5000)]
+    [Tooltip("The total newton meters of torque that the car has"), Range(0, 12000)]
     [SerializeField] private float brakeTorque = 200;
     [Tooltip("The amount of brakes to the front or back of the car"), Range(100, 0)]
     [SerializeField] private float brakeBalance = 55;
